@@ -42,15 +42,18 @@ void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest)
 		stack_dest[i] = stack_dest[i - 1];
 	stack_dest[0] = stack_src[0];
 	i = -1;
-	while (++i < *size_src - 1)
+	while (++i < *size_src)
 		stack_src[i] = stack_src[i + 1];
+	stack_src[i] = 0;
 }
 
 void	make_move(t_stacks *stacks, int move)
 {
+	if (!(move >= RA && move <= PB))
+		exit_on_err("make_move received wrong input\n");
 	if (move == RA || move == RR)
 		rotate(stacks->A , stacks->sizeA , false);
-	else if (move == RB || move == RR)
+	if (move == RB || move == RR)
 		rotate(stacks->B , stacks->sizeB , false);
 	else if (move == RRA || move == RRR)
 		rotate(stacks->A , stacks->sizeA , true);

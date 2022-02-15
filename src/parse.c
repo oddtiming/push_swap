@@ -94,11 +94,10 @@ void	parse(int argc, char *argv[], t_stacks *stacks)
 		i++;
 	if (args_split[i] != NULL)
 		exit_on_err("one of the inputs is not an int\n");
-	stacks->size = i;
-	init(args_split, stacks, i);
+	assign_inputs(args_split, stacks, i);
 	if (has_duplicates(stacks->A, stacks->size) == true)
 		exit_on_err("Duplicate inputs\n");
-	ft_print_split(args_split, "argv");
+	// ft_print_split(args_split, "argv");
 	ft_free_split(args_split);
 	return ;
 }

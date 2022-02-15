@@ -4,25 +4,23 @@ void	print_stacks(t_stacks *stacks)
 {
 	int	i;
 
-	printf("\t\033[38;5;5m[A]\t\033[38;5;6m[B]\n\033[0m");
-	printf("------------------------\n");
+	printf("\t|\033[38;5;5m[A]\t\033[0m|\033[38;5;6m[B]\033[0m\t|\n");
+	printf("+-------+-------+-------+\n");
 	i = 0;
-	while (i < stacks->size)
+	while (i < stacks->sizeA || i < stacks->sizeB)
 	{
-		if (!stacks->A[i] && !stacks->B[i])
-			return ;
-		printf("%d\t", i);
-		if (stacks->A[i])
+		printf("|%d\t|", i);
+		if (i < stacks->sizeA)
 			printf("\033[38;5;5m[%d]\t\033[0m", stacks->A[i]);
 		else
-			printf("\t\033[0m");
-		if (stacks->B[i])
-			printf("\033[38;5;6m[%d]\n\033[0m", stacks->B[i]);
+			printf("\t\033[0m|");
+		if (i < stacks->sizeB)
+			printf("|\033[38;5;6m[%d]\033[0m\t|\n", stacks->B[i]);
 		else
-			printf("\n\033[0m");
+			printf("|\t|\n\033[0m");
 		i++;
 	}
-
+	printf("+-------+-------+-------+\n");
 }
 
 void	print_move(int move)
@@ -32,7 +30,7 @@ void	print_move(int move)
 	else if (move == RB)
 		write(1, "rb\n", 3);
 	else if (move == RR)
-		write(1, "rb\n", 3);
+		write(1, "rr\n", 3);
 	else if (move == RRA)
 		write(1, "rra\n", 4);
 	else if (move == RRB)

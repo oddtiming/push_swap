@@ -1,5 +1,8 @@
 NAME	=	push_swap
 
+# FOR TESTING PURPOSES
+RUN_ARGS = 0 1 2 3 4 5 6 7 8
+
 SHELL	=	bash
 
 GREEN		=	\033[0;32m
@@ -91,4 +94,7 @@ re:	fclean all
 
 bonus:	all
 
-.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print
+run: all
+	./$(NAME) $(RUN_ARGS)
+
+.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print run

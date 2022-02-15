@@ -47,7 +47,7 @@ typedef enum s_moves
 //Functions
 //PARSING
 void	parse(int argc, char *argv[], t_stacks *stacks);
-void	assign_inputs(char **args, t_stacks *stacks);
+void	assign_inputs(char **args, t_stacks *stacks, int size);
 
 //MOVES
 void	rotate(int *stack, int size, bool is_reverse);
