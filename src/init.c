@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 #include "../incl/push_swap.h"
 
 void	init(char **args, t_stacks *stacks, int size)
+=======
+#include "push_swap.h"
+
+void	assign_inputs(char **args, t_stacks *stacks)
+>>>>>>> bb035a462ef6f279bbacbc4c237da89c8100a6a2
 {
 	int	i;
 
@@ -15,5 +21,9 @@ void	init(char **args, t_stacks *stacks, int size)
 		stacks->A[i] = ft_atoi(args[i]);
 		i++;
 	}
+<<<<<<< HEAD
+=======
+	stacks->sizeA = stacks->size;
+>>>>>>> bb035a462ef6f279bbacbc4c237da89c8100a6a2
 	return ;
 }
