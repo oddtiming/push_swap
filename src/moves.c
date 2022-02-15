@@ -1,22 +1,7 @@
 #include "push_swap.h"
 
-typedef enum s_moves
-{
-	RA = 1,
-	RB = 2,
-	RR = 3,
-	RRA = 4,
-	RRB = 5,
-	RRR = 6,
-	SA = 7,
-	SB = 8,
-	SS = 9,
-	PA = 10,
-	PB = 11
-}	t_moves;
-
 //Look what you've done to me, Norminette...
-inline void	rotate(int *stack, int size, bool is_reverse)
+void	rotate(int *stack, int size, bool is_reverse)
 {
 	int	temp;
 	int i;
@@ -33,7 +18,7 @@ inline void	rotate(int *stack, int size, bool is_reverse)
 	return ;
 }
 
-inline void	swap(int *stack, int size)
+void	swap(int *stack, int size)
 {
 	int	temp;
 
@@ -42,4 +27,42 @@ inline void	swap(int *stack, int size)
 	temp = stack[0];
 	stack[0] = stack[1];
 	stack[1] = temp;
+}
+
+void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest)
+{
+	int	i;
+
+	if (*size_src == 0)
+		return ;
+	*size_dest += 1;
+	*size_src -= 1;
+	i = *size_dest;
+	while (--i > 0)
+		stack_dest[i] = stack_dest[i - 1];
+	stack_dest[0] = stack_src[0];
+	i = -1;
+	while (++i < *size_src - 1)
+		stack_src[i] = stack_src[i + 1];
+}
+
+void	make_move(t_stacks *stacks, int move)
+{
+	if (move == RA || move == RR)
+		rotate(stacks->A , stacks->sizeA , false);
+	else if (move == RB || move == RR)
+		rotate(stacks->B , stacks->sizeB , false);
+	else if (move == RRA || move == RRR)
+		rotate(stacks->A , stacks->sizeA , true);
+	if (move == RRB || move == RRR)
+		rotate(stacks->B , stacks->sizeB , true);
+	else if (move == SA || move == SS)
+		swap(stacks->A, stacks->sizeA);
+	if (move == SB || move == SS)
+		swap(stacks->B, stacks->sizeB);
+	else if (move == PA)
+		push(stacks->B, stacks->A, &stacks->sizeB, &stacks->sizeA);
+	else if (move == PB)
+		push(stacks->A, stacks->B, &stacks->sizeA, &stacks->sizeB);
+	print_move(move);
 }
