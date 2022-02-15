@@ -1,4 +1,4 @@
-#include "../incl/push_swap.h"
+#include "push_swap.h"
 
 void	assign_inputs(char **args, t_stacks *stacks)
 {
@@ -15,5 +15,6 @@ void	assign_inputs(char **args, t_stacks *stacks)
 		stacks->A[i] = ft_atoi(args[i]);
 		i++;
 	}
+	stacks->sizeA = stacks->size;
 	return ;
 }

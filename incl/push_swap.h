@@ -25,6 +25,8 @@ typedef struct s_stacks
 	int	*A;			//NEEDS TO BE FREED
 	int	*B;			//NEEDS TO BE FREED
 	int	size;
+	int	sizeA;
+	int	sizeB;
 }	t_stacks;
 
 //Functions
@@ -32,7 +34,13 @@ typedef struct s_stacks
 void	parse(int argc, char *argv[], t_stacks *stacks);
 void	assign_inputs(char **args, t_stacks *stacks);
 
+//MOVES
+inline void	rotate(int *stack, int size, bool is_reverse);
+
 //ERROR HANDLING
-void	terminate(char *err_message);
+void	exit_on_err(char *err_message);
+
+//UTILS
+void	print_stacks(t_stacks *stacks);
 
 #endif
