@@ -69,5 +69,6 @@ void	make_move(t_stacks *stacks, int move)
 	else if (move == PB)
 		push(stacks->A, stacks->B, &stacks->sizeA, &stacks->sizeB);
 	print_move(move);
-	print_stacks(stacks);
+	if (DEBUG != 0)
+		print_stacks(stacks);
 }

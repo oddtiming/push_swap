@@ -19,6 +19,13 @@
 # define _ARGC_MIN 2
 # define VALID_INPUTS 1
 
+//TO REMOVE
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
+//END OF REMOVE
+
+
 //TYPEDEFS
 typedef struct s_stacks
 {
@@ -48,6 +55,8 @@ typedef enum s_moves
 //PARSING
 void	parse(int argc, char *argv[], t_stacks *stacks);
 void	assign_inputs(char **args, t_stacks *stacks, int size);
+int		*normalize_stack_values(int *stack, int size);
+
 
 //MOVES
 // void	rotate(int *stack, int size, bool is_reverse);
@@ -58,7 +67,7 @@ void	make_move(t_stacks *stacks, int move);
 //SOLVING
 void	sort(t_stacks *stacks);
 void	sort_3(t_stacks *stacks);
-int		stack_is_in_order_at_pos(int *stack, int size);
+int		stack_is_sorted_at_pos(int *stack, int size);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);

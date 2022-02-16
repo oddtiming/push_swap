@@ -3,15 +3,28 @@
 int	main(int argc, char *argv[])
 {
 	t_stacks	stacks;
-
+	
+	printf("AT ENTRY, DEBUG == %d\n", DEBUG);
 	ft_bzero(&stacks, sizeof(t_stacks));
+
 	parse(argc, argv, &stacks);
-	print_stacks(&stacks);
+	if (DEBUG)
+	{
+		printf("\n----Initial Stacks----\n\n");
+		print_stacks(&stacks);
+	}
+	stacks.A = normalize_stack_values(stacks.A, stacks.size);
+	if (DEBUG)
+	{
+		printf("\n----After normalization----\n\n");
+		print_stacks(&stacks);
+	}
+
+
 	sort(&stacks);
 	cleanup(&stacks);
 	return (0);
 }
-	// printf("\n----Initial Stacks----\n\n");
 	// print_stacks(&stacks);
 
 	// make_move(&stacks, PB);

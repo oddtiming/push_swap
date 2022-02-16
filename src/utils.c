@@ -62,6 +62,5 @@ int	nb_sorted(int *stack, int size)
 			nb_sorted++;
 		i++;
 	}
-	printf("nb_sorted = %d\n", nb_sorted);
 	return (nb_sorted);
 }
