@@ -1,7 +1,7 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 0 1 2 3 4 5 6 7 8
+RUN_ARGS = 2 0 1
 
 SHELL	=	bash
 
@@ -10,11 +10,13 @@ BLUE		=	\033[0;34m
 RED			=	\033[0;31m
 RESET_COL	=	\033[0m
 
-CFILES	=	errors.c \
+CFILES	=	cleanup.c \
+			errors.c \
 			init.c \
 			moves.c \
 			parse.c \
 			push_swap.c \
+			sort.c \
 			utils.c
 
 SRC_DIR	= src
@@ -27,7 +29,7 @@ INC			= incl
 INCFLAGS	= -I$(INC)
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror -g -O2
 
 LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a

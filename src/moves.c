@@ -1,10 +1,10 @@
 #include "push_swap.h"
 
 //Look what you've done to me, Norminette...
-void	rotate(int *stack, int size, bool is_reverse)
+static inline void	rotate(int *stack, int size, bool is_reverse)
 {
 	int	temp;
-	int i;
+	int	i;
 
 	temp = is_reverse * stack[size - 1] + !is_reverse * stack[0];
 	i = is_reverse * size + !is_reverse * (-1);
@@ -18,7 +18,7 @@ void	rotate(int *stack, int size, bool is_reverse)
 	return ;
 }
 
-void	swap(int *stack, int size)
+static inline void	swap(int *stack, int size)
 {
 	int	temp;
 
@@ -29,7 +29,8 @@ void	swap(int *stack, int size)
 	stack[1] = temp;
 }
 
-void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest)
+static inline void	push(int *stack_src, int *stack_dest, \
+	int *size_src, int *size_dest)
 {
 	int	i;
 
@@ -52,13 +53,13 @@ void	make_move(t_stacks *stacks, int move)
 	if (!(move >= RA && move <= PB))
 		exit_on_err("make_move received wrong input\n");
 	if (move == RA || move == RR)
-		rotate(stacks->A , stacks->sizeA , false);
+		rotate(stacks->A, stacks->sizeA, false);
 	if (move == RB || move == RR)
-		rotate(stacks->B , stacks->sizeB , false);
+		rotate(stacks->B, stacks->sizeB, false);
 	else if (move == RRA || move == RRR)
-		rotate(stacks->A , stacks->sizeA , true);
+		rotate(stacks->A, stacks->sizeA, true);
 	if (move == RRB || move == RRR)
-		rotate(stacks->B , stacks->sizeB , true);
+		rotate(stacks->B, stacks->sizeB, true);
 	else if (move == SA || move == SS)
 		swap(stacks->A, stacks->sizeA);
 	if (move == SB || move == SS)
@@ -68,4 +69,5 @@ void	make_move(t_stacks *stacks, int move)
 	else if (move == PB)
 		push(stacks->A, stacks->B, &stacks->sizeA, &stacks->sizeB);
 	print_move(move);
+	print_stacks(stacks);
 }

@@ -50,10 +50,15 @@ void	parse(int argc, char *argv[], t_stacks *stacks);
 void	assign_inputs(char **args, t_stacks *stacks, int size);
 
 //MOVES
-void	rotate(int *stack, int size, bool is_reverse);
-void	swap(int *stack, int size);
-void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
+// void	rotate(int *stack, int size, bool is_reverse);
+// void	swap(int *stack, int size);
+// void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
 void	make_move(t_stacks *stacks, int move);
+
+//SOLVING
+void	sort(t_stacks *stacks);
+void	sort_3(t_stacks *stacks);
+int		stack_is_in_order_at_pos(int *stack, int size);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
@@ -61,5 +66,9 @@ void	exit_on_err(char *err_message);
 //UTILS
 void	print_stacks(t_stacks *stacks);
 void	print_move(int move);
+int		nb_sorted(int *stack, int size);
+
+//CLEANUP
+void	cleanup(t_stacks *stacks);
 
 #endif

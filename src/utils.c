@@ -48,3 +48,20 @@ void	print_move(int move)
 	else if (move == PB)
 		write(1, "pb\n", 3);
 }
+
+int	nb_sorted(int *stack, int size)
+{
+	int	i;
+	int	nb_sorted;
+
+	i = 1;
+	nb_sorted = 1;
+	while (i < size)
+	{
+		if (stack[i] > stack[i - 1])
+			nb_sorted++;
+		i++;
+	}
+	printf("nb_sorted = %d\n", nb_sorted);
+	return (nb_sorted);
+}

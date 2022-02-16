@@ -40,15 +40,15 @@ static bool	is_an_int(char *str)
 			to_long *= -1;
 		i++;
 	}
-	while (ft_isdigit(str[i]))
+	while (str[i])
 	{
+		if (!ft_isdigit(str[i]))
+			return (false);
 		to_long = 10 * to_long + (str[i] - '0');
 		if (to_long > INT_MAX || to_long < INT_MIN)
 			return (false);
 		i++;
 	}
-	if (str[i] != '\0')
-			return (false);
 	return (true);
 }
 
@@ -76,7 +76,7 @@ static char	**split_args(int argc, char *argv[])
 	}
 	if (!args_split)
 		exit_on_err("Split Error\n");
-	return (args_split);	
+	return (args_split);
 }
 
 void	parse(int argc, char *argv[], t_stacks *stacks)
