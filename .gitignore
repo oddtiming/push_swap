@@ -57,5 +57,7 @@ dkms.conf
 *.swp
 .vscode
 *.txt
-push_swap
-obj/*
+checker*
+push_swap*
+*.o
+*.py

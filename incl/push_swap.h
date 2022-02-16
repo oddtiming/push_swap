@@ -68,6 +68,7 @@ void	make_move(t_stacks *stacks, int move);
 void	sort(t_stacks *stacks);
 void	sort_3(t_stacks *stacks);
 int		stack_is_sorted_at_pos(int *stack, int size);
+int		nb_sorted_at_pos(int *stack, int size, int pos);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);

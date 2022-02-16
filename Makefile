@@ -68,6 +68,8 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 #
 # DEBUG obj compilation
 #
+COMPILE_DBG_EXE		=	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCFLAGS) $(DBG_OBJS) -o $(DBG_EXE)
+COMPILE_DBG_EXE_OUT	=	$$($(COMPILE_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 COMPILE_DBGC		=	$(CC) $(DBG_CFLAGS) $(INCFLAGS) -o $@ -c $<
 COMPILE_DBGC_OUT	=	$$($(COMPILE_DBGC) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
@@ -129,9 +131,11 @@ run: all
 #
 # Debug rules
 #
+pretty_print_debug:
+	@echo -e "$(RED)\n------------------- $(DBG_EXE) -------------------$(RESET_COL)\n"
 
-debug: libft pretty_print $(DBG_OBJS)
-	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCFLAGS) $(DBG_OBJS) -o $(DBG_EXE)
+debug: libft pretty_print_debug $(DBG_OBJS)
+	@echo -e "\n$(ON_RED)>>>>>>>> Compiling $(DBG_EXE) ...$(RESET_COL)$(COMPILE_DBG_EXE_OUT)"
 	./$(DBG_EXE) $(RUN_ARGS)
 
-.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print run debug
+.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print pretty_print_debug run debug
