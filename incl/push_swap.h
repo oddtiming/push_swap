@@ -36,7 +36,7 @@ typedef struct s_stacks
 	int	sizeB;
 }	t_stacks;
 
-typedef enum s_moves
+typedef enum e_moves
 {
 	RA = 1,
 	RB = 2,
@@ -67,16 +67,17 @@ void	make_move(t_stacks *stacks, int move);
 //SOLVING
 void	sort(t_stacks *stacks);
 void	sort_3(t_stacks *stacks);
-int		stack_is_sorted_at_pos(int *stack, int size);
+int		nb_sorted_at_smallest(int *stack, int size, int *pos_smallest);
 int		nb_sorted_at_pos(int *stack, int size, int pos);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
 
 //UTILS
-void	print_stacks(t_stacks *stacks);
-void	print_move(int move);
-int		nb_sorted(int *stack, int size);
+void		print_stacks(t_stacks *stacks);
+void		print_move(int move);
+int			nb_sorted(int *stack, int size);
+// inline int	get_0(int *stack, int size);
 
 //CLEANUP
 void	cleanup(t_stacks *stacks);
