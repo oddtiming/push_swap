@@ -15,7 +15,7 @@ void	print_stacks(t_stacks *stacks)
 		else
 			printf("\t\033[0m|");
 		if (i < stacks->sizeB)
-			printf("|\033[38;5;6m %-3d \033[0m\t|\n", stacks->B[i]);
+			printf("|\033[38;5;6m %-3d \033[0m|\n", stacks->B[i]);
 		else
 			printf("|     |\n\033[0m");
 		i++;
@@ -65,7 +65,7 @@ int	nb_sorted(int *stack, int size)
 	return (nb_sorted);
 }
 
-inline int	get_0(int *stack, int size)
+inline int	get_pos_smallest(int *stack, int size)
 {
 	int	pos;
 

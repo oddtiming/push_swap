@@ -1,7 +1,7 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 0 2 1
+RUN_ARGS = 2 0 1 3 4
 
 SHELL	=	bash
 
@@ -19,6 +19,7 @@ CFILES	=	cleanup.c \
 			parse.c \
 			push_swap.c \
 			sort.c \
+			sort5.c \
 			utils.c
 
 SRC_DIR	= src
@@ -31,7 +32,7 @@ INC			= incl
 INCFLAGS	= -I$(INC)
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g -O2
+CFLAGS	= -Wall -Wextra -Werror -g -O3
 
 #
 # DEBUG build settings

@@ -1,30 +1,95 @@
 #include "push_swap.h"
 
-void	rotate_to_0(t_stacks *stacks)
+void	rotate_to_pos0(t_stacks *cont, int pos)
 {
 	int *stack;
-	int	dist_from_origin;
 	int	size;
 
-	stack = stacks->A;
-	size = stacks->sizeA;
-	dist_from_origin = 0;
-	while (stack[dist_from_origin] != 0)
-		dist_from_origin++;
-	if (dist_from_origin < size - dist_from_origin)
-		while (dist_from_origin--)
-			make_move(stacks, RA);
+	stack = cont->A;
+	size = cont->sizeA;
+	if (pos < size - pos)
+		while (pos--)
+			make_move(cont, RA);
 	else
-		while (dist_from_origin++ != size)
-			make_move(stacks, RRA);
+		while (pos++ != size)
+			make_move(cont, RRA);
 	return ;
 }
 
-void	sort5(t_stacks *stacks)
+bool	try_swap(t_stacks *cont)
 {
+	int *stack;
+	int size;
+	int	pos;
+	int	pos_smallest;
+
+	stack = cont->A;
+	size = cont->sizeA;
+	pos = 0;
+	while (pos < size - 1)
+	{
+		ft_swap_ints(&stack[pos], &stack[pos + 1]);
+		pos_smallest = get_smallest_pos(stack, size);
+		if (nb_sorted_at_pos(stack, size, pos_smallest) == size)
+		{
+			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+			rotate_to_pos0(cont, pos);
+			make_move(cont, SA);
+			return (true);
+		}
+		else
+			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+		pos++;
+	}
+	return (false);
+}
+
+void	insert_b(t_stacks *cont)
+{
+	int	pos_of_b0_in_a;
+	int	next_index;
+
+	while (cont->sizeB)
+	{
+		pos_of_b0_in_a = 0;
+		next_index = cont->B[0] + 1;
+		if (cont->B[0] == cont->size - 1)
+			next_index = 0;
+		while (cont->A[pos_of_b0_in_a] != next_index)
+			pos_of_b0_in_a++;
+		rotate_to_pos0(cont, pos_of_b0_in_a);
+		make_move(cont, PA);
+	}
+	return ;
+}
+
+void	sort_5(t_stacks *cont)
+{
+	int pos_smallest;
 	int	nb_sorted;
 
-	nb_sorted = nb_sorted_at_smallest(stacks->A, stacks->sizeA, get0(stacks->A, stacks->sizeA));
-	if (nb_sorted == stacks->size)
-		rotate_to_0(stacks->A, stacks->Asize);
+	pos_smallest = get_smallest_pos(cont->A, cont->sizeA);
+	if (DEBUG)
+		printf("in sort_5, pos_smallest = %d\n", pos_smallest);
+	nb_sorted = nb_sorted_at_pos(cont->A, cont->sizeA, pos_smallest);
+	if (nb_sorted == cont->sizeA)
+	{
+		rotate_to_pos0(cont, pos_smallest);
+		return ;
+	}
+	if (try_swap(cont) == true)
+	{
+		rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
+		return ;
+	}
+	while (cont->sizeA > 3)
+	{
+		make_move(cont, PB);
+		if (try_swap(cont) == true)
+		{
+			insert_b(cont);
+			rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
+			return ;
+		}
+	}
 }

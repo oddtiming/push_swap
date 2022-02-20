@@ -53,8 +53,8 @@ typedef enum e_moves
 
 //Functions
 //PARSING
-void	parse(int argc, char *argv[], t_stacks *stacks);
-void	assign_inputs(char **args, t_stacks *stacks, int size);
+void	parse(int argc, char *argv[], t_stacks *cont);
+void	assign_inputs(char **args, t_stacks *cont, int size);
 int		*normalize_stack_values(int *stack, int size);
 
 
@@ -62,24 +62,25 @@ int		*normalize_stack_values(int *stack, int size);
 // void	rotate(int *stack, int size, bool is_reverse);
 // void	swap(int *stack, int size);
 // void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
-void	make_move(t_stacks *stacks, int move);
+void	make_move(t_stacks *cont, int move);
 
 //SOLVING
-void	sort(t_stacks *stacks);
-void	sort_3(t_stacks *stacks);
-int		nb_sorted_at_smallest(int *stack, int size, int *pos_smallest);
+void	sort(t_stacks *cont);
+void	sort_3(t_stacks *cont);
+void	sort_5(t_stacks *cont);
+int		get_smallest_pos(int *stack, int size);
 int		nb_sorted_at_pos(int *stack, int size, int pos);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
 
 //UTILS
-void		print_stacks(t_stacks *stacks);
+void		print_stacks(t_stacks *cont);
 void		print_move(int move);
 int			nb_sorted(int *stack, int size);
 // inline int	get_0(int *stack, int size);
 
 //CLEANUP
-void	cleanup(t_stacks *stacks);
+void	cleanup(t_stacks *cont);
 
 #endif
