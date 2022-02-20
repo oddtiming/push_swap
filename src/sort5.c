@@ -8,14 +8,17 @@ void	rotate_to_pos0(t_stacks *cont, int pos)
 	stack = cont->A;
 	size = cont->sizeA;
 	if (pos < size - pos)
-		while (pos--)
+		while (pos-- > 0)
 			make_move(cont, RA);
 	else
-		while (pos++ != size)
+		while (pos++ < size)
 			make_move(cont, RRA);
 	return ;
 }
 
+
+//I think that my issue is simply that I need to check whether they are in order
+//before I attempte to swap
 bool	try_swap(t_stacks *cont)
 {
 	int *stack;
@@ -33,6 +36,8 @@ bool	try_swap(t_stacks *cont)
 		if (nb_sorted_at_pos(stack, size, pos_smallest) == size)
 		{
 			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+			printf("board after swap\n");
+			print_stacks(cont);
 			rotate_to_pos0(cont, pos);
 			make_move(cont, SA);
 			return (true);
@@ -54,15 +59,23 @@ void	insert_b(t_stacks *cont)
 {
 	int	pos_of_b0_in_a;
 	int	next_index;
+	int	smallest_in_a;
+	int	biggest_in_a;
 
 	while (cont->sizeB)
 	{
-		pos_of_b0_in_a = 0;
+		smallest_in_a = get_smallest_val(cont->A, cont->sizeA);
+		biggest_in_a = get_biggest_val(cont->A, cont->sizeA);
 		next_index = cont->B[0] + 1;
-		if (cont->B[0] == cont->size - 1)
-			next_index = 0;
+		if (cont->B[0] > biggest_in_a)
+			next_index = smallest_in_a;
+		if (DEBUG)
+			printf(RED"------>in insert_b, next_index of %d = %d\n"RESET_COL, cont->B[0], next_index);
+		pos_of_b0_in_a = 0;
 		while (cont->A[pos_of_b0_in_a] != next_index)
 			pos_of_b0_in_a++;
+		if (DEBUG)
+			printf(RED"------>in insert_b, pos_of %d in a = %d\n"RESET_COL, next_index, pos_of_b0_in_a);
 		rotate_to_pos0(cont, pos_of_b0_in_a);
 		make_move(cont, PA);
 	}
@@ -72,30 +85,40 @@ void	insert_b(t_stacks *cont)
 void	sort_5(t_stacks *cont)
 {
 	int pos_smallest;
-	int	nb_sorted;
+	// int	nb_sorted;
 
+	// pos_smallest = get_smallest_pos(cont->A, cont->sizeA);
+	// if (DEBUG)
+	// 	printf("in sort_5, pos_smallest = %d\n", pos_smallest);
+	// nb_sorted = nb_sorted_at_pos(cont->A, cont->sizeA, pos_smallest);
+	// if (nb_sorted == cont->sizeA)
+	// {
+	// 	rotate_to_pos0(cont, pos_smallest);
+	// 	return ;
+	// }
+	// if (try_swap(cont) == true)
+	// {
+	// 	rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
+	// 	return ;
+	// }
+	// while (cont->sizeA > 3)
+	// {
+	// 	make_move(cont, PB);
+	// 	if (try_swap(cont) == true)
+	// 	{
+	// 		insert_b(cont);
+	// 		rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
+	// 		return ;
+	// 	}
+	// }
+	make_move(cont, PB);
+	make_move(cont, PB);
 	pos_smallest = get_smallest_pos(cont->A, cont->sizeA);
-	if (DEBUG)
-		printf("in sort_5, pos_smallest = %d\n", pos_smallest);
-	nb_sorted = nb_sorted_at_pos(cont->A, cont->sizeA, pos_smallest);
-	if (nb_sorted == cont->sizeA)
-	{
+	if (nb_sorted_at_pos(cont->A, cont->sizeA, pos_smallest) == cont->sizeA)
 		rotate_to_pos0(cont, pos_smallest);
-		return ;
-	}
-	if (try_swap(cont) == true)
-	{
-		rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
-		return ;
-	}
-	while (cont->sizeA > 3)
-	{
-		make_move(cont, PB);
-		if (try_swap(cont) == true)
-		{
-			insert_b(cont);
-			rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
-			return ;
-		}
-	}
+	else
+		try_swap(cont);
+	insert_b(cont);
+	rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
+	return ;
 }

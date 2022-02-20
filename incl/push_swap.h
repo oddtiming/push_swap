@@ -23,7 +23,13 @@
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
+# define YELLOW "\033[0;33m"
+# define MAGENTA "\033[0;35m"
+# define RED "\033[0;31m"
+# define RESET_COL "\033[0m"
 //END OF REMOVE
+
+
 
 
 //TYPEDEFS
@@ -69,15 +75,18 @@ void	sort(t_stacks *cont);
 void	sort_3(t_stacks *cont);
 void	sort_5(t_stacks *cont);
 int		get_smallest_pos(int *stack, int size);
+int		get_smallest_val(int *stack, int size);
+int		get_biggest_val(int *stack, int size);
 int		nb_sorted_at_pos(int *stack, int size, int pos);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
 
 //UTILS
-void		print_stacks(t_stacks *cont);
-void		print_move(int move);
-int			nb_sorted(int *stack, int size);
+void	print_stacks(t_stacks *cont);
+void	print_single_stack(int *stack, int size);
+void	print_move(int move);
+int		nb_sorted(int *stack, int size);
 // inline int	get_0(int *stack, int size);
 
 //CLEANUP

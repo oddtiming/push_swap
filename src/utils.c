@@ -1,5 +1,24 @@
 #include "push_swap.h"
 
+void	print_single_stack(int *stack, int size)
+{
+	int	i;
+
+	printf("    |\033[38;5;5m [A] \033[0m|\n");
+	printf("+---+-----+\n");
+	i = 0;
+	while (i < size)
+	{
+		printf("|%-3d|", i);
+		if (i < size)
+			printf("\033[38;5;5m %-3d \033[0;0;0m|\n", stack[i]);
+		else
+			printf("\t\033[0m|\n");
+		i++;
+	}
+	printf("+---+-----+\n");
+}
+
 void	print_stacks(t_stacks *stacks)
 {
 	int	i;
@@ -63,14 +82,4 @@ int	nb_sorted(int *stack, int size)
 		i++;
 	}
 	return (nb_sorted);
-}
-
-inline int	get_pos_smallest(int *stack, int size)
-{
-	int	pos;
-
-	pos = 0;
-	while (stack[pos] != 0 && pos < size)
-		pos++;
-	return (pos);
 }

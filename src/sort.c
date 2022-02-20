@@ -1,10 +1,5 @@
 #include "push_swap.h"
 
-# define YELLOW "\033[0;33m"
-# define MAGENTA "\033[0;35m"
-# define RED "\033[0;31m"
-# define RESET_COL "\033[0m"
-
 int	nb_sorted_at_pos(int *stack, int size, int pos)
 {
 	int		nb_sorted;
@@ -18,9 +13,11 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 	{
 		printf(MAGENTA"in nb_sorted_at_pos, size = %d\n"RESET_COL, size);
 		printf(MAGENTA"in nb_sorted_at_pos, pos = %d\n"RESET_COL, pos);
+		printf(RED"in nb_sorted_at_pos, stack[0] = %d\n"RESET_COL, stack[0]);
 		temp = size;
 		while (--temp >= 0)
 			printf(MAGENTA"------------------------->in nb_sorted_at_pos, stack[%d] = %d\n"RESET_COL, temp, stack[temp]);
+		print_single_stack(stack, size);
 	}	
 	while (i != pos && !(pos == 0 && i == size))
 	{
@@ -49,6 +46,48 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 	if (DEBUG)
 		printf("nb_sorted at stack[%d] == %d\n", pos, nb_sorted);
 	return (nb_sorted);
+}
+
+int	get_biggest_val(int *stack, int size)
+{
+	int	pos_in_stack;
+	int pos_biggest;
+	int	val_biggest;
+
+	pos_in_stack = 0;
+	pos_biggest = 0;
+	val_biggest = 0;
+	while (pos_in_stack < size)
+	{
+		if (stack[pos_in_stack] > val_biggest)
+		{
+			val_biggest = stack[pos_in_stack];
+			pos_biggest = pos_in_stack;
+		}
+		pos_in_stack++;
+	}
+	return (val_biggest);
+}
+
+int	get_smallest_val(int *stack, int size)
+{
+	int	pos_in_stack;
+	int pos_smallest;
+	int	val_smallest;
+
+	pos_in_stack = 0;
+	pos_smallest = 0;
+	val_smallest = size;
+	while (pos_in_stack < size)
+	{
+		if (stack[pos_in_stack] < val_smallest)
+		{
+			val_smallest = stack[pos_in_stack];
+			pos_smallest = pos_in_stack;
+		}
+		pos_in_stack++;
+	}
+	return (val_smallest);
 }
 
 int	get_smallest_pos(int *stack, int size)
