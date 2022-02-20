@@ -58,6 +58,7 @@ dkms.conf
 .vscode
 *.txt
 checker*
-push_swap*
+push_swap
+push_swap_debug
 *.o
 *.py

@@ -4,7 +4,6 @@ int	main(int argc, char *argv[])
 {
 	t_stacks	stacks;
 	
-	printf("AT ENTRY, DEBUG == %d\n", DEBUG);
 	ft_bzero(&stacks, sizeof(t_stacks));
 
 	parse(argc, argv, &stacks);

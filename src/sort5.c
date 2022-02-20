@@ -36,8 +36,11 @@ bool	try_swap(t_stacks *cont)
 		if (nb_sorted_at_pos(stack, size, pos_smallest) == size)
 		{
 			ft_swap_ints(&stack[pos], &stack[pos + 1]);
-			printf("board after swap\n");
-			print_stacks(cont);
+			if (DEBUG)
+			{
+				printf("board after swap\n");
+				print_stacks(cont);
+			}
 			rotate_to_pos0(cont, pos);
 			make_move(cont, SA);
 			return (true);
