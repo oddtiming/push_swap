@@ -1,13 +1,27 @@
 #include "push_swap.h"
 
+# define YELLOW "\033[0;33m"
+# define MAGENTA "\033[0;35m"
+# define RED "\033[0;31m"
+# define RESET_COL "\033[0m"
+
 int	nb_sorted_at_pos(int *stack, int size, int pos)
 {
 	int		nb_sorted;
 	int		curr_value;
 	int		i;
+	int		temp;
 
 	i = pos + 1;
 	nb_sorted = 1;
+	if (DEBUG)
+	{
+		printf(MAGENTA"in nb_sorted_at_pos, size = %d\n"RESET_COL, size);
+		printf(MAGENTA"in nb_sorted_at_pos, pos = %d\n"RESET_COL, pos);
+		temp = size;
+		while (--temp >= 0)
+			printf(MAGENTA"------------------------->in nb_sorted_at_pos, stack[%d] = %d\n"RESET_COL, temp, stack[temp]);
+	}	
 	while (i != pos && !(pos == 0 && i == size))
 	{
 		if (i == size)
@@ -23,10 +37,10 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 		{
 			nb_sorted++;
 			if (DEBUG)
-				printf("\033[0;33mstack[%d] > stack[%d] <===> %d > %d \n\033[0m", (i != size)*i, i-1, curr_value, stack[i - 1]);
+				printf(YELLOW"stack[%d] > stack[%d] <===> %d > %d \n"RESET_COL, (i != size)*i, i-1, curr_value, stack[i - 1]);
 		}
 		else if (DEBUG)
-			printf("\033[0;33mstack[%d] !> stack[%d] <===> %d !> %d \n\033[0m", (i != size)*i, i-1, curr_value, stack[i - 1]);
+			printf(YELLOW"stack[%d] !> stack[%d] <===> %d !> %d \n"RESET_COL, (i != size)*i, i-1, curr_value, stack[i - 1]);
 		if (i == size)
 			i = 0;
 		else

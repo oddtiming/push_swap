@@ -41,6 +41,12 @@ bool	try_swap(t_stacks *cont)
 			ft_swap_ints(&stack[pos], &stack[pos + 1]);
 		pos++;
 	}
+	if (DEBUG)
+	{
+		printf("---after try_swap-----\n");
+		print_stacks(cont);
+	}	
+
 	return (false);
 }
 
