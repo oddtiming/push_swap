@@ -65,16 +65,16 @@ int		*normalize_stack_values(int *stack, int size);
 
 
 //MOVES
-// void	rotate(int *stack, int size, bool is_reverse);
-// void	swap(int *stack, int size);
-// void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
+void	rotate(int *stack, int size, bool is_reverse);
+void	swap(int *stack, int size);
+void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
 void	make_move(t_stacks *cont, int move);
 
 //SOLVING
 void	sort(t_stacks *cont);
 void	sort_3(t_stacks *cont);
 void	sort_5(t_stacks *cont);
-int		get_smallest_pos(int *stack, int size);
+int		get_pos_smallest(int *stack, int size);
 int		get_smallest_val(int *stack, int size);
 int		get_biggest_val(int *stack, int size);
 int		nb_sorted_at_pos(int *stack, int size, int pos);
@@ -86,8 +86,7 @@ void	exit_on_err(char *err_message);
 void	print_stacks(t_stacks *cont);
 void	print_single_stack(int *stack, int size);
 void	print_move(int move);
-int		nb_sorted(int *stack, int size);
-// inline int	get_0(int *stack, int size);
+void	set_next_index(int *pos, int size);
 
 //CLEANUP
 void	cleanup(t_stacks *cont);

@@ -1,7 +1,7 @@
 #include "push_swap.h"
 
 //Look what you've done to me, Norminette...
-static inline void	rotate(int *stack, int size, bool is_reverse)
+void	rotate(int *stack, int size, bool is_reverse)
 {
 	int	temp;
 	int	i;
@@ -18,7 +18,7 @@ static inline void	rotate(int *stack, int size, bool is_reverse)
 	return ;
 }
 
-static inline void	swap(int *stack, int size)
+void	swap(int *stack, int size)
 {
 	int	temp;
 
@@ -29,7 +29,7 @@ static inline void	swap(int *stack, int size)
 	stack[1] = temp;
 }
 
-static inline void	push(int *stack_src, int *stack_dest, \
+void	push(int *stack_src, int *stack_dest, \
 	int *size_src, int *size_dest)
 {
 	int	i;

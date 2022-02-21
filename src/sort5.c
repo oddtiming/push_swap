@@ -32,7 +32,7 @@ bool	try_swap(t_stacks *cont)
 	while (pos < size - 1)
 	{
 		ft_swap_ints(&stack[pos], &stack[pos + 1]);
-		pos_smallest = get_smallest_pos(stack, size);
+		pos_smallest = get_pos_smallest(stack, size);
 		if (nb_sorted_at_pos(stack, size, pos_smallest) == size)
 		{
 			ft_swap_ints(&stack[pos], &stack[pos + 1]);
@@ -61,67 +61,75 @@ bool	try_swap(t_stacks *cont)
 void	insert_b(t_stacks *cont)
 {
 	int	pos_of_b0_in_a;
-	int	next_index;
-	int	smallest_in_a;
-	int	biggest_in_a;
+	int	insertion_val;
 
 	while (cont->sizeB)
 	{
-		smallest_in_a = get_smallest_val(cont->A, cont->sizeA);
-		biggest_in_a = get_biggest_val(cont->A, cont->sizeA);
-		next_index = cont->B[0] + 1;
-		if (cont->B[0] > biggest_in_a)
-			next_index = smallest_in_a;
+		if (cont->B[0] < cont->size - 1)
+			insertion_val = cont->B[0] + 1;
+		else
+			insertion_val = 0;
 		if (DEBUG)
-			printf(RED"------>in insert_b, next_index of %d = %d\n"RESET_COL, cont->B[0], next_index);
+			printf(RED"------>in insert_b, insertion_val of %d = %d\n"RESET_COL, cont->B[0], insertion_val);
 		pos_of_b0_in_a = 0;
-		while (cont->A[pos_of_b0_in_a] != next_index)
-			pos_of_b0_in_a++;
+		while (cont->A[pos_of_b0_in_a] != insertion_val)
+		{
+			set_next_index(&pos_of_b0_in_a, cont->sizeA);
+			if (pos_of_b0_in_a == 0)
+				set_next_index(&insertion_val, cont->size);
+		}	
 		if (DEBUG)
-			printf(RED"------>in insert_b, pos_of %d in a = %d\n"RESET_COL, next_index, pos_of_b0_in_a);
+			printf(RED"------>in insert_b, pos_of %d in a = %d\n"RESET_COL, insertion_val, pos_of_b0_in_a);
 		rotate_to_pos0(cont, pos_of_b0_in_a);
 		make_move(cont, PA);
 	}
 	return ;
 }
 
-void	sort_5(t_stacks *cont)
+bool	is_almost_sorted(t_stacks *cont)
 {
 	int pos_smallest;
-	// int	nb_sorted;
 
-	// pos_smallest = get_smallest_pos(cont->A, cont->sizeA);
-	// if (DEBUG)
-	// 	printf("in sort_5, pos_smallest = %d\n", pos_smallest);
-	// nb_sorted = nb_sorted_at_pos(cont->A, cont->sizeA, pos_smallest);
-	// if (nb_sorted == cont->sizeA)
-	// {
-	// 	rotate_to_pos0(cont, pos_smallest);
-	// 	return ;
-	// }
-	// if (try_swap(cont) == true)
-	// {
-	// 	rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
-	// 	return ;
-	// }
-	// while (cont->sizeA > 3)
-	// {
-	// 	make_move(cont, PB);
-	// 	if (try_swap(cont) == true)
-	// 	{
-	// 		insert_b(cont);
-	// 		rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
-	// 		return ;
-	// 	}
-	// }
-	make_move(cont, PB);
-	make_move(cont, PB);
-	pos_smallest = get_smallest_pos(cont->A, cont->sizeA);
+	pos_smallest = get_pos_smallest(cont->A, cont->sizeA);
 	if (nb_sorted_at_pos(cont->A, cont->sizeA, pos_smallest) == cont->sizeA)
+	{
+		if (cont->sizeA != cont->size)
+			insert_b(cont);
+		pos_smallest = get_pos_smallest(cont->A, cont->sizeA);
+		if (DEBUG)
+		{
+			printf(RED"#############pos_smallest = %d\n"RESET_COL, pos_smallest);
+			printf(RED"#############cont->A[pos_smallest] = %d\n"RESET_COL, cont->A[pos_smallest]);
+		}
 		rotate_to_pos0(cont, pos_smallest);
+		return (true);
+	}
+	else if (try_swap(cont) == true)
+	{
+		if (cont->sizeA != cont->size)
+			insert_b(cont);
+		pos_smallest = get_pos_smallest(cont->A, cont->sizeA);
+		if (DEBUG)
+		{
+			printf(RED"#############pos_smallest = %d\n"RESET_COL, pos_smallest);
+			printf(RED"#############cont->A[pos_smallest] = %d\n"RESET_COL, cont->A[pos_smallest]);
+		}
+		rotate_to_pos0(cont, pos_smallest);
+		return (true);
+	}
+	return (false);
+}
+
+void	sort_5(t_stacks *cont)
+{
+	if (is_almost_sorted(cont) == true)
+		return ;
 	else
-		try_swap(cont);
-	insert_b(cont);
-	rotate_to_pos0(cont, get_smallest_pos(cont->A, cont->sizeA));
+	{
+		// if (try_pb == true)
+		// 	return ;
+		make_move(cont, PB);
+		sort_5(cont);
+	}
 	return ;
 }

@@ -68,18 +68,10 @@ void	print_move(int move)
 		write(1, "pb\n", 3);
 }
 
-int	nb_sorted(int *stack, int size)
+void	set_next_index(int *index, int size)
 {
-	int	i;
-	int	nb_sorted;
-
-	i = 1;
-	nb_sorted = 1;
-	while (i < size)
-	{
-		if (stack[i] > stack[i - 1])
-			nb_sorted++;
-		i++;
-	}
-	return (nb_sorted);
+	if (*index == size - 1)
+		*index = 0;
+	else
+		*index += 1;
 }

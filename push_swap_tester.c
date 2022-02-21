@@ -4,6 +4,7 @@
 
 #define TEMP_PATH "./ps_tester.tmp"
 #define LOG_5_PATH "./results_5.log"
+#define MAX_MOVES 9
 
 typedef struct	s_cmd {
 	int		in_fd;
@@ -18,6 +19,7 @@ void	exec_checker(t_cmd ps, char *stack);
 void	exec_wc(t_cmd wc);
 void	tester_cleanup(t_cmd *ps, t_cmd *checker, t_cmd *wc, int log_fd);
 void	wait_cmds(pid_t pid_ps, pid_t pid_checker, pid_t pid_wc);
+void	write_report(void);
 
 int	main(void)
 {
@@ -38,9 +40,50 @@ int	main(void)
 		execute_permutation(curr_line);
 		free (curr_line);
 		curr_line = get_next_line(fd);
+		printf(YELLOW"-->curr_line == %s\n"RESET_COL, curr_line);
 	}
 	close(fd);
-	return (0);
+	write_report();
+	exit (0);
+}
+
+//Doesn't properly work bc I'm writing to and reading from the same fd
+//Needs some rework.
+void	write_report(void)
+{
+	char	*stack_input;
+	char	*curr_line;
+	char	*prev_line;
+	int		log_fd;
+	int 	curr_moves;
+
+	log_fd = open(LOG_5_PATH, O_RDWR | O_APPEND);
+	curr_line = get_next_line(log_fd);
+	prev_line = NULL;
+	stack_input = NULL;
+	while (curr_line)
+	{
+		if (!ft_isdigit(curr_line[0]))
+		{
+			curr_moves = ft_atoi(curr_line);
+			printf("atoi(curr_line) = %d\n", curr_moves);
+			if (curr_moves > MAX_MOVES)
+			{
+				stack_input = ft_get_first_token(prev_line, ':');
+				ft_putstr_fd("**nb_moves for : ", log_fd);
+				ft_putstr_fd(stack_input, log_fd);
+				ft_putstr_fd(" --> ", log_fd);
+				ft_putnbr_fd(curr_moves, log_fd);
+				ft_putchar_fd('\n', log_fd);
+				free(stack_input);
+			}
+		}
+		free(prev_line);
+		prev_line = curr_line;
+		curr_line = get_next_line(log_fd);
+	}
+	free(prev_line);
+	close(log_fd);
 }
 
 void	execute_permutation(char *stack)
@@ -53,9 +96,9 @@ void	execute_permutation(char *stack)
 	int		log_fd;
 	int		status;
 
-	log_fd = open(LOG_5_PATH, O_WRONLY | O_APPEND);
+	log_fd = open(LOG_5_PATH, O_WRONLY | O_APPEND, 0644);
 	if (log_fd == -1)
-		log_fd = open(LOG_5_PATH, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		log_fd = open(LOG_5_PATH, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	buff = ft_strjoin(stack, ": ");
 	
 	//Write the input in result.log
@@ -106,8 +149,8 @@ void	execute_permutation(char *stack)
 	close(wc.out_fd);
 	close(temp_fd);
 
-	tester_cleanup(&ps, &checker, &wc, log_fd);
 	waitpid(wc.pid, &status, 0);
+	tester_cleanup(&ps, &checker, &wc, log_fd);
 	
 	write(log_fd, "\n", 1);
 
