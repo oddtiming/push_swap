@@ -4,14 +4,13 @@
 
 #define TEMP_PATH "./ps_tester.tmp"
 #define LOG_5_PATH "./results_5.log"
-#define MAX_MOVES 9
+#define MAX_MOVES 8
 
 typedef struct	s_cmd {
 	int		in_fd;
 	int		out_fd;
 	pid_t	pid;
 }	t_cmd;
-
 
 void 	execute_permutation(char *stack);
 void	exec_ps(t_cmd ps, char *stack);
@@ -23,60 +22,88 @@ void	write_report(void);
 
 int	main(void)
 {
-	char	*curr_line;
+	char	*curr_stack;
 	int		nl_pos;
 	int		fd;
 
 	fd = open("./5_permutations.txt", O_RDONLY);
-	curr_line = get_next_line(fd);
-	while (curr_line && ft_isdigit(curr_line[0]))
+	curr_stack = get_next_line(fd);
+	while (curr_stack && ft_isdigit(curr_stack[0]))
 	{
 		//Remove the '\n'
-		nl_pos = strlen_c(curr_line, '\n');
+		nl_pos = strlen_c(curr_stack, '\n');
 		if (nl_pos > 0)
-			curr_line[nl_pos - 1] = 0;
-		// printf(MAGENTA"---> curr_line = '%s'\n"RESET_COL, curr_line);
+			curr_stack[nl_pos - 1] = 0;
+		// printf(MAGENTA"---> curr_stack = '%s'\n"RESET_COL, curr_stack);
 		//Go to execute
-		execute_permutation(curr_line);
-		free (curr_line);
-		curr_line = get_next_line(fd);
-		printf(YELLOW"-->curr_line == %s\n"RESET_COL, curr_line);
+		execute_permutation(curr_stack);
+		free (curr_stack);
+		curr_stack = get_next_line(fd);
+		// printf(YELLOW"-->curr_line == %s\n"RESET_COL, curr_stack);
 	}
 	close(fd);
 	write_report();
 	exit (0);
 }
 
-//Doesn't properly work bc I'm writing to and reading from the same fd
-//Needs some rework.
-void	write_report(void)
+char *add_report_entry(char *report_entries, char *prev_line, int nb_moves)
 {
 	char	*stack_input;
+	char	*temp;
+	char	*nb_moves_toa;
+	
+	stack_input = ft_get_first_token(prev_line, ':');
+	nb_moves_toa = ft_itoa(nb_moves);
+	temp = stack_input;
+	stack_input = ft_strjoin_n(5, "\t", stack_input, " --> ", nb_moves_toa, "\n");
+	report_entries = ft_strjoin_free(report_entries, stack_input);
+	free(nb_moves_toa);
+	free(temp);
+	free(stack_input);
+	return (report_entries);
+}
+
+void	print_report_header(void)
+{
+	int log_fd;
+
+	log_fd = open(LOG_5_PATH, O_WRONLY | O_APPEND);
+	ft_putstr_fd("** stacks resulting in nb_moves > ", log_fd);
+	ft_putnbr_fd(MAX_MOVES, log_fd);
+	ft_putstr_fd(" : **\n", log_fd);
+	close(log_fd);
+	return ;
+}
+
+void	print_report_entries(char *report_entries)
+{
+	int	log_fd;
+
+	log_fd = open(LOG_5_PATH, O_WRONLY | O_APPEND);
+	write(log_fd, report_entries, ft_strlen(report_entries));
+	close(log_fd);
+}
+
+void	write_report(void)
+{
+	char	*report_entries;
 	char	*curr_line;
 	char	*prev_line;
 	int		log_fd;
-	int 	curr_moves;
+	int 	curr_nb_moves;
 
-	log_fd = open(LOG_5_PATH, O_RDWR | O_APPEND);
-	curr_line = get_next_line(log_fd);
+	print_report_header();
+	log_fd = open(LOG_5_PATH, O_RDONLY);
 	prev_line = NULL;
-	stack_input = NULL;
+	curr_line = get_next_line(log_fd);
 	while (curr_line)
 	{
 		if (!ft_isdigit(curr_line[0]))
 		{
-			curr_moves = ft_atoi(curr_line);
-			printf("atoi(curr_line) = %d\n", curr_moves);
-			if (curr_moves > MAX_MOVES)
-			{
-				stack_input = ft_get_first_token(prev_line, ':');
-				ft_putstr_fd("**nb_moves for : ", log_fd);
-				ft_putstr_fd(stack_input, log_fd);
-				ft_putstr_fd(" --> ", log_fd);
-				ft_putnbr_fd(curr_moves, log_fd);
-				ft_putchar_fd('\n', log_fd);
-				free(stack_input);
-			}
+			curr_nb_moves = ft_atoi(curr_line);
+			if (curr_nb_moves > MAX_MOVES)
+				report_entries = add_report_entry(report_entries, \
+					prev_line, curr_nb_moves);
 		}
 		free(prev_line);
 		prev_line = curr_line;
@@ -84,6 +111,8 @@ void	write_report(void)
 	}
 	free(prev_line);
 	close(log_fd);
+	print_report_entries(report_entries);
+	free(report_entries);
 }
 
 void	execute_permutation(char *stack)
@@ -122,7 +151,7 @@ void	execute_permutation(char *stack)
 
 	//Execute checker: will print to STDOUT, only for personal reference
 	temp_fd = open(TEMP_PATH, O_RDONLY, 0644);
-	printf(RED"temp_fd before exec_checker = %d\n"RESET_COL, temp_fd);
+	// printf(RED"temp_fd before exec_checker = %d\n"RESET_COL, temp_fd);
 	dup2(temp_fd, STDIN_FILENO);
 	// close(temp_fd);
 
@@ -138,7 +167,7 @@ void	execute_permutation(char *stack)
 
 	//Execute wc: output will be redirected to results.log
 	temp_fd = open(TEMP_PATH, O_RDONLY, 0644);
-	printf(RED"temp_fd before exec_wc = %d\n"RESET_COL, temp_fd);
+	// printf(RED"temp_fd before exec_wc = %d\n"RESET_COL, temp_fd);
 	dup2(temp_fd, STDIN_FILENO);
 	close(temp_fd);
 	log_fd = open(LOG_5_PATH, O_WRONLY | O_APPEND);

@@ -53,8 +53,7 @@ bool	try_swap(t_stacks *cont)
 	{
 		printf("---after try_swap-----\n");
 		print_stacks(cont);
-	}	
-
+	}
 	return (false);
 }
 
