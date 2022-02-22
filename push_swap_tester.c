@@ -20,13 +20,20 @@ void	tester_cleanup(t_cmd *ps, t_cmd *checker, t_cmd *wc, int log_fd);
 void	wait_cmds(pid_t pid_ps, pid_t pid_checker, pid_t pid_wc);
 bool	write_report(void);
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	char	*curr_stack;
 	int		nl_pos;
 	int		fd;
 
-	fd = open("./5_permutations.txt", O_RDONLY);
+
+	if (argv[1][0] == '5')
+		fd = open("./5_permutations.txt", O_RDONLY);
+	else
+	{
+		ft_putstr_fd("Oops, tester can only accept 5 as input for now...\n", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	curr_stack = get_next_line(fd);
 	while (curr_stack && ft_isdigit(curr_stack[0]))
 	{

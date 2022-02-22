@@ -5,7 +5,6 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 	int		nb_sorted;
 	int		curr_value;
 	int		i;
-	int		temp;
 
 	i = pos + 1;
 	nb_sorted = 1;
