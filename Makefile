@@ -14,6 +14,7 @@ RESET_COL	=	\033[0m
 CFILES	=	cleanup.c \
 			errors.c \
 			init.c \
+			make_moves.c \
 			moves.c \
 			normalize.c \
 			parse.c \
@@ -124,6 +125,9 @@ fclean:	clean clean_libft clean_debug
 	@echo -e "$(GREEN)>>>>>>>> ./$(NAME) deleted\n>>>>>>>>$(RESET_COL)"
 
 re:	fclean all
+
+test: all
+	gcc push_swap_tester.c libft/libft.a && ./a.out;
 
 bonus:	all
 

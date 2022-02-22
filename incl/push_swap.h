@@ -73,7 +73,7 @@ void	rev_rotate(int **stack, int size);
 void	make_rrab(int **stack, int size, int move);
 void	swap(int *stack, int size);
 void	make_sab(int *stack, int size, int move);
-void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
+void	push(int **stack_src, int **stack_dest, int *size_src, int *size_dest);
 void	make_push(t_main_container *cont, int move);
 
 //SOLVING

@@ -24,7 +24,7 @@ bool	try_pb(t_main_container *cont)
 	pos_in_stack = 0;
 	while (pos_in_stack < cont->sizeA)
 	{
-		push(cont->A, cont->B, &cont->sizeA, &cont->sizeB);
+		push(&cont->A, &cont->B, &cont->sizeA, &cont->sizeB);
 		stack_head = get_pos_smallest(cont->A, cont->sizeA);
 		if (nb_sorted_at_pos(cont->A, cont->sizeA, stack_head) == cont->sizeA)
 		{}
