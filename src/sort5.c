@@ -124,7 +124,7 @@ bool	is_almost_sorted(t_stacks *cont)
 //try_swap to sort the 4 remaining ones.
 //I believe that the only case that would result in more than 7 moves with this
 //method is "4 3 2 1 0" (8 moves). The only way I found to make it in less is :
-//4 3 2 1 0 -pb; sa-> 2 3 1 0 | 4 -ra x2; sa-> 0 1 2 3 -pa; ra->[DONE](7 moves)
+//	-pb; sa-> 2 3 1 0 | 4 -ra x2; sa-> 0 1 2 3 | 4 -pa; ra-> [DONE] (7 moves)
 
 void	sort_5(t_stacks *cont)
 {
