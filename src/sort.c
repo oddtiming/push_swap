@@ -48,7 +48,7 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 	return (nb_sorted);
 }
 
-int	get_biggest_val(int *stack, int size)
+int	get_val_biggest(int *stack, int size)
 {
 	int	pos_in_stack;
 	int pos_biggest;
@@ -69,7 +69,7 @@ int	get_biggest_val(int *stack, int size)
 	return (val_biggest);
 }
 
-int	get_smallest_val(int *stack, int size)
+int	get_val_smallest(int *stack, int size)
 {
 	int	pos_in_stack;
 	int pos_smallest;

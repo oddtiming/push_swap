@@ -27,7 +27,8 @@ void	swap(int *stack, int size)
 	stack[1] = temp;
 }
 
-void	push(int **stack_src, int **stack_dest, int *size_src, int *size_dest)
+static void	private_push(int **stack_src, int **stack_dest, \
+							int *size_src, int *size_dest)
 {
 	*(*stack_dest - 1) = *stack_src[0];
 	*stack_src[0] = 0;
@@ -35,4 +36,12 @@ void	push(int **stack_src, int **stack_dest, int *size_src, int *size_dest)
 	*size_src -= 1;
 	*stack_dest -= 1;
 	*stack_src += 1;
+}
+
+void	push(t_main_container *cont, int move)
+{
+	if (move == PA)
+		private_push(&cont->B, &cont->A, &cont->sizeB, &cont->sizeA);
+	else if (move == PB)
+		private_push(&cont->A, &cont->B, &cont->sizeA, &cont->sizeB);
 }

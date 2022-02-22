@@ -19,22 +19,59 @@ void	rotate_to_pos0(int **stack, int size, int pos)
 bool	try_pb(t_main_container *cont)
 {
 	int	pos_in_stack;
-	int	stack_head;
 
 	pos_in_stack = 0;
 	while (pos_in_stack < cont->sizeA)
 	{
-		push(&cont->A, &cont->B, &cont->sizeA, &cont->sizeB);
-		stack_head = get_pos_smallest(cont->A, cont->sizeA);
-		if (nb_sorted_at_pos(cont->A, cont->sizeA, stack_head) == cont->sizeA)
-		{}
-
-
+		push(cont, PB);
+		if (try_sa_dry_run(cont))
+		{
+			push(cont, PA);
+			make_push(cont, PB);
+			try_sa(cont);
+			insert_b(cont);
+			try_ra(cont->A, cont->sizeA);
+			if (DEBUG)
+			{
+				printf(GREEN"--------try_pb succeeded--------\n"RESET_COL);
+				print_stacks(cont);				
+			}
+			return (true);
+		}
+		else
+			push(cont, PA);
+		pos_in_stack++;
 	}
 	return (false);
 }
 
-bool	try_swap(t_main_container *cont)
+bool	try_sa_dry_run(t_main_container *cont)
+{
+	int *stack;
+	int size;
+	int	pos;
+	int	stack_head;
+
+	stack = cont->A;
+	size = cont->sizeA;
+	pos = 0;
+	while (pos < size - 1)
+	{
+		ft_swap_ints(&stack[pos], &stack[pos + 1]);
+		stack_head = get_pos_smallest(stack, size);
+		if (nb_sorted_at_pos(stack, size, stack_head) == size)
+		{
+			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+			return (true);
+		}
+		else
+			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+		pos++;
+	}
+	return (false);
+}
+
+bool	try_sa(t_main_container *cont)
 {
 	int *stack;
 	int size;
@@ -53,21 +90,33 @@ bool	try_swap(t_main_container *cont)
 			ft_swap_ints(&stack[pos], &stack[pos + 1]);
 			rotate_to_pos0(&cont->A, cont->sizeA, pos);
 			make_sab(cont->A, cont->sizeA, SA);
+			if (DEBUG)
+			{
+				printf(YELLOW"--------AFTER try_sa--------\n"RESET_COL);
+				print_stacks(cont);
+			}
 			return (true);
 		}
 		else
 			ft_swap_ints(&stack[pos], &stack[pos + 1]);
 		pos++;
 	}
-	if (DEBUG)
+	return (false);
+}
+
+bool	try_ra_dry_run(int *stack, int size)
+{
+	int	stack_head;
+
+	stack_head = get_pos_smallest(stack, size);
+	if (nb_sorted_at_pos(stack, size, stack_head) == size)
 	{
-		printf(YELLOW"--------AFTER try_swap--------\n"RESET_COL);
-		print_stacks(cont);
+		return (true);
 	}
 	return (false);
 }
 
-bool	try_rotate(int *stack, int size)
+bool	try_ra(int *stack, int size)
 {
 	int	stack_head;
 
@@ -120,8 +169,7 @@ bool	try_rotate_and_swap(t_main_container *cont)
 	stack_head = get_pos_smallest(cont->A, cont->sizeA);
 	if (nb_sorted_at_pos(cont->A, cont->sizeA, stack_head) == cont->sizeA)
 	{
-		if (cont->sizeA != cont->size)
-			insert_b(cont);
+		insert_b(cont);
 		stack_head = get_pos_smallest(cont->A, cont->sizeA);
 		if (DEBUG)
 		{
@@ -131,10 +179,9 @@ bool	try_rotate_and_swap(t_main_container *cont)
 		rotate_to_pos0(&cont->A, cont->sizeA, stack_head);
 		return (true);
 	}
-	else if (try_swap(cont) == true)
+	else if (try_sa(cont) == true)
 	{
-		if (cont->sizeA != cont->size)
-			insert_b(cont);
+		insert_b(cont);
 		stack_head = get_pos_smallest(cont->A, cont->sizeA);
 		if (DEBUG)
 		{
@@ -149,7 +196,7 @@ bool	try_rotate_and_swap(t_main_container *cont)
 
 //Need to code try_pb (which will try ALL positions in stack A to see which
 //is closest to pos_0) to try to see if pushing a single value can allow
-//try_swap to sort the 4 remaining ones.
+//try_sa to sort the 4 remaining ones.
 //I believe that the only case that would result in more than 7 moves with this
 //method is "4 3 2 1 0" (8 moves). The only way I found to make it in less is :
 //	-pb; sa-> 2 3 1 0 | 4 -ra x2; sa-> 0 1 2 3 | 4 -pa; ra-> [DONE] (7 moves)
@@ -167,8 +214,8 @@ void	sort_5(t_main_container *cont)
 	}
 	else
 	{
-		// if (try_pb == true)
-		// 	return ;
+		if (try_pb(cont) == true)
+			return ;
 		make_push(cont, PB);
 		if (DEBUG)
 		{

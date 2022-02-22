@@ -73,17 +73,27 @@ void	rev_rotate(int **stack, int size);
 void	make_rrab(int **stack, int size, int move);
 void	swap(int *stack, int size);
 void	make_sab(int *stack, int size, int move);
-void	push(int **stack_src, int **stack_dest, int *size_src, int *size_dest);
+void	push(t_main_container *cont, int move);
 void	make_push(t_main_container *cont, int move);
 
-//SOLVING
+//SORTING
 void	sort(t_main_container *cont);
 void	sort_3(t_main_container *cont);
-void	sort_5(t_main_container *cont);
 int		get_pos_smallest(int *stack, int size);
-int		get_smallest_val(int *stack, int size);
-int		get_biggest_val(int *stack, int size);
+int		get_val_smallest(int *stack, int size);
+int		get_val_biggest(int *stack, int size);
 int		nb_sorted_at_pos(int *stack, int size, int pos);
+
+//  SORT_5
+void	sort_5(t_main_container *cont);
+void	rotate_to_pos0(int **stack, int size, int pos);
+void	insert_b(t_main_container *cont);
+bool	try_rotate_and_swap(t_main_container *cont);
+bool	try_ra(int *stack, int size);
+bool	try_ra_dry_run(int *stack, int size);
+bool	try_sa(t_main_container *cont);
+bool	try_sa_dry_run(t_main_container *cont);
+bool	try_pb(t_main_container *cont);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);

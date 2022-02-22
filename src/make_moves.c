@@ -20,9 +20,6 @@ void	make_sab(int *stack, int size, int move)
 
 void	make_push(t_main_container *cont, int move)
 {
-	if (move == PA)
-		push(&cont->B, &cont->A, &cont->sizeB, &cont->sizeA);
-	else if (move == PB)
-		push(&cont->A, &cont->B, &cont->sizeA, &cont->sizeB);
+	push(cont, move);
 	print_move(move);
 }
