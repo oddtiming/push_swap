@@ -26,6 +26,7 @@
 # define YELLOW "\033[0;33m"
 # define MAGENTA "\033[0;35m"
 # define RED "\033[0;31m"
+# define GREEN "\033[0;32m"
 # define RESET_COL "\033[0m"
 //END OF REMOVE
 
@@ -35,8 +36,9 @@
 //TYPEDEFS
 typedef struct s_stacks
 {
-	int	*A;			//NEEDS TO BE FREED
-	int	*B;			//NEEDS TO BE FREED
+	int	*malloced_space;
+	int	*A;
+	int	*B;
 	int	size;
 	int	sizeA;
 	int	sizeB;
@@ -65,13 +67,13 @@ int		*normalize_stack_values(int *stack, int size);
 
 
 //MOVES
-void	rotate(int *stack, int size);
-void	rev_rotate(int *stack, int size);
+void	rotate(int **stack, int size);
+void	make_rab(int **stack, int size, int move);
+void	rev_rotate(int **stack, int size);
+void	make_rrab(int **stack, int size, int move);
 void	swap(int *stack, int size);
-void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
-void	make_rab(int *stack, int size, int move);
-void	make_rrab(int *stack, int size, int move);
 void	make_sab(int *stack, int size, int move);
+void	push(int *stack_src, int *stack_dest, int *size_src, int *size_dest);
 void	make_push(t_main_container *cont, int move);
 
 //SOLVING

@@ -2,60 +2,60 @@
 
 int	main(int argc, char *argv[])
 {
-	t_stacks	stacks;
+	t_main_container	cont;
 	
-	ft_bzero(&stacks, sizeof(t_stacks));
+	ft_bzero(&cont, sizeof(t_main_container));
 
-	parse(argc, argv, &stacks);
+	parse(argc, argv, &cont);
 	if (DEBUG)
 	{
 		printf("\n----Initial Stacks----\n\n");
-		print_stacks(&stacks);
+		print_stacks(&cont);
 	}
-	stacks.A = normalize_stack_values(stacks.A, stacks.size);
+	cont.A = normalize_stack_values(cont.A, cont.size);
 	if (DEBUG)
 	{
 		printf("\n----After normalization----\n\n");
-		print_stacks(&stacks);
+		print_stacks(&cont);
 	}
 
 
-	sort(&stacks);
-	cleanup(&stacks);
+	sort(&cont);
+	cleanup(&cont);
 	return (0);
 }
-	// print_stacks(&stacks);
+	// print_stacks(&cont);
 
-	// make_move(&stacks, PB);
-	// make_move(&stacks, PB);
-	// make_move(&stacks, PB);
-	// make_move(&stacks, PB);
-	// print_stacks(&stacks);
+	// make_move(&cont, PB);
+	// make_move(&cont, PB);
+	// make_move(&cont, PB);
+	// make_move(&cont, PB);
+	// print_stacks(&cont);
 
-	// make_move(&stacks, RRR);
-	// print_stacks(&stacks);
-	// make_move(&stacks, RR);
-	// print_stacks(&stacks);
-	// make_move(&stacks, SS);
-	// print_stacks(&stacks);
-	// make_move(&stacks, PA);
-	// make_move(&stacks, PA);
-	// make_move(&stacks, PA);
-	// make_move(&stacks, PA);
-	// print_stacks(&stacks);
-	// make_move(&stacks, RR);
-	// print_stacks(&stacks);
-	// make_move(&stacks, RRR);
-	// print_stacks(&stacks);
-	// make_move(&stacks, SS);
-	// print_stacks(&stacks);
+	// make_move(&cont, RRR);
+	// print_stacks(&cont);
+	// make_move(&cont, RR);
+	// print_stacks(&cont);
+	// make_move(&cont, SS);
+	// print_stacks(&cont);
+	// make_move(&cont, PA);
+	// make_move(&cont, PA);
+	// make_move(&cont, PA);
+	// make_move(&cont, PA);
+	// print_stacks(&cont);
+	// make_move(&cont, RR);
+	// print_stacks(&cont);
+	// make_move(&cont, RRR);
+	// print_stacks(&cont);
+	// make_move(&cont, SS);
+	// print_stacks(&cont);
 
 
-	// rotate(stacks.A, stacks.sizeA, false);
+	// rotate(cont.A, cont.sizeA, false);
 	// printf("\n----After rotate----\n\n");
-	// print_stacks(&stacks);
+	// print_stacks(&cont);
 
-	// rotate(stacks.A, stacks.sizeA, true);
-	// rotate(stacks.A, stacks.sizeA, true);
+	// rotate(cont.A, cont.sizeA, true);
+	// rotate(cont.A, cont.sizeA, true);
 	// printf("\n----After 2x reverse rotate----\n\n");
-	// print_stacks(&stacks);
+	// print_stacks(&cont);

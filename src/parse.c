@@ -79,7 +79,7 @@ static char	**split_args(int argc, char *argv[])
 	return (args_split);
 }
 
-void	parse(int argc, char *argv[], t_stacks *stacks)
+void	parse(int argc, char *argv[], t_main_container *stacks)
 {
 	char	**args_split;
 	int		i;

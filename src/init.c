@@ -1,22 +1,27 @@
 #include "push_swap.h"
 
-void	assign_inputs(char **args, t_stacks *stacks, int size)
+void	assign_inputs(char **args, t_main_container *cont, int size)
 {
 	int	i;
 
-	stacks->size = size;
-	// printf("size : %d\n", stacks->size);
-	stacks->A = malloc(stacks->size * sizeof(int));
-	stacks->B = malloc(stacks->size * sizeof(int));
-	if (!stacks->A || !stacks->B)
+	cont->size = size;
+	if (DEBUG)
+	{
+		printf("in assign_inputs size = %d\n", size);
+		printf("in assign_inputs malloced_size = %d\n", 6 * size);
+	}
+	cont->malloced_space = malloc(6 * size * sizeof(int));
+	if (!cont->malloced_space)
 		exit_on_err("Malloc error\n");
+	cont->A = &(cont->malloced_space[1 * size]);
+	cont->B = &(cont->malloced_space[4 * size]);
 	i = 0;
 	while (args[i])
 	{
-		stacks->A[i] = ft_atoi(args[i]);
+		cont->A[i] = ft_atoi(args[i]);
 		i++;
 	}
-	stacks->sizeA = stacks->size;
-	stacks->sizeB = 0;
+	cont->sizeA = cont->size;
+	cont->sizeB = 0;
 	return ;
 }

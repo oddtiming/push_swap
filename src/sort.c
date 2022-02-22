@@ -125,9 +125,9 @@ void	sort_3(t_main_container *cont)
 	else if (nb_sorted == cont->size)
 	{
 		if (pos_smallest == 1)
-			make_rab(cont->A, cont->sizeA, RA);
+			make_rab(&cont->A, cont->sizeA, RA);
 		else if (pos_smallest == cont->size - 1)
-			make_rrab(cont->A, cont->sizeA, RRA);
+			make_rrab(&cont->A, cont->sizeA, RRA);
 		return ;
 	}
 	make_sab(cont->A, cont->sizeA, SA);

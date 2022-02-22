@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	rotate_to_pos0(int *stack, int size, int pos)
+void	rotate_to_pos0(int **stack, int size, int pos)
 {
 	if (pos < size - pos)
 		while (pos-- > 0)
@@ -11,7 +11,7 @@ void	rotate_to_pos0(int *stack, int size, int pos)
 	if (DEBUG)
 	{
 		printf(YELLOW"--------AFTER rotate_to_pos0--------\n"RESET_COL);
-		print_single_stack(stack, size);
+		print_single_stack(*stack, size);
 	}
 	return ;
 }
@@ -51,7 +51,7 @@ bool	try_swap(t_main_container *cont)
 		if (nb_sorted_at_pos(stack, size, stack_head) == size)
 		{
 			ft_swap_ints(&stack[pos], &stack[pos + 1]);
-			rotate_to_pos0(cont->A, cont->sizeA, pos);
+			rotate_to_pos0(&cont->A, cont->sizeA, pos);
 			make_sab(cont->A, cont->sizeA, SA);
 			return (true);
 		}
@@ -74,7 +74,7 @@ bool	try_rotate(int *stack, int size)
 	stack_head = get_pos_smallest(stack, size);
 	if (nb_sorted_at_pos(stack, size, stack_head) == size)
 	{
-		rotate_to_pos0(stack, size, stack_head);
+		rotate_to_pos0(&stack, size, stack_head);
 		return (true);
 	}
 	return (false);
@@ -102,8 +102,13 @@ void	insert_b(t_main_container *cont)
 		}	
 		if (DEBUG)
 			printf(RED"------>in insert_b, pos_of %d in a = %d\n"RESET_COL, insertion_val, pos_of_b0_in_a);
-		rotate_to_pos0(cont->A, cont->sizeA, pos_of_b0_in_a);
+		rotate_to_pos0(&cont->A, cont->sizeA, pos_of_b0_in_a);
 		make_push(cont, PA);
+		if (DEBUG)
+		{
+			printf(YELLOW"--------AFTER pa--------\n"RESET_COL);
+			print_stacks(cont);
+		}
 	}
 	return ;
 }
@@ -123,7 +128,7 @@ bool	try_rotate_and_swap(t_main_container *cont)
 			printf(RED"#############stack_head = %d\n"RESET_COL, stack_head);
 			printf(RED"#############cont->A[stack_head] = %d\n"RESET_COL, cont->A[stack_head]);
 		}
-		rotate_to_pos0(cont->A, cont->sizeA, stack_head);
+		rotate_to_pos0(&cont->A, cont->sizeA, stack_head);
 		return (true);
 	}
 	else if (try_swap(cont) == true)
@@ -136,7 +141,7 @@ bool	try_rotate_and_swap(t_main_container *cont)
 			printf(RED"#############stack_head = %d\n"RESET_COL, stack_head);
 			printf(RED"#############cont->A[stack_head] = %d\n"RESET_COL, cont->A[stack_head]);
 		}
-		rotate_to_pos0(cont->A, cont->sizeA, stack_head);
+		rotate_to_pos0(&cont->A, cont->sizeA, stack_head);
 		return (true);
 	}
 	return (false);

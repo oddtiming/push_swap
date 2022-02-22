@@ -24,6 +24,7 @@ int	*normalize_stack_values(int *src_stack, int size)
 		normalized_stack[stack_pos] = nb_smaller_elements;
 		stack_pos++;
 	}
-	free(src_stack);
-	return (normalized_stack);
+	src_stack = ft_memcpy(src_stack, normalized_stack, size * sizeof(int));
+	free(normalized_stack);
+	return (src_stack);
 }

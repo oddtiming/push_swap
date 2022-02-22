@@ -19,22 +19,22 @@ void	print_single_stack(int *stack, int size)
 	printf("+---+-----+\n");
 }
 
-void	print_stacks(t_main_container *stacks)
+void	print_stacks(t_main_container *cont)
 {
 	int	i;
 
 	printf("    |\033[38;5;5m [A] \033[0m|\033[38;5;6m [B] \033[0;0;0m|\n");
 	printf("+---+-----+-----+\n");
 	i = 0;
-	while (i < stacks->sizeA || i < stacks->sizeB)
+	while (i < cont->sizeA || i < cont->sizeB)
 	{
 		printf("|%-3d|", i);
-		if (i < stacks->sizeA)
-			printf("\033[38;5;5m %-3d \033[0;0;0m", stacks->A[i]);
+		if (i < cont->sizeA)
+			printf("\033[38;5;5m %-3d \033[0;0;0m", cont->A[i]);
 		else
 			printf("\t\033[0m|");
-		if (i < stacks->sizeB)
-			printf("|\033[38;5;6m %-3d \033[0m|\n", stacks->B[i]);
+		if (i < cont->sizeB)
+			printf("|\033[38;5;6m %-3d \033[0m|\n", cont->B[i]);
 		else
 			printf("|     |\n\033[0m");
 		i++;

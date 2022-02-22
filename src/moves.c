@@ -1,38 +1,50 @@
 #include "push_swap.h"
 
-void	rotate(int *stack, int size)
+void	rotate(int **stack, int size)
 {
-	int	temp;
-	int	i;
-
-	if (!size)
-		return ;
-	i = 0;
-	temp = stack[0];
-	while (i < size - 1)
+	if (DEBUG)
 	{
-		stack[i] = stack[i + 1];
-		i++;
+		printf("stack address before rotate = %p\n", *stack);
 	}
-	stack[i] = temp;
+	*(*stack + size) = *stack[0];
+	*(*stack - 1) = 0;
+	*stack += 1;
+	if (DEBUG)
+	{
+		printf("stack address after rotate = %p\n", *stack);
+	}
 	return ;
 }
+	// int	temp;
+	// int	i;
 
-void	rev_rotate(int *stack, int size)
+	// if (!size)
+	// 	return ;
+	// i = 0;
+	// temp = stack[0];
+	// while (i < size - 1)
+	// {
+	// 	stack[i] = stack[i + 1];
+	// 	i++;
+	// }
+	// stack[i] = temp;
+	// return ;
+
+void	rev_rotate(int **stack, int size)
 {
-	int	temp;
-	int	i;
-
-	if (!size)
-		return ;
-	i = size - 1;	
-	temp = stack[size - 1];
-	while (i > 0)
+	
+	if (DEBUG)
 	{
-		stack[i] = stack[i - 1];
-		i--;
+		printf("stack address before rev_rotate = %p\n", *stack);
 	}
-	stack[0] = temp;
+	*(*stack - 1) = *(*stack + size - 1);
+	*(*stack + size) = 0;
+	*stack -= 1;
+	if (DEBUG)
+	{
+		printf("stack address after rev_rotate = %p\n", *stack);
+	}
+	return ;
 	return ;
 }
 
@@ -66,13 +78,13 @@ void	push(int *stack_src, int *stack_dest, \
 	stack_src[i] = 0;
 }
 
-void	make_rab(int *stack, int size, int move)
+void	make_rab(int **stack, int size, int move)
 {
 	rotate(stack, size);
 	print_move(move);
 }
 
-void	make_rrab(int *stack, int size, int move)
+void	make_rrab(int **stack, int size, int move)
 {
 	rev_rotate(stack, size);
 	print_move(move);

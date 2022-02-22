@@ -18,7 +18,7 @@ void	exec_checker(t_cmd ps, char *stack);
 void	exec_wc(t_cmd wc);
 void	tester_cleanup(t_cmd *ps, t_cmd *checker, t_cmd *wc, int log_fd);
 void	wait_cmds(pid_t pid_ps, pid_t pid_checker, pid_t pid_wc);
-void	write_report(void);
+bool	write_report(void);
 
 int	main(void)
 {
@@ -42,7 +42,10 @@ int	main(void)
 		// printf(YELLOW"-->curr_line == %s\n"RESET_COL, curr_stack);
 	}
 	close(fd);
-	write_report();
+	if (write_report() == true)
+		printf(RED"\t[KO]\n"RESET_COL);
+	else
+		printf(GREEN"\t[OK]\n"RESET_COL);
 	exit (0);
 }
 
@@ -84,18 +87,20 @@ void	print_report_entries(char *report_entries)
 	close(log_fd);
 }
 
-void	write_report(void)
+bool	write_report(void)
 {
 	char	*report_entries;
 	char	*curr_line;
 	char	*prev_line;
 	int		log_fd;
 	int 	curr_nb_moves;
+	bool	has_failed;
 
 	print_report_header();
 	log_fd = open(LOG_5_PATH, O_RDONLY);
 	prev_line = NULL;
 	curr_line = get_next_line(log_fd);
+	has_failed = false;
 	while (curr_line)
 	{
 		if (!ft_isdigit(curr_line[0]))
@@ -105,6 +110,8 @@ void	write_report(void)
 				report_entries = add_report_entry(report_entries, \
 					prev_line, curr_nb_moves);
 		}
+		else if (ft_strnstr(curr_line, "KO", ft_strlen(curr_line)))
+			has_failed = true;
 		free(prev_line);
 		prev_line = curr_line;
 		curr_line = get_next_line(log_fd);
@@ -113,6 +120,7 @@ void	write_report(void)
 	close(log_fd);
 	print_report_entries(report_entries);
 	free(report_entries);
+	return (has_failed);
 }
 
 void	execute_permutation(char *stack)
