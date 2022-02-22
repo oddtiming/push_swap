@@ -9,16 +9,6 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 
 	i = pos + 1;
 	nb_sorted = 1;
-	if (DEBUG)
-	{
-		printf(MAGENTA"in nb_sorted_at_pos, size = %d\n"RESET_COL, size);
-		printf(MAGENTA"in nb_sorted_at_pos, pos = %d\n"RESET_COL, pos);
-		printf(RED"in nb_sorted_at_pos, stack[0] = %d\n"RESET_COL, stack[0]);
-		temp = size;
-		while (--temp >= 0)
-			printf(MAGENTA"------------------------->in nb_sorted_at_pos, stack[%d] = %d\n"RESET_COL, temp, stack[temp]);
-		print_single_stack(stack, size);
-	}	
 	while (i != pos && !(pos == 0 && i == size))
 	{
 		if (i == size)
@@ -31,20 +21,12 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 			continue ;
 		}
 		if (curr_value > stack[i - 1])
-		{
 			nb_sorted++;
-			if (DEBUG)
-				printf(YELLOW"stack[%d] > stack[%d] <===> %d > %d \n"RESET_COL, (i != size)*i, i-1, curr_value, stack[i - 1]);
-		}
-		else if (DEBUG)
-			printf(YELLOW"stack[%d] !> stack[%d] <===> %d !> %d \n"RESET_COL, (i != size)*i, i-1, curr_value, stack[i - 1]);
 		if (i == size)
 			i = 0;
 		else
 			i++;
 	}
-	if (DEBUG)
-		printf("nb_sorted at stack[%d] == %d\n", pos, nb_sorted);
 	return (nb_sorted);
 }
 

@@ -27,10 +27,10 @@ bool	try_pb(t_main_container *cont)
 		if (try_sa_dry_run(cont))
 		{
 			push(cont, PA);
+			rotate_to_pos0(&cont->A, cont->sizeA, pos_in_stack);
 			make_push(cont, PB);
 			try_sa(cont);
 			insert_b(cont);
-			try_ra(cont->A, cont->sizeA);
 			if (DEBUG)
 			{
 				printf(GREEN"--------try_pb succeeded--------\n"RESET_COL);
@@ -159,6 +159,8 @@ void	insert_b(t_main_container *cont)
 			print_stacks(cont);
 		}
 	}
+	insertion_val = get_pos_smallest(cont->A, cont->sizeA);
+	rotate_to_pos0(&cont->A, cont->sizeA, insertion_val);
 	return ;
 }
 
@@ -170,25 +172,21 @@ bool	try_rotate_and_swap(t_main_container *cont)
 	if (nb_sorted_at_pos(cont->A, cont->sizeA, stack_head) == cont->sizeA)
 	{
 		insert_b(cont);
-		stack_head = get_pos_smallest(cont->A, cont->sizeA);
 		if (DEBUG)
 		{
 			printf(RED"#############stack_head = %d\n"RESET_COL, stack_head);
 			printf(RED"#############cont->A[stack_head] = %d\n"RESET_COL, cont->A[stack_head]);
 		}
-		rotate_to_pos0(&cont->A, cont->sizeA, stack_head);
 		return (true);
 	}
 	else if (try_sa(cont) == true)
 	{
 		insert_b(cont);
-		stack_head = get_pos_smallest(cont->A, cont->sizeA);
 		if (DEBUG)
 		{
 			printf(RED"#############stack_head = %d\n"RESET_COL, stack_head);
 			printf(RED"#############cont->A[stack_head] = %d\n"RESET_COL, cont->A[stack_head]);
 		}
-		rotate_to_pos0(&cont->A, cont->sizeA, stack_head);
 		return (true);
 	}
 	return (false);

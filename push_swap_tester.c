@@ -141,6 +141,7 @@ void	execute_permutation(char *stack)
 	//Write the input in result.log
 	write(log_fd, buff, ft_strlen(buff));
 	close(log_fd);
+	free(buff);
 	
 	//Write everything to an intermediary file so that both checker and wc can
 	//easily access it
@@ -188,9 +189,8 @@ void	execute_permutation(char *stack)
 
 	waitpid(wc.pid, &status, 0);
 	tester_cleanup(&ps, &checker, &wc, log_fd);
-	
-	write(log_fd, "\n", 1);
 
+	write(log_fd, "\n", 1);
 }
 
 void	wait_cmds(pid_t pid_ps, pid_t pid_checker, pid_t pid_wc)
