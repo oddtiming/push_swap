@@ -17,10 +17,9 @@ CFILES	=	cleanup.c \
 			moves.c \
 			normalize.c \
 			parse.c \
-			print_utils.c \
 			push_swap.c \
 			sort.c \
-			sort_5.c \
+			sort5.c \
 			utils.c
 
 SRC_DIR	= src

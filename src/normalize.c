@@ -9,7 +9,7 @@ int	*normalize_stack_values(int *src_stack, int size)
 
 	normalized_stack = malloc(size * sizeof(int));
 	if (!normalized_stack)
-		exit_on_err("Malloc error in normalize()\n");
+		exit_on_err("Malloc error\n");
 	stack_pos = 0;
 	while (stack_pos < size)
 	{
@@ -24,7 +24,6 @@ int	*normalize_stack_values(int *src_stack, int size)
 		normalized_stack[stack_pos] = nb_smaller_elements;
 		stack_pos++;
 	}
-	src_stack = ft_memcpy(src_stack, normalized_stack, size * sizeof(int));
-	free(normalized_stack);
-	return (src_stack);
+	free(src_stack);
+	return (normalized_stack);
 }

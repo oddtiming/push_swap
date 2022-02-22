@@ -9,7 +9,6 @@
 [1]0 3 4[2]
 [1]0 4[3][2]
 [1][2]0 4 3 -- will cause problem --
-[1][2]0 4 3 -try_pb->-rra; pb
 [1][2]4 0 3 -pb-> 2 4 0 3 | 1 -!in_order->-!try_swap->-pb-> 4 0 3 | 2 1 -in_order-> //insert// -rra; pa-> 2 3 4 0 | 1 -pa-> 1 2 3 4 0 -rra-> [DONE]
 [1][3]0 2 4
 [1][3][2]0 4

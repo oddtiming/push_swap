@@ -1,38 +1,20 @@
 #include "push_swap.h"
 
-void	rotate(int *stack, int size)
+//Look what you've done to me, Norminette...
+void	rotate(int *stack, int size, bool is_reverse)
 {
 	int	temp;
 	int	i;
 
-	if (!size)
-		return ;
-	i = 0;
-	temp = stack[0];
-	while (i < size - 1)
-	{
-		stack[i] = stack[i + 1];
-		i++;
-	}
+	temp = is_reverse * stack[size - 1] + !is_reverse * stack[0];
+	i = is_reverse * size + !is_reverse * (-1);
+	if (is_reverse == true)
+		while (--i > 0)
+			stack[i] = stack[i - 1];
+	else
+		while (++i < size - 1)
+			stack[i] = stack[i + 1];
 	stack[i] = temp;
-	return ;
-}
-
-void	rev_rotate(int *stack, int size)
-{
-	int	temp;
-	int	i;
-
-	if (!size)
-		return ;
-	i = size - 1;	
-	temp = stack[size - 1];
-	while (i > 0)
-	{
-		stack[i] = stack[i - 1];
-		i--;
-	}
-	stack[0] = temp;
 	return ;
 }
 
@@ -66,29 +48,27 @@ void	push(int *stack_src, int *stack_dest, \
 	stack_src[i] = 0;
 }
 
-void	make_rab(int *stack, int size, int move)
+void	make_move(t_stacks *stacks, int move)
 {
-	rotate(stack, size);
-	print_move(move);
-}
-
-void	make_rrab(int *stack, int size, int move)
-{
-	rev_rotate(stack, size);
-	print_move(move);
-}
-
-void	make_sab(int *stack, int size, int move)
-{
-	swap(stack, size);
-	print_move(move);
-}
-
-void	make_push(t_main_container *cont, int move)
-{
-	if (move == PA)
-		push(cont->B, cont->A, &cont->sizeB, &cont->sizeA);
+	if (!(move >= RA && move <= PB))
+		exit_on_err("make_move received wrong input\n");
+	if (move == RA || move == RR)
+		rotate(stacks->A, stacks->sizeA, false);
+	if (move == RB || move == RR)
+		rotate(stacks->B, stacks->sizeB, false);
+	else if (move == RRA || move == RRR)
+		rotate(stacks->A, stacks->sizeA, true);
+	if (move == RRB || move == RRR)
+		rotate(stacks->B, stacks->sizeB, true);
+	else if (move == SA || move == SS)
+		swap(stacks->A, stacks->sizeA);
+	if (move == SB || move == SS)
+		swap(stacks->B, stacks->sizeB);
+	else if (move == PA)
+		push(stacks->B, stacks->A, &stacks->sizeB, &stacks->sizeA);
 	else if (move == PB)
-		push(cont->A, cont->B, &cont->sizeA, &cont->sizeB);
+		push(stacks->A, stacks->B, &stacks->sizeA, &stacks->sizeB);
 	print_move(move);
+	if (DEBUG != 0)
+		print_stacks(stacks);
 }

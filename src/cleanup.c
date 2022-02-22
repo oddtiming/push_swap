@@ -1,9 +1,8 @@
 #include "push_swap.h"
 
-void	cleanup(t_main_container *cont)
+void	cleanup(t_stacks *stacks)
 {
-	if (DEBUG)
-		printf(RED"**entered cleanup**\n"RESET_COL);
-	free (cont->malloced_space);
+	free (stacks->A);
+	free (stacks->B);
 	return ;
 }

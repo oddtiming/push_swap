@@ -63,13 +63,13 @@ static char	**split_args(int argc, char *argv[])
 	{
 		args_split = malloc((argc) * sizeof(char *));
 		if (!args_split)
-			exit_on_err("Split Error in split_args\n");
+			exit_on_err("Malloc Error\n");
 		i = 0;
 		while (i < argc - 1)
 		{
 			args_split[i] = ft_strdup(argv[i + 1]);
 			if (!args_split[i])
-				exit_on_err("Malloc Error in split_args\n");
+				exit_on_err("Malloc Error\n");
 			i++;
 		}
 		args_split[i] = NULL;
@@ -79,7 +79,7 @@ static char	**split_args(int argc, char *argv[])
 	return (args_split);
 }
 
-void	parse(int argc, char *argv[], t_main_container *stacks)
+void	parse(int argc, char *argv[], t_stacks *stacks)
 {
 	char	**args_split;
 	int		i;
