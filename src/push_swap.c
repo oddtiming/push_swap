@@ -2,9 +2,9 @@
 
 int	main(int argc, char *argv[])
 {
-	t_stacks	stacks;
+	t_main_container	stacks;
 	
-	ft_bzero(&stacks, sizeof(t_stacks));
+	ft_bzero(&stacks, sizeof(t_main_container));
 
 	parse(argc, argv, &stacks);
 	if (DEBUG)
