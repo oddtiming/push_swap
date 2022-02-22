@@ -87,6 +87,7 @@ int		nb_sorted_at_pos(int *stack, int size, int pos);
 //  SORT_5
 void	sort_5(t_main_container *cont);
 void	rotate_to_pos0(int **stack, int size, int pos);
+void	rotate_to_pos0_dry_run(int **stack, int size, int pos);
 void	insert_b(t_main_container *cont);
 bool	try_rotate_and_swap(t_main_container *cont);
 bool	try_ra(int *stack, int size);
@@ -99,10 +100,14 @@ bool	try_pb(t_main_container *cont);
 void	exit_on_err(char *err_message);
 
 //UTILS
+void	set_next_pos(int *pos, int size);
+int		get_stack_pos(int *stack, int size, int value);
+int		get_next_pos(int pos, int size);
+
+//  PRINT UTILS
 void	print_stacks(t_main_container *cont);
 void	print_single_stack(int *stack, int size);
 void	print_move(int move);
-void	set_next_index(int *pos, int size);
 
 //CLEANUP
 void	cleanup(t_main_container *cont);

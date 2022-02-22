@@ -1,7 +1,7 @@
-NAME	=	push_swap
+NAME	=	push_swap_try_pb
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 0 4 2 3 1
+RUN_ARGS = 2 1 0 4 3
 
 SHELL	=	bash
 
@@ -40,7 +40,7 @@ CFLAGS	= -Wall -Wextra -Werror -g -O3
 # DEBUG build settings
 #
 DBG_DIR = debug_objs
-DBG_EXE = push_swap_debug
+DBG_EXE = push_swap_try_pb_debug
 DBG_OBJS = $(addprefix $(DBG_DIR)/, $(CFILES:.c=.o))
 DBG_CFLAGS = -D DEBUG=1 -g
 
@@ -51,8 +51,8 @@ LIBFT_FLAGS	= -lft -Llibft
 
 RM_OBJS			=	rm -rf $(OBJ_DIR)
 RM_OBJS_OUT		=	$$($(RM_OBJS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-RM_DBG_OBJS		=	rm -rf debug_objs
-RM_DBG_OBJS_OUT	=	$$($(RM_DBG_OBJS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
+RM_DBG		=	rm -rf debug_objs; rm $(DBG_EXE)
+RM_DBG_OUT	=	$$($(RM_DBG) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 RM_PROG			=	rm -f $(NAME)
 RM_PROG_OUT		=	$$($(RM_PROG) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 RM_LIBFT		=	make clean -sC ./libft
@@ -117,7 +117,7 @@ clean_libft:
 	@echo -e "$(GREEN)>>>>>>>> libft cleaned\n>>>>>>>>$(RESET_COL)"
 
 clean_debug:
-	@echo -e "$(RED)>>>>>>>> Deleting debug obj files$(RESET_COL)$(RM_DBG_OBJS_OUT)"
+	@echo -e "$(RED)>>>>>>>> Deleting debug obj files$(RESET_COL)$(RM_DBG_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> obj files deleted\n>>>>>>>>$(RESET_COL)"
 
 fclean:	clean clean_libft clean_debug

@@ -16,18 +16,42 @@ void	rotate_to_pos0(int **stack, int size, int pos)
 	return ;
 }
 
+void	rotate_to_pos0_dry_run(int **stack, int size, int pos)
+{
+	if (pos < size - pos)
+		while (pos-- > 0)
+			rotate(stack, size);
+	else
+		while (pos++ < size)
+			rev_rotate(stack, size);
+	return ;
+}
+
 bool	try_pb(t_main_container *cont)
 {
 	int	pos_in_stack;
+	int	stack_head_value;
+
+	if (DEBUG)
+		printf(RED"-----ENTERED try_pb!!!-----\n"RESET_COL);
 
 	pos_in_stack = 0;
+	stack_head_value = cont->A[0];
 	while (pos_in_stack < cont->sizeA)
 	{
+		rotate_to_pos0_dry_run(&cont->A, cont->size, pos_in_stack);
 		push(cont, PB);
+		if (DEBUG)
+		{
+			printf(RED"------after pushing stackA[%d]------\n"RESET_COL, pos_in_stack);
+			print_stacks(cont);
+			
+		}
 		if (try_sa_dry_run(cont))
 		{
 			push(cont, PA);
-			rotate_to_pos0(&cont->A, cont->sizeA, pos_in_stack);
+			rotate_to_pos0_dry_run(&cont->A, cont->sizeA, get_stack_pos(cont->A, cont->sizeA, stack_head_value));
+			rotate_to_pos0(&cont->A, cont->size, pos_in_stack);
 			make_push(cont, PB);
 			try_sa(cont);
 			insert_b(cont);
@@ -39,7 +63,10 @@ bool	try_pb(t_main_container *cont)
 			return (true);
 		}
 		else
+		{
 			push(cont, PA);
+			rotate_to_pos0_dry_run(&cont->A, cont->sizeA, get_stack_pos(cont->A, cont->sizeA, stack_head_value));
+		}
 		pos_in_stack++;
 	}
 	return (false);
@@ -51,21 +78,23 @@ bool	try_sa_dry_run(t_main_container *cont)
 	int size;
 	int	pos;
 	int	stack_head;
+	int	next_pos;
 
 	stack = cont->A;
 	size = cont->sizeA;
 	pos = 0;
-	while (pos < size - 1)
+	while (pos < size)
 	{
-		ft_swap_ints(&stack[pos], &stack[pos + 1]);
+		next_pos = get_next_pos(pos, size);
+		ft_swap_ints(&stack[pos], &stack[next_pos]);
 		stack_head = get_pos_smallest(stack, size);
 		if (nb_sorted_at_pos(stack, size, stack_head) == size)
 		{
-			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+			ft_swap_ints(&stack[pos], &stack[next_pos]);
 			return (true);
 		}
 		else
-			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+			ft_swap_ints(&stack[pos], &stack[next_pos]);
 		pos++;
 	}
 	return (false);
@@ -77,17 +106,19 @@ bool	try_sa(t_main_container *cont)
 	int size;
 	int	pos;
 	int	stack_head;
+	int	next_pos;
 
 	stack = cont->A;
 	size = cont->sizeA;
 	pos = 0;
-	while (pos < size - 1)
+	while (pos < size)
 	{
-		ft_swap_ints(&stack[pos], &stack[pos + 1]);
+		next_pos = get_next_pos(pos, size);
+		ft_swap_ints(&stack[pos], &stack[next_pos]);
 		stack_head = get_pos_smallest(stack, size);
 		if (nb_sorted_at_pos(stack, size, stack_head) == size)
 		{
-			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+			ft_swap_ints(&stack[pos], &stack[next_pos]);
 			rotate_to_pos0(&cont->A, cont->sizeA, pos);
 			make_sab(cont->A, cont->sizeA, SA);
 			if (DEBUG)
@@ -98,7 +129,7 @@ bool	try_sa(t_main_container *cont)
 			return (true);
 		}
 		else
-			ft_swap_ints(&stack[pos], &stack[pos + 1]);
+			ft_swap_ints(&stack[pos], &stack[next_pos]);
 		pos++;
 	}
 	return (false);
@@ -145,9 +176,9 @@ void	insert_b(t_main_container *cont)
 		pos_of_b0_in_a = 0;
 		while (cont->A[pos_of_b0_in_a] != insertion_val)
 		{
-			set_next_index(&pos_of_b0_in_a, cont->sizeA);
+			set_next_pos(&pos_of_b0_in_a, cont->sizeA);
 			if (pos_of_b0_in_a == 0)
-				set_next_index(&insertion_val, cont->size);
+				set_next_pos(&insertion_val, cont->size);
 		}	
 		if (DEBUG)
 			printf(RED"------>in insert_b, pos_of %d in a = %d\n"RESET_COL, insertion_val, pos_of_b0_in_a);
