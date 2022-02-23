@@ -1,4 +1,4 @@
-NAME	=	push_swap_try_pb
+NAME	=	push_swap
 
 # FOR TESTING PURPOSES
 RUN_ARGS = 2 1 0 4 3
@@ -40,7 +40,7 @@ CFLAGS	= -Wall -Wextra -Werror -g -O3
 # DEBUG build settings
 #
 DBG_DIR = debug_objs
-DBG_EXE = push_swap_try_pb_debug
+DBG_EXE = push_swap_debug
 DBG_OBJS = $(addprefix $(DBG_DIR)/, $(CFILES:.c=.o))
 DBG_CFLAGS = -D DEBUG=1 -g
 
