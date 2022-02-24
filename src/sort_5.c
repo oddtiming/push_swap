@@ -37,7 +37,7 @@ bool	try_pb(t_main_cont *cont)
 	if (DEBUG)
 		printf(RED"-----ENTERED try_pb!!!-----\n"RESET_COL);
 	smallest_val = get_smallest_val(cont->A, cont->sizeA);
-	if (smallest_val > NOT_SORTED)
+	if (nb_sorted_at_pos(cont->A, cont->sizeA, smallest_val))
 	{
 		rotate_a_to_pos0(cont, smallest_val);
 		return (true);
