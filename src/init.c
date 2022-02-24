@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	assign_inputs(char **args, t_main_container *cont, int size)
+void	assign_inputs(t_main_container *cont, char **args, int size)
 {
 	int	i;
 
