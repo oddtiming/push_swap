@@ -37,6 +37,7 @@
 //TYPEDEFS
 typedef struct s_stacks
 {
+	int		**moves_vector;
 	int		*malloced_space;
 	int		*A;
 	int		*B;

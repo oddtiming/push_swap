@@ -1,4 +1,4 @@
-#include "../incl/push_swap.h"
+#include "push_swap.h"
 
 void	exit_on_err(char *err_message)
 {

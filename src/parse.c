@@ -1,4 +1,4 @@
-#include "../incl/push_swap.h"
+#include "push_swap.h"
 
 static bool	has_duplicates(int *array, int size)
 {
