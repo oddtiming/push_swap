@@ -8,6 +8,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
+
 //TO REMOVE
 # include <stdio.h>
 //END OF REMOVE
@@ -25,6 +26,11 @@
 # define VECTOR_INIT_SIZE 16
 # define SUCCESS 0
 # define FAILURE 1
+
+//DEFINES
+# define _ARGC_MIN 2
+# define VALID_INPUTS 1
+# define MAX_MOVES_FOR_5 9
 
 //TO REMOVE
 # ifndef DEBUG
@@ -77,7 +83,6 @@ typedef struct s_main_cont
 	void			(**reverse_fcts)(t_main_cont *, t_deque *);
 	int				min_nb_moves;
 }	t_main_cont;
-
 
 //Functions
 //PARSING
