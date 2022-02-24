@@ -1,4 +1,4 @@
-#include "../incl/push_swap.h"
+#include "../include/push_swap.h"
 
 # define VECTOR_INIT_SIZE 16
 # define SUCCESS true
@@ -27,24 +27,24 @@ typedef struct s_vector
 }	t_vector;
 
 bool 	vector_init(t_vector *vector);
-bool 	add_end(t_vector *vector, int *new_elem);
+bool 	vec_add(t_vector *vector, int *new_elem);
 bool 	add_begin(t_vector *vector, int *new_elem);
-void	remove_end(t_vector *vector);
+void	vec_remove(t_vector *vector);
 void	remove_begin(t_vector *vector);
-bool 	resize_end(t_vector *vector, int new_size);
+bool 	vec_resize(t_vector *vector, int new_size);
 bool 	resize_begin(t_vector *vector, int new_size);
-bool 	free_list(t_vector *vector);
+bool 	vec_free_list(t_vector *vector);
 
 
 bool vector_init(t_vector *vector)
 {
-	vector->ptr_add_end = add_end;
+	vector->ptr_add_end = vec_add;
 	vector->ptr_add_begin = add_begin;
-	vector->ptr_remove_end = remove_end;
+	vector->ptr_remove_end = vec_remove;
 	vector->ptr_remove_begin = remove_begin;
-	vector->ptr_resize_end = resize_end;
+	vector->ptr_resize_end = vec_resize;
 	vector->ptr_resize_begin = resize_begin;
-	vector->ptr_free_list = free_list;
+	vector->ptr_free_list = vec_free_list;
 
 	vector->list.nb_elems = 0;
 	vector->list.capacity_begin = VECTOR_INIT_SIZE;
@@ -56,7 +56,7 @@ bool vector_init(t_vector *vector)
 	return (SUCCESS);
 }
 
-bool add_end(t_vector *vector, int *new_elem)
+bool vec_add(t_vector *vector, int *new_elem)
 {
 	t_vec_list	*list;
 	bool		status;
@@ -64,7 +64,7 @@ bool add_end(t_vector *vector, int *new_elem)
 	list = &vector->list;
 	if (list->nb_elems == list->capacity_end)
 	{
-		status = resize_end(vector, list->capacity_end * 2);
+		status = vec_resize(vector, list->capacity_end * 2);
 		if (status == FAILURE)
 			return (status);
 	}
@@ -95,7 +95,7 @@ bool add_begin(t_vector *vector, int *new_elem)
 }
 
 //Need to add resize smaller when under a certain size
-void	remove_end(t_vector *vector)
+void	vec_remove(t_vector *vector)
 {
 	t_vec_list	*list;
 
@@ -118,7 +118,7 @@ void	remove_begin(t_vector *vector)
 	return ;
 }
 
-bool resize_end(t_vector *vector, int new_size)
+bool vec_resize(t_vector *vector, int new_size)
 {
 	int		**temp;
 	int		total_new_size;
@@ -184,7 +184,7 @@ bool resize_begin(t_vector *vector, int new_size)
 	return (FAILURE);
 }
 
-bool free_list(t_vector *vector)
+bool vec_free_list(t_vector *vector)
 {
 	free (vector->list.malloced_space);
 	return (FAILURE);

@@ -2,9 +2,9 @@
 
 int	main(int argc, char *argv[])
 {
-	t_main_container	cont;
+	t_main_cont	cont;
 	
-	ft_bzero(&cont, sizeof(t_main_container));
+	ft_bzero(&cont, sizeof(t_main_cont));
 
 	parse(argc, argv, &cont);
 	if (DEBUG)
@@ -12,16 +12,18 @@ int	main(int argc, char *argv[])
 		printf("\n----Initial Stacks----\n\n");
 		print_stacks(&cont);
 	}
-	cont.A = normalize_stack_values(cont.A, cont.size);
+	cont.A = normalize_stack_values(cont.A, cont.sizeA);
 	if (DEBUG)
 	{
 		printf("\n----After normalization----\n\n");
 		print_stacks(&cont);
 	}
-
+	t_vector	moves;
+	if (vector_init(&moves) == FAILURE)
+		exit_on_err(RED"vector failed :( \n"RESET_COL);
 
 	sort(&cont);
-	cleanup(&cont);
+	cleanup(&cont, &moves);
 	return (0);
 }
 	// print_stacks(&cont);

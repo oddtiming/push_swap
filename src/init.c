@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	assign_inputs(char **args, t_main_container *cont, int size)
+void	assign_inputs(t_main_cont *cont, char **args, int size)
 {
 	int	i;
 
@@ -13,6 +13,7 @@ void	assign_inputs(char **args, t_main_container *cont, int size)
 	cont->malloced_space = malloc(6 * size * sizeof(int));
 	if (!cont->malloced_space)
 		exit_on_err("Malloc error\n");
+	ft_bzero(cont->malloced_space, 6 * size);
 	cont->A = &(cont->malloced_space[1 * size]);
 	cont->B = &(cont->malloced_space[4 * size]);
 	i = 0;

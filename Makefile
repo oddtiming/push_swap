@@ -22,7 +22,8 @@ CFILES	=	cleanup.c \
 			push_swap.c \
 			sort.c \
 			sort_5.c \
-			utils.c
+			utils.c \
+			vectors.c
 
 SRC_DIR	= src
 SRCS	= $(addprefix $(SRC_DIR)/, $(CFILES))
@@ -30,7 +31,7 @@ SRCS	= $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJ_DIR	= obj
 OBJS	= $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 
-INC			= incl
+INC			= include
 INCFLAGS	= -I$(INC)
 
 CC		= gcc

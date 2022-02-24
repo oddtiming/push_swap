@@ -92,7 +92,7 @@ int	get_smallest_pos(int *stack, int size)
 	return (smallest_pos);
 }
 
-void	sort_3(t_main_container *cont)
+void	sort_3(t_main_cont *cont)
 {
 	int	smallest_pos;
 	int	nb_sorted;
@@ -116,7 +116,7 @@ void	sort_3(t_main_container *cont)
 	return ;
 }
 
-void	sort(t_main_container *cont)
+void	sort(t_main_cont *cont)
 {
 	if (cont->size <= 3)
 		sort_3(cont);

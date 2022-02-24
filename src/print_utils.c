@@ -19,7 +19,7 @@ void	print_single_stack(int *stack, int size)
 	printf("+---+-----+\n");
 }
 
-void	print_stacks(t_main_container *cont)
+void	print_stacks(t_main_cont *cont)
 {
 	int	i;
 

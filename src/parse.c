@@ -79,7 +79,7 @@ static char	**split_args(int argc, char *argv[])
 	return (args_split);
 }
 
-void	parse(int argc, char *argv[], t_main_container *stacks)
+void	parse(int argc, char *argv[], t_main_cont *cont)
 {
 	char	**args_split;
 	int		i;
@@ -94,8 +94,8 @@ void	parse(int argc, char *argv[], t_main_container *stacks)
 		i++;
 	if (args_split[i] != NULL)
 		exit_on_err("one of the inputs is not an int\n");
-	assign_inputs(args_split, stacks, i);
-	if (has_duplicates(stacks->A, stacks->size) == true)
+	assign_inputs(cont, args_split, i);
+	if (has_duplicates(cont->A, cont->size))
 		exit_on_err("Duplicate inputs\n");
 	// ft_print_split(args_split, "argv");
 	ft_free_split(args_split);
