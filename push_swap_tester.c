@@ -4,7 +4,7 @@
 
 #define TEMP_PATH "./ps_tester.tmp"
 #define LOG_5_PATH "./results_5.log"
-#define MAX_MOVES 7
+#define MAX_MOVES 8
 
 typedef struct	s_cmd {
 	int		in_fd;

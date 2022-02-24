@@ -29,85 +29,85 @@ int	nb_sorted_at_pos(int *stack, int size, int pos)
 	return (nb_sorted);
 }
 
-int	get_biggest_val(int *stack, int size)
+int	get_val_biggest(int *stack, int size)
 {
 	int	pos_in_stack;
 	int pos_biggest;
-	int	biggest_val;
+	int	val_biggest;
 
 	pos_in_stack = 0;
 	pos_biggest = 0;
-	biggest_val = 0;
+	val_biggest = 0;
 	while (pos_in_stack < size)
 	{
-		if (stack[pos_in_stack] > biggest_val)
+		if (stack[pos_in_stack] > val_biggest)
 		{
-			biggest_val = stack[pos_in_stack];
+			val_biggest = stack[pos_in_stack];
 			pos_biggest = pos_in_stack;
 		}
 		pos_in_stack++;
 	}
-	return (biggest_val);
+	return (val_biggest);
 }
 
-int	get_smallest_val(int *stack, int size)
+int	get_val_smallest(int *stack, int size)
 {
 	int	pos_in_stack;
-	int smallest_pos;
-	int	smallest_val;
+	int pos_smallest;
+	int	val_smallest;
 
 	pos_in_stack = 0;
-	smallest_pos = 0;
-	smallest_val = size;
+	pos_smallest = 0;
+	val_smallest = size;
 	while (pos_in_stack < size)
 	{
-		if (stack[pos_in_stack] < smallest_val)
+		if (stack[pos_in_stack] < val_smallest)
 		{
-			smallest_val = stack[pos_in_stack];
-			smallest_pos = pos_in_stack;
+			val_smallest = stack[pos_in_stack];
+			pos_smallest = pos_in_stack;
 		}
 		pos_in_stack++;
 	}
-	return (smallest_val);
+	return (val_smallest);
 }
 
-int	get_smallest_pos(int *stack, int size)
+int	get_pos_smallest(int *stack, int size)
 {
 	int	pos_in_stack;
-	int smallest_pos;
-	int	smallest_val;
+	int pos_smallest;
+	int	val_smallest;
 
 	pos_in_stack = 0;
-	smallest_pos = 0;
-	smallest_val = size;
+	pos_smallest = 0;
+	val_smallest = size;
 	while (pos_in_stack < size)
 	{
-		if (stack[pos_in_stack] < smallest_val)
+		if (stack[pos_in_stack] < val_smallest)
 		{
-			smallest_val = stack[pos_in_stack];
-			smallest_pos = pos_in_stack;
+			val_smallest = stack[pos_in_stack];
+			pos_smallest = pos_in_stack;
 		}
 		pos_in_stack++;
 	}
-	return (smallest_pos);
+	return (pos_smallest);
 }
 
 void	sort_3(t_main_container *cont)
 {
-	int	smallest_pos;
+	int	pos_smallest;
 	int	nb_sorted;
 
-	smallest_pos = get_smallest_pos(cont->A, cont->sizeA);
-	nb_sorted = nb_sorted_at_pos(cont->A, cont->sizeA, smallest_pos);
+	pos_smallest = get_pos_smallest(cont->A, cont->sizeA);
+	nb_sorted = nb_sorted_at_pos(cont->A, cont->sizeA, pos_smallest);
 	if (DEBUG)
-		printf("in sort_3, smallest_pos = %d\n", smallest_pos);
-	if (smallest_pos == 0 && nb_sorted == cont->size)
+		printf("in sort_3, pos_smallest = %d\n", pos_smallest);
+	if (pos_smallest == 0 && nb_sorted == cont->size)
 		return ;
 	else if (nb_sorted == cont->size)
 	{
-		if (smallest_pos == 1)
+		if (pos_smallest == 1)
 			make_rab(&cont->A, cont->sizeA, RA);
-		else if (smallest_pos == cont->size - 1)
+		else if (pos_smallest == cont->size - 1)
 			make_rrab(&cont->A, cont->sizeA, RRA);
 		return ;
 	}

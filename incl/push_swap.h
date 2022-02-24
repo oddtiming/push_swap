@@ -18,7 +18,6 @@
 //DEFINES
 # define _ARGC_MIN 2
 # define VALID_INPUTS 1
-# define MAX_MOVES_FOR_5 9
 
 //TO REMOVE
 # ifndef DEBUG
@@ -37,13 +36,12 @@
 //TYPEDEFS
 typedef struct s_stacks
 {
-	int		**moves_vector;
-	int		*malloced_space;
-	int		*A;
-	int		*B;
-	int		size;
-	int		sizeA;
-	int		sizeB;
+	int	*malloced_space;
+	int	*A;
+	int	*B;
+	int	size;
+	int	sizeA;
+	int	sizeB;
 }	t_main_container;
 
 typedef enum e_moves
@@ -81,19 +79,19 @@ void	make_push(t_main_container *cont, int move);
 //SORTING
 void	sort(t_main_container *cont);
 void	sort_3(t_main_container *cont);
-int		get_smallest_pos(int *stack, int size);
-int		get_smallest_val(int *stack, int size);
-int		get_biggest_val(int *stack, int size);
+int		get_pos_smallest(int *stack, int size);
+int		get_val_smallest(int *stack, int size);
+int		get_val_biggest(int *stack, int size);
 int		nb_sorted_at_pos(int *stack, int size, int pos);
 
 //  SORT_5
 void	sort_5(t_main_container *cont);
-void	rotate_a_to_pos0(t_main_container *cont, int pos);
-void	rotate_a_to_pos0_dry_run(t_main_container *cont, int pos);
+void	rotate_to_pos0(int **stack, int size, int pos);
+void	rotate_to_pos0_dry_run(int **stack, int size, int pos);
 void	insert_b(t_main_container *cont);
 bool	try_rotate_and_swap(t_main_container *cont);
-bool	try_ra(t_main_container *cont);
-int		try_ra_dry_run(t_main_container *cont);
+bool	try_ra(int *stack, int size);
+bool	try_ra_dry_run(int *stack, int size);
 bool	try_sa(t_main_container *cont);
 bool	try_sa_dry_run(t_main_container *cont);
 bool	try_pb(t_main_container *cont);
@@ -103,7 +101,7 @@ void	exit_on_err(char *err_message);
 
 //UTILS
 void	set_next_pos(int *pos, int size);
-int		get_pos_in_stack(int *stack, int size, int value);
+int		get_stack_pos(int *stack, int size, int value);
 int		get_next_pos(int pos, int size);
 
 //  PRINT UTILS
