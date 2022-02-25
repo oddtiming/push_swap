@@ -12,52 +12,24 @@ int	main(int argc, char *argv[])
 		printf("\n----Initial Stacks----\n\n");
 		print_stacks(&cont);
 	}
-	cont.A = normalize_stack_values(cont.A, cont.sizeA);
+	// cont.a = normalize_stack_values(cont.a, cont.sizeA);
 	if (DEBUG)
 	{
 		printf("\n----After normalization----\n\n");
 		print_stacks(&cont);
 	}
-	t_vector	moves;
-	if (vector_init(&moves) == FAILURE)
-		exit_on_err(RED"vector failed :( \n"RESET_COL);
+	print_stacks(&cont);
 
-	sort(&cont);
-	cleanup(&cont, &moves);
-	return (0);
+	int *temp;
+
+	temp = cont.a.get_elems(&cont.a);
+	printf(RED"In main, temp[%d] = %d\n"RESET_COL, 0, temp[0]);
+	printf(RED"In main, temp[%d] = %d\n"RESET_COL, 1, temp[1]);
+	printf(RED"In main, temp[%d] = %d\n"RESET_COL, 2, temp[2]);
+	printf(RED"In main, temp[%d] = %d\n"RESET_COL, 3, temp[3]);
+	printf(RED"In main, temp[%d] = %d\n"RESET_COL, 4, temp[4]);
+	printf(RED"In main, temp[%d] = %d\n"RESET_COL, 5, temp[5]);
+	printf(RED"In main, temp[%d] = %d\n"RESET_COL, 6, temp[6]);
+	cleanup(&cont);
+	exit (EXIT_SUCCESS);
 }
-	// print_stacks(&cont);
-
-	// make_move(&cont, PB);
-	// make_move(&cont, PB);
-	// make_move(&cont, PB);
-	// make_move(&cont, PB);
-	// print_stacks(&cont);
-
-	// make_move(&cont, RRR);
-	// print_stacks(&cont);
-	// make_move(&cont, RR);
-	// print_stacks(&cont);
-	// make_move(&cont, SS);
-	// print_stacks(&cont);
-	// make_move(&cont, PA);
-	// make_move(&cont, PA);
-	// make_move(&cont, PA);
-	// make_move(&cont, PA);
-	// print_stacks(&cont);
-	// make_move(&cont, RR);
-	// print_stacks(&cont);
-	// make_move(&cont, RRR);
-	// print_stacks(&cont);
-	// make_move(&cont, SS);
-	// print_stacks(&cont);
-
-
-	// rotate(cont.A, cont.sizeA, false);
-	// printf("\n----After rotate----\n\n");
-	// print_stacks(&cont);
-
-	// rotate(cont.A, cont.sizeA, true);
-	// rotate(cont.A, cont.sizeA, true);
-	// printf("\n----After 2x reverse rotate----\n\n");
-	// print_stacks(&cont);

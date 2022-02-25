@@ -1,8 +1,8 @@
 #include "push_swap.h"
 
-void	cleanup(t_main_cont *cont, t_vector *moves)
+void	cleanup(t_main_cont *cont)
 {
-	free (cont->malloced_space);
-	moves->ptr_vec_free_list(moves);
+	cont->a.free_list(&cont->a);
+	cont->b.free_list(&cont->b);
 	return ;
 }

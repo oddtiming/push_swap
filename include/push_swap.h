@@ -8,7 +8,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include "vectors.h"
 //TO REMOVE
 # include <stdio.h>
 //END OF REMOVE
@@ -20,6 +19,10 @@
 # define _ARGC_MIN 2
 # define VALID_INPUTS 1
 # define MAX_MOVES_FOR_5 9
+
+# define VECTOR_INIT_SIZE 16
+# define SUCCESS 0
+# define FAILURE 1
 
 //TO REMOVE
 # ifndef DEBUG
@@ -33,14 +36,37 @@
 //END OF REMOVE
 
 //TYPEDEFS
+typedef struct s_vec_list
+{
+	int	*elems;
+	int	*malloced_space;
+	int	nb_elems;
+	int	capacity_total;
+	int	capacity_after_head;
+	int	capacity_before_head;
+}	t_vec_list;
+
+typedef struct s_vector t_vector;
+typedef struct s_vector
+{
+	t_vec_list	list;
+	bool		(*add_back)(t_vector *, int);
+	bool		(*add_front)(t_vector *, int);
+	void		(*remove_back)(t_vector *);
+	void		(*remove_front)(t_vector *);
+	bool		(*resize_back)(t_vector *, int);
+	bool		(*resize_front)(t_vector *, int);
+	bool		(*free_list)(t_vector *);
+	int			*(*get_elems)(t_vector *);
+	int			(*get_size)(t_vector *);
+}	t_vector;
+
 typedef struct s_main_cont
 {
-	int			*malloced_space;
-	int			*A;
-	int			*B;
-	int			size;
-	int			sizeA;
-	int			sizeB;
+	t_vector	a;
+	t_vector	b;
+	t_vector	*moves;
+	int			size_total;
 }	t_main_cont;
 
 typedef enum e_moves
@@ -102,6 +128,7 @@ void	exit_on_err(char *err_message);
 void	set_next_pos(int *pos, int size);
 int		get_pos_in_stack(int *stack, int size, int value);
 int		get_next_pos(int pos, int size);
+bool	ft_assign_calloc(void **ptr, size_t count, size_t size);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);
@@ -109,6 +136,18 @@ void	print_single_stack(int *stack, int size);
 void	print_move(int move);
 
 //CLEANUP
-void	cleanup(t_main_cont *cont, t_vector *moves);
+void	cleanup(t_main_cont *cont);
+
+//VECTORS
+bool 	devec_init(t_vector *vector);
+bool 	vec_add_back(t_vector *vector, int new_elem);
+bool 	vec_add_front(t_vector *vector, int new_elem);
+void	vec_remove_back(t_vector *vector);
+void	vec_remove_front(t_vector *vector);
+bool 	vec_resize_back(t_vector *vector, int new_size);
+bool 	vec_resize_front(t_vector *vector, int new_size);
+bool 	vec_free_list(t_vector *vector);
+int		*vec_get_elems(t_vector *vector);
+int		vec_get_size(t_vector *vector);
 
 #endif

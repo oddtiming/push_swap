@@ -12,27 +12,27 @@ ON_RED		=	\033[41m
 RESET_COL	=	\033[0m
 
 CFILES	=	cleanup.c \
+			devectors.c \
 			errors.c \
 			init.c \
-			make_moves.c \
-			moves.c \
-			normalize.c \
 			parse.c \
 			print_utils.c \
 			push_swap.c \
-			sort.c \
-			sort_5.c \
-			utils.c \
-			vectors.c
+			utils.c
+
+HFILES	= 	push_swap.h \
+			vectors.h
 
 SRC_DIR	= src
 SRCS	= $(addprefix $(SRC_DIR)/, $(CFILES))
+
 
 OBJ_DIR	= obj
 OBJS	= $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 
 INC			= include
 INCFLAGS	= -I$(INC)
+HEADERS		= $(addprefix $(INC)/, $(HFILES))
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g -O3

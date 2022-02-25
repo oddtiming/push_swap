@@ -4,25 +4,24 @@ void	assign_inputs(t_main_cont *cont, char **args, int size)
 {
 	int	i;
 
-	cont->size = size;
+	cont->size_total = size;
 	if (DEBUG)
-	{
 		printf("in assign_inputs size = %d\n", size);
-		printf("in assign_inputs malloced_size = %d\n", 6 * size);
-	}
-	cont->malloced_space = malloc(6 * size * sizeof(int));
-	if (!cont->malloced_space)
-		exit_on_err("Malloc error\n");
-	ft_bzero(cont->malloced_space, 6 * size);
-	cont->A = &(cont->malloced_space[1 * size]);
-	cont->B = &(cont->malloced_space[4 * size]);
+
+	if (devec_init(&cont->a) == FAILURE)
+		exit_on_err("Oopsie fucky in the vector department\n");
+	if (devec_init(&cont->b) == FAILURE)
+		exit_on_err("Oopsie fucky in the vector department\n");
 	i = 0;
-	while (args[i])
+	while (args[i] != NULL)
 	{
-		cont->A[i] = ft_atoi(args[i]);
+		if (cont->a.add_back(&cont->a, ft_atoi(args[i])))
+		{
+			cleanup(cont);
+			exit_on_err("vec_add_back done fucked up\n");
+		}
 		i++;
 	}
-	cont->sizeA = cont->size;
-	cont->sizeB = 0;
+	cont->moves = NULL;
 	return ;
 }

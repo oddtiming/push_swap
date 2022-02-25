@@ -85,7 +85,7 @@ void	parse(int argc, char *argv[], t_main_cont *cont)
 	int		i;
 
 	if (argc < _ARGC_MIN)
-		exit_on_err("Wrong number of inputs\n");
+		exit_on_err("Come on, give me at least ONE input\n");
 	args_split = split_args(argc, argv);
 	if (!args_split || !args_split[0])
 		exit_on_err("args_split is somehow NULL?\n");
@@ -95,7 +95,7 @@ void	parse(int argc, char *argv[], t_main_cont *cont)
 	if (args_split[i] != NULL)
 		exit_on_err("one of the inputs is not an int\n");
 	assign_inputs(cont, args_split, i);
-	if (has_duplicates(cont->A, cont->size))
+	if (has_duplicates(cont->a.list.elems, cont->a.list.nb_elems))
 		exit_on_err("Duplicate inputs\n");
 	// ft_print_split(args_split, "argv");
 	ft_free_split(args_split);

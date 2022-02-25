@@ -29,3 +29,18 @@ int	get_pos_in_stack(int *stack, int size, int value)
 	}
 	return (-1);
 }
+
+#define MALLOC_SUCCESS 0
+#define MALLOC_FAILURE 1
+
+bool	ft_assign_calloc(void **ptr, size_t count, size_t size)
+{
+	ptr = malloc(count * size);
+	if (!ptr)
+	{
+		ptr = NULL;
+		return (MALLOC_FAILURE);
+	}
+	ft_bzero(ptr, size);
+	return (MALLOC_SUCCESS);
+}
