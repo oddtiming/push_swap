@@ -15,6 +15,7 @@ CFILES	=	cleanup.c \
 			devectors.c \
 			errors.c \
 			init.c \
+			normalize.c \
 			parse.c \
 			print_utils.c \
 			push_swap.c \

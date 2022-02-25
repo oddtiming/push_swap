@@ -2,6 +2,7 @@
 
 bool devec_init(t_vector *vector)
 {
+	//Add the atrocious list of helper functions(probs too much)
 	vector->add_back = &vec_add_back;
 	vector->add_front = &vec_add_front;
 	vector->remove_back = &vec_remove_back;
@@ -11,7 +12,12 @@ bool devec_init(t_vector *vector)
 	vector->free_list = &vec_free_list;
 	vector->get_elems = &vec_get_elems;
 	vector->get_size = &vec_get_size;
+	vector->set_elem = &vec_set_elem;
+	vector->get_elem = &vec_get_elem;
 
+	//Malloc a block of memory designed to leave space on each side of the
+	//vector_head, so that values can be added on both ends with the same
+	//calculation cost, and there is still a single memory space.
 	vector->list.nb_elems = 0;
 	vector->list.capacity_after_head = VECTOR_INIT_SIZE;
 	vector->list.capacity_before_head = VECTOR_INIT_SIZE;
@@ -161,4 +167,15 @@ bool vec_free_list(t_vector *vector)
 {
 	free (vector->list.malloced_space);
 	return (FAILURE);
+}
+
+int		vec_get_elem(t_vector *vector, int pos)
+{
+	return(vector->list.elems[pos]);
+}
+
+void	vec_set_elem(t_vector *vector, int pos, int new_value)
+{
+	vector->list.elems[pos] = new_value;
+	return ;
 }

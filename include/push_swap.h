@@ -59,6 +59,8 @@ typedef struct s_vector
 	bool		(*free_list)(t_vector *);
 	int			*(*get_elems)(t_vector *);
 	int			(*get_size)(t_vector *);
+	void		(*set_elem)(t_vector *, int, int);
+	int			(*get_elem)(t_vector *, int);
 }	t_vector;
 
 typedef struct s_main_cont
@@ -88,7 +90,7 @@ typedef enum e_moves
 //PARSING
 void	parse(int argc, char *argv[], t_main_cont *cont);
 void	assign_inputs(t_main_cont *cont, char **args, int size);
-int		*normalize_stack_values(int *stack, int size);
+int		*normalize_stack_values(t_vector *stack);
 
 
 //MOVES
@@ -149,5 +151,7 @@ bool 	vec_resize_front(t_vector *vector, int new_size);
 bool 	vec_free_list(t_vector *vector);
 int		*vec_get_elems(t_vector *vector);
 int		vec_get_size(t_vector *vector);
+int		vec_get_elem(t_vector *vector, int pos);
+void	vec_set_elem(t_vector *vector, int pos, int new_value);
 
 #endif
