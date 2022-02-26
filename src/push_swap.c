@@ -12,17 +12,17 @@ int	main(int argc, char *argv[])
 		printf("\n----Initial Stacks----\n\n");
 		print_stacks(&cont);
 	}
-	normalize_stack_values(&cont.a);
+	normalize_stack_values(&cont.stack_a);
 	if (DEBUG)
 	{
 		printf("\n----After normalization----\n\n");
 		print_stacks(&cont);
 	}
 
-	printf(YELLOW"--INITIAL STACK--"RESET_COL);
+	printf(YELLOW"--INITIAL STACK--\n"RESET_COL);
 	print_stacks(&cont);
 
 
 	cleanup(&cont);
-	return (0);
+	return (EXIT_SUCCESS);
 }

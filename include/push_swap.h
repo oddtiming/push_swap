@@ -65,8 +65,8 @@ typedef struct s_vector
 
 typedef struct s_main_cont
 {
-	t_vector	a;
-	t_vector	b;
+	t_vector	stack_a;
+	t_vector	stack_b;
 	t_vector	*moves;
 	int			size_total;
 }	t_main_cont;
@@ -90,7 +90,7 @@ typedef enum e_moves
 //PARSING
 void	parse(int argc, char *argv[], t_main_cont *cont);
 void	assign_inputs(t_main_cont *cont, char **args, int size);
-int		*normalize_stack_values(t_vector *stack);
+void	normalize_stack_values(t_vector *stack);
 
 
 //MOVES
@@ -111,17 +111,8 @@ int		get_smallest_val(int *stack, int size);
 int		get_biggest_val(int *stack, int size);
 int		nb_sorted_at_pos(int *stack, int size, int pos);
 
-//  SORT_5
-void	sort_5(t_main_cont *cont);
-void	rotate_a_to_pos0(t_main_cont *cont, int pos);
-void	rotate_a_to_pos0_dry_run(t_main_cont *cont, int pos);
-void	insert_b(t_main_cont *cont);
-bool	try_rotate_and_swap(t_main_cont *cont);
-bool	try_ra(t_main_cont *cont);
-int		try_ra_dry_run(t_main_cont *cont);
-bool	try_sa(t_main_cont *cont);
-bool	try_sa_dry_run(t_main_cont *cont);
-bool	try_pb(t_main_cont *cont);
+//  SORT_SMALL
+
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
