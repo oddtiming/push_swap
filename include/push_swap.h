@@ -67,23 +67,23 @@ typedef struct s_main_cont
 {
 	t_vector	stack_a;
 	t_vector	stack_b;
-	t_vector	*moves;
+	t_vector	moves_list;
 	int			size_total;
 }	t_main_cont;
 
 typedef enum e_moves
 {
-	RA = 1,
-	RB = 2,
-	RR = 3,
-	RRA = 4,
-	RRB = 5,
-	RRR = 6,
-	SA = 7,
-	SB = 8,
-	SS = 9,
-	PA = 10,
-	PB = 11
+	RA = 'r' << 8 | 'a' << 0,
+	RB = 'r' << 8 | 'b' << 0,
+	RR = 'r' << 8 | 'r' << 0,
+	RRA = 'r' << 16 | 'r'<< 8 | 'a' << 0,
+	RRB = 'r' << 16 | 'r'<< 8 | 'b' << 0,
+	RRR = 'r' << 16 | 'r'<< 8 | 'r' << 0,
+	SA = 's' << 8 | 'a' << 0,
+	SB = 's' << 8 | 'b' << 0,
+	SS = 's' << 8 | 's' << 0,
+	PA = 'p' << 8 | 'a' << 0,
+	PB = 'p' << 8 | 'b' << 0
 }	t_moves;
 
 //Functions
@@ -94,14 +94,14 @@ void	normalize_stack_values(t_vector *stack);
 
 
 //MOVES
-void	rotate(int **stack, int size);
-void	make_rab(int **stack, int size, int move);
-void	rev_rotate(int **stack, int size);
-void	make_rrab(int **stack, int size, int move);
-void	swap(int *stack, int size);
-void	make_sab(int *stack, int size, int move);
-void	push(t_main_cont *cont, int move);
-void	make_push(t_main_cont *cont, int move);
+void	rotate(t_vector *stack);
+void	rev_rotate(t_vector *stack);
+void	swap(t_vector *stack);
+void	push(t_vector *stack_src, t_vector *stack_dest);
+void    do_rotate(t_main_cont *cont, t_vector *moves_list, int move);
+void    do_push(t_main_cont *cont, t_vector *moves_list, int move);
+void    do_swap(t_main_cont *cont, t_vector *moves_list, int move);
+void    do_rev_rotate(t_main_cont *cont, t_vector *moves_list, int move);
 
 //SORTING
 void	sort(t_main_cont *cont);
@@ -125,14 +125,14 @@ bool	ft_assign_calloc(void **ptr, size_t count, size_t size);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);
-void	print_single_stack(int *stack, int size);
 void	print_move(int move);
+void    print_all_moves(t_vector *moves_list);
 
 //CLEANUP
 void	cleanup(t_main_cont *cont);
 
 //VECTORS
-bool 	devec_init(t_vector *vector);
+bool 	init_devec(t_vector *vector);
 bool 	vec_add_back(t_vector *vector, int new_elem);
 bool 	vec_add_front(t_vector *vector, int new_elem);
 void	vec_remove_back(t_vector *vector);

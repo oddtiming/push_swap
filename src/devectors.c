@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-bool devec_init(t_vector *vector)
+bool init_devec(t_vector *vector)
 {
 	//Add the atrocious list of helper functions(probs too much)
 	vector->add_back = &vec_add_back;
@@ -25,6 +25,7 @@ bool devec_init(t_vector *vector)
 	vector->list.malloced_space = malloc(2 * VECTOR_INIT_SIZE * sizeof(int));
 	if (!vector->list.malloced_space)
 		return (FAILURE);
+	ft_bzero(vector->list.malloced_space, 2 * VECTOR_INIT_SIZE);
 	vector->list.elems = &(vector->list.malloced_space[VECTOR_INIT_SIZE]);
 	return (SUCCESS);
 }

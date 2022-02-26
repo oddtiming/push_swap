@@ -15,10 +15,14 @@ CFILES	=	cleanup.c \
 			devectors.c \
 			errors.c \
 			init.c \
-			normalize.c \
 			parse.c \
+			print_moves.c \
 			print_utils.c \
+			push.c \
 			push_swap.c \
+			rev_rotate.c \
+			rotate.c \
+			swap.c \
 			utils.c
 
 HFILES	= 	push_swap.h \

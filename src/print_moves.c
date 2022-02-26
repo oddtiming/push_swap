@@ -1,39 +1,33 @@
-#include <stdio.h>
-#include <unistd.h>
-
-typedef enum e_list
-{
-        RA = 8265,
-        RB = 8266,
-        RRA = 828265
-}       t_list;
+#include "push_swap.h"
 
 void    print_move(int move)
 {
-        char    c;
+    char    c;
 
-        if (move >= 10000)
-        {
-                c = move/10000 + 32;
-                write(1, &c, 1);
-                move %= 10000;
-        }
-        if (move >= 100)
-        {
-                c = move/100 + 32;
-                write(1, &c, 1);
-                move %= 100;
-        }
-        c = move + 32;
+    if (move >> 16 & 0xFF)
+    {
+        c = (char)(move >> 16 & 0xFF);
         write(1, &c, 1);
-        write(1, "\n", 1);
-        return;
+    }
+    c = (char)(move >> 8 & 0xFF);
+    write(1, &c, 1);
+    c = (char)(move & 0xFF);
+    write(1, &c, 1);
+    write(1, "\n", 1);
+    return;
 }
 
-int     main(void)
+void    print_all_moves(t_vector *moves_list)
 {
-        print_move(RA);
-        print_move(RB);
-        print_move(RRA);
-        return (0);
+    int i;
+    int nb_moves;
+
+    i = 0;
+    nb_moves = moves_list->get_size(moves_list);
+    while (i < nb_moves)
+    {
+        print_move(moves_list->get_elem(moves_list, i));
+        i++;
+    }
+    return ;
 }
