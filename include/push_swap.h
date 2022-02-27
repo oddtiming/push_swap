@@ -39,41 +39,41 @@
 //Learned structure from https://aticleworld.com/implement-vector-in-c/
 //Decided to fuck it up of my own volition, though
 
-typedef struct s_vector t_vector;
-typedef struct s_vector
+typedef struct s_deque t_deque;
+typedef struct s_deque
 {
 	int		*elems;
 	int		*malloced_space;
 	int		nb_elems;
-	int		smallest_elem;
-	int		biggest_elem;
+	int		min_elem;
+	int		max_elem;
 	int		capacity_total;
 	int		capacity_after_head;
 	int		capacity_before_head;
-	bool	(*add_back)(t_vector *, int);
-	bool	(*add_front)(t_vector *, int);
-	void	(*remove_back)(t_vector *);
-	void	(*remove_front)(t_vector *);
-	bool	(*resize_back)(t_vector *, int);
-	bool	(*resize_front)(t_vector *, int);
-	void	(*free_list)(t_vector *);
-	void	(*set_elem)(t_vector *, int, int);
-	int		(*get_smallest_elem)(t_vector *);
-	int		(*get_biggest_elem)(t_vector *);
-}	t_vector;
+	bool	(*add_last)(t_deque *, int);
+	bool	(*add_front)(t_deque *, int);
+	void	(*remove_last)(t_deque *);
+	void	(*remove_front)(t_deque *);
+	bool	(*resize_last)(t_deque *, int);
+	bool	(*resize_front)(t_deque *, int);
+	void	(*free_list)(t_deque *);
+	void	(*set_elem)(t_deque *, int, int);
+	int		(*get_min_elem)(t_deque *);
+	int		(*get_max_elem)(t_deque *);
+}	t_deque;
 
 //VECTORS
-bool 	init_devec(t_vector *vector);
-bool 	vec_add_back(t_vector *vector, int new_elem);
-bool 	vec_add_front(t_vector *vector, int new_elem);
-void	vec_remove_back(t_vector *vector);
-void	vec_remove_front(t_vector *vector);
-bool 	vec_resize_back(t_vector *vector, int new_size);
-bool 	vec_resize_front(t_vector *vector, int new_size);
-void 	vec_free_list(t_vector *vector);
-void	vec_set_elem(t_vector *vector, int pos, int new_value);
-int		vec_get_smallest_elem(t_vector *vector);
-int		vec_get_biggest_elem(t_vector *vector);
+bool 	init_deque(t_deque *deque);
+bool 	deque_add_last(t_deque *deque, int new_elem);
+bool 	deque_add_front(t_deque *deque, int new_elem);
+void	deque_remove_last(t_deque *deque);
+void	deque_remove_front(t_deque *deque);
+bool 	deque_resize_last(t_deque *deque, int new_size);
+bool 	deque_resize_front(t_deque *deque, int new_size);
+void 	deque_free_list(t_deque *deque);
+void	deque_set_elem(t_deque *deque, int pos, int new_value);
+int		deque_get_min_elem(t_deque *deque);
+int		deque_get_max_elem(t_deque *deque);
 
 //ITERATORS (still need to learn how to link headers...)
 # define REVERSE 1
@@ -98,13 +98,13 @@ bool	iterate_n_loops(t_iterator *iterator, int n);
 //TYPEDEFS
 typedef struct s_main_cont
 {
-	t_vector	stack_a;
-	t_vector	stack_b;
-	t_vector	moves_list;
-	t_iterator	pos_smallest_a;
-	t_iterator	pos_smallest_b;
-	t_iterator	pos_biggest_a;
-	t_iterator	pos_biggest_b;
+	t_deque	stack_a;
+	t_deque	stack_b;
+	t_deque	moves_list;
+	t_iterator	pos_min_val_a;
+	t_iterator	pos_min_val_b;
+	t_iterator	pos_max_val_a;
+	t_iterator	pos_max_val_b;
 }	t_main_cont;
 
 typedef enum e_moves
@@ -126,25 +126,25 @@ typedef enum e_moves
 //PARSING
 void	parse(int argc, char *argv[], t_main_cont *cont);
 void	assign_inputs(t_main_cont *cont, char **args);
-void	normalize_stack_values(t_vector *stack);
+void	normalize_stack_values(t_deque *stack);
 
 
 //MOVES
-void	rotate(t_vector *stack);
-void    do_ra(t_main_cont *cont, t_vector *moves_list);
-void    do_rb(t_main_cont *cont, t_vector *moves_list);
-void    do_rr(t_main_cont *cont, t_vector *moves_list);
-void	rev_rotate(t_vector *stack);
-void    do_rra(t_main_cont *cont, t_vector *moves_list);
-void    do_rrb(t_main_cont *cont, t_vector *moves_list);
-void    do_rrr(t_main_cont *cont, t_vector *moves_list);
-void	swap(t_vector *stack);
-void    do_sa(t_main_cont *cont, t_vector *moves_list);
-void    do_sb(t_main_cont *cont, t_vector *moves_list);
-void    do_ss(t_main_cont *cont, t_vector *moves_list);
-void	push(t_vector *stack_src, t_vector *stack_dest);
-void    do_pa(t_main_cont *cont, t_vector *moves_list);
-void    do_pb(t_main_cont *cont, t_vector *moves_list);
+void	rotate(t_deque *stack);
+void    do_ra(t_main_cont *cont, t_deque *moves_list);
+void    do_rb(t_main_cont *cont, t_deque *moves_list);
+void    do_rr(t_main_cont *cont, t_deque *moves_list);
+void	rev_rotate(t_deque *stack);
+void    do_rra(t_main_cont *cont, t_deque *moves_list);
+void    do_rrb(t_main_cont *cont, t_deque *moves_list);
+void    do_rrr(t_main_cont *cont, t_deque *moves_list);
+void	swap(t_deque *stack);
+void    do_sa(t_main_cont *cont, t_deque *moves_list);
+void    do_sb(t_main_cont *cont, t_deque *moves_list);
+void    do_ss(t_main_cont *cont, t_deque *moves_list);
+void	push(t_deque *stack_src, t_deque *stack_dest);
+void    do_pa(t_main_cont *cont, t_deque *moves_list);
+void    do_pb(t_main_cont *cont, t_deque *moves_list);
 
 //  Moves helper functions
 static inline void	rotate_update_iterators(t_iterator *iterator);
@@ -156,18 +156,18 @@ static inline void	push_update_iterators(t_main_cont *cont);
 void	sort(t_main_cont *cont);
 
 //  SORT UTILS
-int		is_sorted_at_pos(t_vector *stack);
-int		get_pos_smallest_val(t_vector *stack);
-int		get_pos_biggest_val(t_vector *stack);
-void	rotate_pos_in_a_to_0(t_main_cont *cont, t_vector *moves_list, int pos);
-void	rotate_pos_in_b_to_0(t_main_cont *cont, t_vector *moves_list, int pos);
+bool	is_sorted(t_deque *stack, int pos_smallest);
+int		get_pos_smallest_val(t_deque *stack);
+int		get_pos_biggest_val(t_deque *stack);
+void	rotate_pos_in_a_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
+void	rotate_pos_in_b_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
 
 //  SORT_SMALL
 void	sort_small(t_main_cont *cont);
 bool	try_rotate(t_main_cont *cont);
-// bool	try_swap(t_main_cont *cont, t_vector *smallest_moves_list);
-// bool	try_pb(t_main_cont *cont, t_vector *smallest_moves_list);
-// bool	try_invert4(t_main_cont *cont, t_vector *temp);
+// bool	try_swap(t_main_cont *cont, t_deque *smallest_moves_list);
+// bool	try_pb(t_main_cont *cont, t_deque *smallest_moves_list);
+// bool	try_invert4(t_main_cont *cont, t_deque *temp);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
@@ -181,7 +181,7 @@ bool	ft_assign_calloc(void **ptr, size_t count, size_t size);
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);
 void	print_move(int move);
-void    print_all_moves(t_vector *moves_list);
+void    print_all_moves(t_deque *moves_list);
 void	print_stacks_info(t_main_cont *cont);
 
 //CLEANUP

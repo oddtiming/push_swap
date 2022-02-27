@@ -12,7 +12,7 @@ ON_RED		=	\033[41m
 RESET_COL	=	\033[0m
 
 CFILES	=	cleanup.c \
-			devectors.c \
+			deques.c \
 			errors.c \
 			init.c \
 			iterators.c \
@@ -28,7 +28,7 @@ CFILES	=	cleanup.c \
 			utils.c
 
 HFILES	= 	push_swap.h \
-			vectors.h
+			deques.h
 
 SRC_DIR	= src
 SRCS	= $(addprefix $(SRC_DIR)/, $(CFILES))

@@ -1,53 +1,50 @@
 #include "push_swap.h"
 
-int	get_pos_smallest_val(t_vector *stack)
+int	get_pos_smallest_val(t_deque *stack)
 {
 	int	pos_in_stack;
 
 	pos_in_stack = 0;
 	if (stack->nb_elems == 0)
 		return (0);
-	while (stack->elems[pos_in_stack] != stack->smallest_elem)
+	while (stack->elems[pos_in_stack] != stack->min_elem)
 		pos_in_stack++;
 	return (pos_in_stack);
 }
 
-int	get_pos_biggest_val(t_vector *stack)
+int	get_pos_biggest_val(t_deque *stack)
 {
 	int	pos_in_stack;
 
 	pos_in_stack = 0;
 	if (stack->nb_elems == 0)
 		return (0);
-	while (stack->elems[pos_in_stack] != stack->biggest_elem)
+	while (stack->elems[pos_in_stack] != stack->max_elem)
 		pos_in_stack++;
 	return (pos_in_stack);
 }
 
-int	is_sorted_at_pos(t_vector *stack)
+//Since the pos_smallest lives outside the deque (that's really dumb btw),
+//pos_smallest needs to be passed as a parameter for now. Should change it soon
+//	Returns true if sorted 
+//	Returns false if not sorted 
+bool	is_sorted(t_deque *stack, int pos_smallest)
 {
-	t_iterator	iterator;
-	int			*elems;
-	int			pos_smallest;
-	int			size;
-	int			nb_sorted;
+	t_iterator	iter;
 
-	nb_sorted = 1;
-	pos_smallest = get_pos_smallest_val(stack);
-	size = stack->nb_elems;
-	elems = stack->elems;
-	set_iterator(&iterator, pos_smallest, size, CANONICAL);
-	while (iterate_n_loops(&iterator, 1))
+	set_iterator(&iter, pos_smallest, stack->nb_elems, CANONICAL);
+	while (iterate_n_loops(&iter, 1))
 	{
-		if (elems[iterator.index] > elems[iterator.prev_index])
-			nb_sorted++;
+		if (!(stack->elems[iter.index] > stack->elems[iter.prev_index]) \
+			&& iter.index != iter.head)
+		{
+			return (false);
+		}
 	}
-	if (nb_sorted == size)
-		return (pos_smallest);
-	return (-1);
+	return (true);
 }
 
-void	rotate_pos_in_a_to_0(t_main_cont *cont, t_vector *moves_list, int pos)
+void	rotate_pos_in_a_to_0(t_main_cont *cont, t_deque *moves_list, int pos)
 {
 	if (pos < cont->stack_a.nb_elems - pos)
 		while (pos-- > 0)
@@ -58,7 +55,7 @@ void	rotate_pos_in_a_to_0(t_main_cont *cont, t_vector *moves_list, int pos)
 	return ;
 }
 
-void	rotate_pos_in_b_to_0(t_main_cont *cont, t_vector *moves_list, int pos)
+void	rotate_pos_in_b_to_0(t_main_cont *cont, t_deque *moves_list, int pos)
 {
 	if (pos < cont->stack_b.nb_elems - pos)
 		while (pos-- > 0)
@@ -71,8 +68,8 @@ void	rotate_pos_in_b_to_0(t_main_cont *cont, t_vector *moves_list, int pos)
 
 // void	insert_b(t_main_cont *cont)
 // {
-// 	t_vector	*best_moves_list;
+// 	t_deque	*best_moves_list;
 
-// 	best_moves_list = malloc(sizeof(t_vector));
+// 	best_moves_list = malloc(sizeof(t_deque));
 
 // }

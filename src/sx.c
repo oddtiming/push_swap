@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	swap(t_vector *stack)
+void	swap(t_deque *stack)
 {
 	int	temp;
 
@@ -17,13 +17,13 @@ static inline void	swap_update_iterator(t_iterator *iterator)
 	return ;
 }
 
-void    do_sa(t_main_cont *cont, t_vector *moves_list)
+void    do_sa(t_main_cont *cont, t_deque *moves_list)
 {
 	swap(&cont->stack_a);
-	moves_list->add_back(moves_list, SA);
+	moves_list->add_last(moves_list, SA);
 
-	swap_update_iterator(&cont->pos_smallest_a);
-	swap_update_iterator(&cont->pos_biggest_a);
+	swap_update_iterator(&cont->pos_min_val_a);
+	swap_update_iterator(&cont->pos_max_val_a);
 
 	if (DEBUG)
 	{
@@ -36,13 +36,13 @@ void    do_sa(t_main_cont *cont, t_vector *moves_list)
 	return ;
 }
 
-void    do_sb(t_main_cont *cont, t_vector *moves_list)
+void    do_sb(t_main_cont *cont, t_deque *moves_list)
 {
 	swap(&cont->stack_b);
-	moves_list->add_back(moves_list, SB);
+	moves_list->add_last(moves_list, SB);
 
-	swap_update_iterator(&cont->pos_smallest_b);
-	swap_update_iterator(&cont->pos_biggest_b);
+	swap_update_iterator(&cont->pos_min_val_b);
+	swap_update_iterator(&cont->pos_max_val_b);
 
 	if (DEBUG)
 	{
@@ -55,16 +55,16 @@ void    do_sb(t_main_cont *cont, t_vector *moves_list)
 	return ;
 }
 
-void    do_ss(t_main_cont *cont, t_vector *moves_list)
+void    do_ss(t_main_cont *cont, t_deque *moves_list)
 {
 	swap(&cont->stack_a);
 	swap(&cont->stack_b);
-	moves_list->add_back(moves_list, SS);
+	moves_list->add_last(moves_list, SS);
 
-	swap_update_iterator(&cont->pos_smallest_a);
-	swap_update_iterator(&cont->pos_biggest_a);
-	swap_update_iterator(&cont->pos_smallest_b);
-	swap_update_iterator(&cont->pos_biggest_b);
+	swap_update_iterator(&cont->pos_min_val_a);
+	swap_update_iterator(&cont->pos_max_val_a);
+	swap_update_iterator(&cont->pos_min_val_b);
+	swap_update_iterator(&cont->pos_max_val_b);
 
 	if (DEBUG)
 	{

@@ -1,11 +1,11 @@
 #include "push_swap.h"
 
-void	rev_rotate(t_vector *stack)
+void	rev_rotate(t_deque *stack)
 {
 	int	temp;
 
 	temp = stack->elems[stack->nb_elems - 1];
-	stack->remove_back(stack);
+	stack->remove_last(stack);
 	stack->add_front(stack, temp);
 	return ;
 }
@@ -16,13 +16,13 @@ static inline void	rev_rotate_update_iterators(t_iterator *iterator)
 	return ;
 }
 
-void    do_rra(t_main_cont *cont, t_vector *moves_list)
+void    do_rra(t_main_cont *cont, t_deque *moves_list)
 {
 	rev_rotate(&cont->stack_a);
-	moves_list->add_back(moves_list, RRA);
+	moves_list->add_last(moves_list, RRA);
 
-	rev_rotate_update_iterators(&cont->pos_smallest_a);
-	rev_rotate_update_iterators(&cont->pos_biggest_a);
+	rev_rotate_update_iterators(&cont->pos_min_val_a);
+	rev_rotate_update_iterators(&cont->pos_max_val_a);
 
 	if (DEBUG)
 	{
@@ -34,13 +34,13 @@ void    do_rra(t_main_cont *cont, t_vector *moves_list)
 	return ;
 }
 
-void    do_rrb(t_main_cont *cont, t_vector *moves_list)
+void    do_rrb(t_main_cont *cont, t_deque *moves_list)
 {
 	rev_rotate(&cont->stack_b);
-	moves_list->add_back(moves_list, RRB);
+	moves_list->add_last(moves_list, RRB);
 
-	rev_rotate_update_iterators(&cont->pos_smallest_b);
-	rev_rotate_update_iterators(&cont->pos_biggest_b);
+	rev_rotate_update_iterators(&cont->pos_min_val_b);
+	rev_rotate_update_iterators(&cont->pos_max_val_b);
 
 	if (DEBUG)
 	{
@@ -52,16 +52,16 @@ void    do_rrb(t_main_cont *cont, t_vector *moves_list)
 	return ;
 }
 
-void	do_rrr(t_main_cont *cont, t_vector *moves_list)
+void	do_rrr(t_main_cont *cont, t_deque *moves_list)
 {
 	rev_rotate(&cont->stack_a);
 	rev_rotate(&cont->stack_b);
-	moves_list->add_back(moves_list, RRR);
+	moves_list->add_last(moves_list, RRR);
 
-	rev_rotate_update_iterators(&cont->pos_smallest_b);
-	rev_rotate_update_iterators(&cont->pos_biggest_b);
-	rev_rotate_update_iterators(&cont->pos_smallest_a);
-	rev_rotate_update_iterators(&cont->pos_biggest_a);
+	rev_rotate_update_iterators(&cont->pos_min_val_b);
+	rev_rotate_update_iterators(&cont->pos_max_val_b);
+	rev_rotate_update_iterators(&cont->pos_min_val_a);
+	rev_rotate_update_iterators(&cont->pos_max_val_a);
 
 	if (DEBUG)
 	{

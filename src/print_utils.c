@@ -34,17 +34,17 @@ void	print_stacks(t_main_cont *cont)
 void	print_stacks_info(t_main_cont *cont)
 {
 	printf(YELLOW"*stack_a*\n");
-	printf("\tstack_a.biggest_elem = %d\n", cont->stack_a.biggest_elem);
-	printf("\tcont->pos_biggest_a.index = %d\n", cont->pos_biggest_a.index);
-	printf("\tstack_a.smallest_elem = %d\n", cont->stack_a.smallest_elem);
-	printf("\tcont->pos_smallest_a.index = %d\n", cont->pos_smallest_a.index);
+	printf("\tstack_a.max_elem = %d\n", cont->stack_a.max_elem);
+	printf("\tcont->pos_max_val_a.index = %d\n", cont->pos_max_val_a.index);
+	printf("\tstack_a.min_elem = %d\n", cont->stack_a.min_elem);
+	printf("\tcont->pos_min_val_a.index = %d\n", cont->pos_min_val_a.index);
 	printf("\tstack_a.nb_elems = %d\n", cont->stack_a.nb_elems);
 
 	printf(YELLOW"*stack_b*\n");
-	printf("\tstack_b.biggest_elem = %d\n", cont->stack_b.biggest_elem);
-	printf("\tcont->pos_biggest_b.index = %d\n", cont->pos_biggest_b.index);
-	printf("\tstack_b.smallest_elem = %d\n", cont->stack_b.smallest_elem);
-	printf("\tcont->pos_smallest_b.index = %d\n", cont->pos_smallest_b.index);
+	printf("\tstack_b.max_elem = %d\n", cont->stack_b.max_elem);
+	printf("\tcont->pos_max_val_b.index = %d\n", cont->pos_max_val_b.index);
+	printf("\tstack_b.min_elem = %d\n", cont->stack_b.min_elem);
+	printf("\tcont->pos_min_val_b.index = %d\n", cont->pos_min_val_b.index);
 	printf("\tstack_b.nb_elems = %d\n"RESET_COL, cont->stack_b.nb_elems);
 	return ;
 }
@@ -66,7 +66,7 @@ void    print_move(int move)
     return;
 }
 
-void    print_all_moves(t_vector *moves_list)
+void    print_all_moves(t_deque *moves_list)
 {
     int i;
 

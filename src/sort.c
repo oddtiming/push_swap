@@ -2,21 +2,19 @@
 
 bool	try_rotate(t_main_cont *cont)
 {
-	int			pos_of_smallest_value;
-	t_vector	*smallest_moves_list;
+	t_deque	*smallest_moves_list;
 
-	smallest_moves_list = malloc(sizeof(t_vector));
+	smallest_moves_list = malloc(sizeof(t_deque));
 	if (!smallest_moves_list)
 		exit_on_err("smallest_moves_list malloc error\n");
-	init_devec(smallest_moves_list);
-	pos_of_smallest_value = is_sorted_at_pos(&cont->stack_a);
-	if (pos_of_smallest_value < 0)
+	init_deque(smallest_moves_list);
+	if (!is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
 	{
 		smallest_moves_list->free_list(smallest_moves_list);
 		free(smallest_moves_list);
 		return (0);
 	}
-	rotate_pos_in_a_to_0(cont, smallest_moves_list, pos_of_smallest_value);
+	rotate_pos_in_a_to_0(cont, smallest_moves_list, cont->pos_min_val_a.index);
 	// if (cont->stack_b.nb_elems > 0)
 	// 	insert_b(cont);
 	cont->moves_list.free_list(&cont->moves_list);
@@ -25,9 +23,16 @@ bool	try_rotate(t_main_cont *cont)
 	return (1);
 }
 
+// void	try_swap(t_main_cont *cont)
+// {
+// 	t_deque	*smallest_moves_list;
+
+// 	smallest_moves_list = malloc(sizeof(t_deque));
+// }
+
 void	sort_small(t_main_cont *cont)
 {
-	// t_vector	*temp;
+	// t_deque	*temp;
 
 	if (try_rotate(cont))
 		return ;
