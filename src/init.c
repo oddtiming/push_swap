@@ -24,8 +24,10 @@ void	assign_inputs(t_main_cont *cont, char **args, int size)
 	normalize_stack_values(&cont->stack_a);
 	if (init_devec(&cont->moves_list) == FAILURE)
 		exit_on_err("Oopsie fucky in the vector department for moves_list\n");
-	if (DEBUG)
-		printf("%s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
+	cont->pos_smallest_a = get_pos_smallest_value(&cont->stack_a);
+	cont->pos_biggest_a = get_pos_biggest_value(&cont->stack_a);
+	cont->pos_smallest_b = 0;
+	cont->pos_biggest_b = 0;
 	return ;
 }
 

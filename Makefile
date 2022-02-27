@@ -1,7 +1,7 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 2 1 0 4 3
+RUN_ARGS = 3 4 0 1 2
 
 SHELL	=	bash
 
@@ -15,6 +15,7 @@ CFILES	=	cleanup.c \
 			devectors.c \
 			errors.c \
 			init.c \
+			iterators.c \
 			parse.c \
 			print_moves.c \
 			print_utils.c \
@@ -22,6 +23,8 @@ CFILES	=	cleanup.c \
 			push_swap.c \
 			rev_rotate.c \
 			rotate.c \
+			sort.c \
+			sort_utils.c \
 			swap.c \
 			utils.c
 

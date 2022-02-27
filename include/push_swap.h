@@ -35,12 +35,16 @@
 # define RESET_COL "\033[0m"
 //END OF REMOVE
 
-//TYPEDEFS
+//VECTORS (need to learn how to properly link multiple headers in Makefile)
+//Learned structure from https://aticleworld.com/implement-vector-in-c/
+//Decided to fuck it up of my own volition, though
 typedef struct s_vec_list
 {
 	int	*elems;
 	int	*malloced_space;
 	int	nb_elems;
+	int	smallest_elem;
+	int	biggest_elem;
 	int	capacity_total;
 	int	capacity_after_head;
 	int	capacity_before_head;
@@ -56,18 +60,53 @@ typedef struct s_vector
 	void		(*remove_front)(t_vector *);
 	bool		(*resize_back)(t_vector *, int);
 	bool		(*resize_front)(t_vector *, int);
-	bool		(*free_list)(t_vector *);
-	int			*(*get_elems)(t_vector *);
-	int			(*get_size)(t_vector *);
+	void		(*free_list)(t_vector *);
 	void		(*set_elem)(t_vector *, int, int);
-	int			(*get_elem)(t_vector *, int);
+	int			(*get_smallest_elem)(t_vector *);
+	int			(*get_biggest_elem)(t_vector *);
 }	t_vector;
 
+//VECTORS
+bool 	init_devec(t_vector *vector);
+bool 	vec_add_back(t_vector *vector, int new_elem);
+bool 	vec_add_front(t_vector *vector, int new_elem);
+void	vec_remove_back(t_vector *vector);
+void	vec_remove_front(t_vector *vector);
+bool 	vec_resize_back(t_vector *vector, int new_size);
+bool 	vec_resize_front(t_vector *vector, int new_size);
+void 	vec_free_list(t_vector *vector);
+void	vec_set_elem(t_vector *vector, int pos, int new_value);
+int		vec_get_smallest_elem(t_vector *vector);
+int		vec_get_biggest_elem(t_vector *vector);
+
+//ITERATORS (still need to learn how to link headers...)
+# define REVERSE 1
+# define CANONICAL 0
+
+typedef struct s_iterator
+{
+	int		head;
+	int		index;
+	int		prev_index;
+	int		max_size;
+	int		nb_loops;
+	bool	direction;
+}	t_iterator;
+
+void	set_iterator(t_iterator *iterator, int head, int size, bool direction);
+void	iterate(t_iterator *iterator);
+bool	iterate_one_loop(t_iterator *iterator);
+
+//TYPEDEFS
 typedef struct s_main_cont
 {
 	t_vector	stack_a;
 	t_vector	stack_b;
 	t_vector	moves_list;
+	int			pos_smallest_a;
+	int			pos_smallest_b;
+	int			pos_biggest_a;
+	int			pos_biggest_b;
 	int			size_total;
 }	t_main_cont;
 
@@ -103,16 +142,22 @@ void    do_push(t_main_cont *cont, t_vector *moves_list, int move);
 void    do_swap(t_main_cont *cont, t_vector *moves_list, int move);
 void    do_rev_rotate(t_main_cont *cont, t_vector *moves_list, int move);
 
-//SORTING
+//SORT
 void	sort(t_main_cont *cont);
-void	sort_3(t_main_cont *cont);
-int		get_smallest_pos(int *stack, int size);
-int		get_smallest_val(int *stack, int size);
-int		get_biggest_val(int *stack, int size);
-int		nb_sorted_at_pos(int *stack, int size, int pos);
+
+//  SORT UTILS
+int		is_sorted_at_pos(t_vector *stack);
+int		get_pos_smallest_value(t_vector *stack);
+int		get_pos_biggest_value(t_vector *stack);
+void	rotate_pos_in_a_to_0(t_main_cont *cont, t_vector *moves_list, int pos);
+void	rotate_pos_in_b_to_0(t_main_cont *cont, t_vector *moves_list, int pos);
 
 //  SORT_SMALL
-
+void	sort_small(t_main_cont *cont);
+bool	try_rotate(t_main_cont *cont);
+// bool	try_swap(t_main_cont *cont, t_vector *smallest_moves_list);
+// bool	try_pb(t_main_cont *cont, t_vector *smallest_moves_list);
+// bool	try_invert4(t_main_cont *cont, t_vector *temp);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
@@ -130,19 +175,5 @@ void    print_all_moves(t_vector *moves_list);
 
 //CLEANUP
 void	cleanup(t_main_cont *cont);
-
-//VECTORS
-bool 	init_devec(t_vector *vector);
-bool 	vec_add_back(t_vector *vector, int new_elem);
-bool 	vec_add_front(t_vector *vector, int new_elem);
-void	vec_remove_back(t_vector *vector);
-void	vec_remove_front(t_vector *vector);
-bool 	vec_resize_back(t_vector *vector, int new_size);
-bool 	vec_resize_front(t_vector *vector, int new_size);
-bool 	vec_free_list(t_vector *vector);
-int		*vec_get_elems(t_vector *vector);
-int		vec_get_size(t_vector *vector);
-int		vec_get_elem(t_vector *vector, int pos);
-void	vec_set_elem(t_vector *vector, int pos, int new_value);
 
 #endif

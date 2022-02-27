@@ -2,22 +2,28 @@
 
 static bool	has_duplicates(int *array, int size)
 {
-	int	i;
-	int	j;
+	int	curr_pos;
+	int	curr_value;
+	int	compare_pos;
+	int	compare_value;
 
-	i = 0;
+	curr_pos = 0;
 	if (!array || size < 0)
 		return (false);
-	while (i < size - 1)
+	while (curr_pos < size - 1)
 	{
-		j = i + 1;
-		while (j < size)
+		curr_value = array[curr_pos];
+		compare_pos = curr_pos + 1;
+		while (compare_pos < size)
 		{
-			if (array[j] == array[i])
+			compare_value = array[compare_pos];
+			if (DEBUG)
+				printf("is %d == %d?\n", curr_value, compare_value);
+			if (curr_value == compare_value)
 				return (true);
-			j++;
+			compare_pos++;
 		}
-		i++;
+		curr_pos++;
 	}
 	return (false);
 }

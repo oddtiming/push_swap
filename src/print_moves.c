@@ -20,13 +20,11 @@ void    print_move(int move)
 void    print_all_moves(t_vector *moves_list)
 {
     int i;
-    int nb_moves;
 
     i = 0;
-    nb_moves = moves_list->get_size(moves_list);
-    while (i < nb_moves)
+    while (i < moves_list->list.nb_elems)
     {
-        print_move(moves_list->get_elem(moves_list, i));
+        print_move(moves_list->list.elems[i]);
         i++;
     }
     return ;

@@ -11,10 +11,10 @@ void	print_stacks(t_main_cont *cont)
 	printf("    |\033[38;5;5m [A] \033[0m|\033[38;5;6m [B] \033[0;0;0m|\n");
 	printf("+---+-----+-----+\n");
 	i = 0;
-	stack_a = cont->stack_a.get_elems(&cont->stack_a);
-	stack_b = cont->stack_b.get_elems(&cont->stack_b);
-	size_a = cont->stack_a.get_size(&cont->stack_a);
-	size_b = cont->stack_a.get_size(&cont->stack_b);
+	stack_a = cont->stack_a.list.elems;
+	stack_b = cont->stack_b.list.elems;
+	size_a = cont->stack_a.list.nb_elems;
+	size_b = cont->stack_b.list.nb_elems;
 	while (i < size_a || i < size_b)
 	{
 		printf("|%-3d|", i);

@@ -1,3 +1,5 @@
+//Learned structure from https://aticleworld.com/implement-vector-in-c/
+//Decided to fuck it up of my own volition, though
 #include "../include/push_swap.h"
 
 # define VECTOR_INIT_SIZE 16

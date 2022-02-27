@@ -4,7 +4,7 @@ void	rev_rotate(t_vector *stack)
 {
 	int	temp;
 
-	temp = stack->get_elem(stack, stack->list.nb_elems - 1);
+	temp = stack->list.elems[stack->list.nb_elems - 1];
 	stack->remove_back(stack);
 	stack->add_front(stack, temp);
 	return ;
