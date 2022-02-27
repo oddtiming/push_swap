@@ -4,13 +4,13 @@ void	rev_rotate(t_vector *stack)
 {
 	int	temp;
 
-	temp = stack->list.elems[stack->list.nb_elems - 1];
+	temp = stack->elems[stack->nb_elems - 1];
 	stack->remove_back(stack);
 	stack->add_front(stack, temp);
 	return ;
 }
 
-void    do_rev_rotate(t_main_cont *cont, t_vector *moves_list, int move)
+void    do_rra(t_main_cont *cont, t_vector *moves_list, int move)
 {
 	if ((move & 0xFF) == 'a' || (move & 0xFF) == 'r')
 		rev_rotate(&cont->stack_a);

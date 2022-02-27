@@ -2,7 +2,7 @@
 
 void	push(t_vector *stack_src, t_vector *stack_dest)
 {
-	stack_dest->add_front(stack_dest, stack_src->list.elems[0]);
+	stack_dest->add_front(stack_dest, stack_src->elems[0]);
 	stack_src->remove_front(stack_src);
 	return ;
 }

@@ -17,7 +17,6 @@ CFILES	=	cleanup.c \
 			init.c \
 			iterators.c \
 			parse.c \
-			print_moves.c \
 			print_utils.c \
 			push.c \
 			push_swap.c \

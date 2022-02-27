@@ -4,7 +4,6 @@ void	assign_inputs(t_main_cont *cont, char **args, int size)
 {
 	int	i;
 
-	cont->size_total = size;
 	if (DEBUG)
 		printf("in assign_inputs size = %d\n", size);
 	if (init_devec(&cont->stack_a) == FAILURE)
@@ -24,10 +23,10 @@ void	assign_inputs(t_main_cont *cont, char **args, int size)
 	normalize_stack_values(&cont->stack_a);
 	if (init_devec(&cont->moves_list) == FAILURE)
 		exit_on_err("Oopsie fucky in the vector department for moves_list\n");
-	cont->pos_smallest_a = get_pos_smallest_value(&cont->stack_a);
-	cont->pos_biggest_a = get_pos_biggest_value(&cont->stack_a);
-	cont->pos_smallest_b = 0;
-	cont->pos_biggest_b = 0;
+	cont->pos_smallest_a.index = get_pos_smallest_value(&cont->stack_a);
+	cont->pos_biggest_a.index = get_pos_biggest_value(&cont->stack_a);
+	cont->pos_smallest_b.index = 0;
+	cont->pos_biggest_b.index = 0;
 	return ;
 }
 
@@ -38,22 +37,22 @@ void	normalize_stack_values(t_vector *stack)
 	int	pos_in_stack;
 	int	i;
 
-	normalized_stack = malloc(stack->list.nb_elems * sizeof(int));
+	normalized_stack = malloc(stack->nb_elems * sizeof(int));
 	if (!normalized_stack)
 		exit_on_err("Malloc back at it again");
 	pos_in_stack = 0;
-	while (pos_in_stack < stack->list.nb_elems)
+	while (pos_in_stack < stack->nb_elems)
 	{
 		nb_smaller_values = 0;
 		i = -1;
-		while (++i < stack->list.nb_elems)
-			if (stack->list.elems[i] < stack->list.elems[pos_in_stack])
+		while (++i < stack->nb_elems)
+			if (stack->elems[i] < stack->elems[pos_in_stack])
 				nb_smaller_values++;
 		normalized_stack[pos_in_stack] = nb_smaller_values;
 		pos_in_stack++;
 	}
 	i = -1;
-	while (++i < stack->list.nb_elems)
+	while (++i < stack->nb_elems)
 		stack->set_elem(stack, i, normalized_stack[i]);
 	free(normalized_stack);
 	return ;

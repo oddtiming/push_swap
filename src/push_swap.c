@@ -21,20 +21,8 @@ int	main(int argc, char *argv[])
 		printf("\n----After normalization----\n\n");
 		print_stacks(cont);
 	}
-	// cont->stack_a.remove_front(&cont->stack_a);
-	// cont->stack_a.remove_front(&cont->stack_a);
-	// cont->stack_a.remove_front(&cont->stack_a);
 
-	// printf("after removing dfirst three elements\n");
-	// print_stacks(&cont);
-
-	// do_push(cont, &cont->moves_list, PB);
-	// do_push(cont, &cont->moves_list, PB);
-	// do_rotate(cont, &cont->moves_list, RR);
-	// do_swap(cont, &cont->moves_list, SS);
-	// do_push(cont, &cont->moves_list, PA);
-	// do_push(cont, &cont->moves_list, PA);
-
+	// do_ra(cont, &cont->moves_list);
 
 	sort(cont);
 

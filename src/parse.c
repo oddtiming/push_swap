@@ -101,7 +101,7 @@ void	parse(int argc, char *argv[], t_main_cont *cont)
 	if (args_split[i] != NULL)
 		exit_on_err("one of the inputs is not an int\n");
 	assign_inputs(cont, args_split, i);
-	if (has_duplicates(cont->stack_a.list.elems, cont->stack_a.list.nb_elems))
+	if (has_duplicates(cont->stack_a.elems, cont->stack_a.nb_elems))
 		exit_on_err("Duplicate inputs\n");
 	// ft_print_split(args_split, "argv");
 	ft_free_split(args_split);

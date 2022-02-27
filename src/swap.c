@@ -4,8 +4,8 @@ void	swap(t_vector *stack)
 {
 	int	temp;
 
-	temp = stack->list.elems[0];
-	stack->set_elem(stack, 0, stack->list.elems[1]);
+	temp = stack->elems[0];
+	stack->set_elem(stack, 0, stack->elems[1]);
 	stack->set_elem(stack, 1, temp);
 	return ;
 }

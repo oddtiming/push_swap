@@ -17,6 +17,9 @@ bool	try_rotate(t_main_cont *cont)
 		return (0);
 	}
 	rotate_pos_in_a_to_0(cont, smallest_moves_list, pos_of_smallest_value);
+	// if (cont->stack_b.nb_elems > 0)
+	// 	insert_b(cont);
+	cont->moves_list.free_list(&cont->moves_list);
 	cont->moves_list = *smallest_moves_list;
 	free(smallest_moves_list);
 	return (1);
@@ -28,14 +31,14 @@ void	sort_small(t_main_cont *cont)
 
 	if (try_rotate(cont))
 		return ;
-	// else if (try_swap(cont, smallest_moves_list))
-	// 	smallest_nb_moves = smallest_moves_list->list.nb_elems;
+	// else if (try_swap(cont))
+	// 	return ;
 	// else
 	// {
 	// 	try_pb(cont, smallest_moves_list);
-	// 	smallest_nb_moves = smallest_moves_list->list.nb_elems;
+	// 	smallest_nb_moves = smallest_moves_list.nb_elems;
 	// 	try_invert4(cont, temp);
-	// 	if (temp->list.nb_elems > smallest_nb_moves)
+	// 	if (temp.nb_elems > smallest_nb_moves)
 	// 	{
 	// 		smallest_moves_list->free_list(smallest_moves_list);
 	// 		smallest_moves_list = temp;
@@ -46,7 +49,7 @@ void	sort_small(t_main_cont *cont)
 
 void	sort(t_main_cont *cont)
 {
-	if (cont->stack_a.list.nb_elems < 10)
+	if (cont->stack_a.nb_elems < 10)
 		sort_small(cont);
 	return ;
 }
