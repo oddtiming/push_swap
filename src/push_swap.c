@@ -8,23 +8,24 @@ int	main(int argc, char *argv[])
 	if (!cont)
 		exit_on_err("t_main_cont malloc error");
 	ft_bzero(cont, sizeof(t_main_cont));
-
 	parse(argc, argv, cont);
-	if (DEBUG)
-	{
-		printf("\n----Initial Stacks----\n\n");
-		print_stacks(cont);
-	}
 	normalize_stack_values(&cont->stack_a);
 	if (DEBUG)
 	{
 		printf("\n----After normalization----\n\n");
 		print_stacks(cont);
+		print_stacks_info(cont);
 	}
 
-	// do_ra(cont, &cont->moves_list);
+	do_pb(cont, &cont->moves_list);
+	do_pb(cont, &cont->moves_list);
+	print_stacks_info(cont);
+	// do_pb(cont, &cont->moves_list);
+	// do_pb(cont, &cont->moves_list);
+	// do_pb(cont, &cont->moves_list);
+	// do_pb(cont, &cont->moves_list);
 
-	sort(cont);
+	// sort(cont);
 
 	print_all_moves(&cont->moves_list);
 

@@ -1,20 +1,5 @@
 #include "push_swap.h"
 
-/**
- * Works as expected. 
- * The iterator "class" itself doesn't malloc the iterator
- */
-
-// typedef struct s_iterator
-// {
-	// int		head;
-	// int		index;
-	// int		prev_index;
-	// int		max_size;
-	// int		nb_loops;
-	// bool	direction;
-// }	t_iterator;
-
 void	set_iterator(t_iterator *iterator, int head, int size, bool is_reverse)
 {
 	iterator->index = head;
@@ -24,6 +9,13 @@ void	set_iterator(t_iterator *iterator, int head, int size, bool is_reverse)
 	//Will be incremented in the first loop to set at 0 once iterate starts
 	iterator->nb_loops = -1;
 	iterator->prev_index = -1;
+	return ;
+}
+
+void	set_iter_head(t_iterator *iterator, int new_head)
+{
+	iterator->head = new_head;
+	iterator->index = new_head;
 	return ;
 }
 

@@ -42,7 +42,7 @@ INCFLAGS	= -I$(INC)
 HEADERS		= $(addprefix $(INC)/, $(HFILES))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g -O3
+CFLAGS	= -Wall -Wextra -Werror -g -O2
 
 #
 # DEBUG build settings

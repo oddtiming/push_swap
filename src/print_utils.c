@@ -21,7 +21,7 @@ void	print_stacks(t_main_cont *cont)
 		if (i < size_a)
 			printf("\033[38;5;5m %-3d \033[0;0;0m", stack_a[i]);
 		else
-			printf("\t\033[0m|");
+			printf("     \033[0m");
 		if (i < size_b)
 			printf("|\033[38;5;6m %-3d \033[0m|\n", stack_b[i]);
 		else

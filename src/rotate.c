@@ -12,12 +12,6 @@ void	rotate(t_vector *stack)
 
 void    do_ra(t_main_cont *cont, t_vector *moves_list)
 {
-	if (DEBUG)
-	{
-		print_move(RA);
-		print_stacks(cont);
-		print_stacks_info(cont);
-	}
 	rotate(&cont->stack_a);
 	moves_list->add_back(moves_list, RA);
 	iterate_once(&cont->pos_smallest_a, REVERSE);

@@ -18,8 +18,8 @@ bool init_devec(t_vector *vec)
 	//vector_head, so that values can be added on both ends with the same
 	//calculation cost, and there is still a single memory space.
 	vec->nb_elems = 0;
-	vec->smallest_elem = INT_MAX;
-	vec->biggest_elem = INT_MIN;
+	vec->smallest_elem = vec->get_smallest_elem(vec);
+	vec->biggest_elem = vec->get_biggest_elem(vec);
 	vec->capacity_after_head = VECTOR_INIT_SIZE;
 	vec->capacity_before_head = VECTOR_INIT_SIZE;
 	vec->capacity_total = 2 * VECTOR_INIT_SIZE;
@@ -45,7 +45,7 @@ bool vec_add_back(t_vector *vec, int new_elem)
 	vec->nb_elems += 1;
 	if (new_elem > vec->biggest_elem)
 		vec->biggest_elem = new_elem;
-	else if (new_elem < vec->smallest_elem)
+	if (new_elem < vec->smallest_elem)
 		vec->smallest_elem = new_elem;
 	status = SUCCESS;
 	return (status);
@@ -67,7 +67,7 @@ bool vec_add_front(t_vector *vec, int new_elem)
 	vec->capacity_before_head -= 1;
 	if (new_elem > vec->biggest_elem)
 		vec->biggest_elem = new_elem;
-	else if (new_elem < vec->smallest_elem)
+	if (new_elem < vec->smallest_elem)
 		vec->smallest_elem = new_elem;
 	status = SUCCESS;
 	return (status);
@@ -76,26 +76,32 @@ bool vec_add_front(t_vector *vec, int new_elem)
 //Need to add resize smaller when under a certain size
 void	vec_remove_back(t_vector *vec)
 {
-	if (vec->elems[vec->nb_elems - 1] == vec->biggest_elem)
-		vec->biggest_elem = vec->get_biggest_elem(vec);
-	if (vec->elems[vec->nb_elems - 1] == vec->smallest_elem)
-		vec->smallest_elem = vec->get_smallest_elem(vec);
+	int	elem_to_be_removed;
+
+	elem_to_be_removed = vec->elems[vec->nb_elems - 1];
 	vec->elems[vec->nb_elems - 1] = 0;
 	vec->nb_elems -= 1;
+	if (elem_to_be_removed == vec->smallest_elem)
+		vec->smallest_elem = vec->get_smallest_elem(vec);
+	if (elem_to_be_removed == vec->biggest_elem)
+		vec->biggest_elem = vec->get_biggest_elem(vec);
 	return ;
 }
 
 //Need to add resize smaller when under a certain size
 void	vec_remove_front(t_vector *vec)
 {
-	if (vec->elems[0] == vec->biggest_elem)
-		vec->biggest_elem = vec->get_biggest_elem(vec);
-	if (vec->elems[0] == vec->smallest_elem)
-		vec->smallest_elem = vec->get_smallest_elem(vec);
+	int	elem_to_be_removed;
+
+	elem_to_be_removed = vec->elems[0];
 	vec->elems[0] = 0;
 	vec->elems += 1;
 	vec->capacity_before_head += 1;
 	vec->nb_elems -= 1;
+	if (elem_to_be_removed == vec->smallest_elem)
+		vec->smallest_elem = vec->get_smallest_elem(vec);
+	if (elem_to_be_removed == vec->biggest_elem)
+		vec->biggest_elem = vec->get_biggest_elem(vec);
 	return ;
 }
 

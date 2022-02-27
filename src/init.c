@@ -19,8 +19,8 @@ void	assign_inputs(t_main_cont *cont, char **args)
 			cont->stack_a.nb_elems, CANONICAL);
 	set_iterator(&cont->pos_biggest_a, get_pos_biggest_val(&cont->stack_a), \
 			cont->stack_a.nb_elems, REVERSE);
-	cont->pos_smallest_b.index = 0;
-	cont->pos_biggest_b.index = 0;
+	set_iterator(&cont->pos_smallest_b, 0, 0, CANONICAL);
+	set_iterator(&cont->pos_biggest_b, 0, 0, REVERSE);
 	return ;
 }
 

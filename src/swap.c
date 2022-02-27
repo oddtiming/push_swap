@@ -22,6 +22,8 @@ void    do_sa(t_main_cont *cont, t_vector *moves_list)
 	{
 		print_move(SA);
 		print_stacks(cont);
+		printf("%s\n", __FUNCTION__);
+		print_stacks_info(cont);
 	}
 	return ;
 }
@@ -36,8 +38,10 @@ void    do_sb(t_main_cont *cont, t_vector *moves_list)
 	moves_list->add_back(moves_list, SB);
 	if (DEBUG)
 	{
+		printf("%s\n", __FUNCTION__);
 		print_move(SB);
 		print_stacks(cont);
+		print_stacks_info(cont);
 	}
 	return ;
 }
@@ -57,8 +61,10 @@ void    do_ss(t_main_cont *cont, t_vector *moves_list)
 	moves_list->add_back(moves_list, SS);
 	if (DEBUG)
 	{
+		printf("%s\n", __FUNCTION__);
 		print_move(SS);
 		print_stacks(cont);
+		print_stacks_info(cont);
 	}
 	return ;
 }
