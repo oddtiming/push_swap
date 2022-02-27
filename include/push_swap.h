@@ -146,6 +146,12 @@ void	push(t_vector *stack_src, t_vector *stack_dest);
 void    do_pa(t_main_cont *cont, t_vector *moves_list);
 void    do_pb(t_main_cont *cont, t_vector *moves_list);
 
+//  Moves helper functions
+static inline void	rotate_update_iterators(t_iterator *iterator);
+static inline void	rev_rotate_update_iterators(t_iterator *iterator);
+static inline void	swap_update_iterator(t_iterator *iterator);
+static inline void	push_update_iterators(t_main_cont *cont);
+
 //SORT
 void	sort(t_main_cont *cont);
 

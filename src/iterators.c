@@ -30,7 +30,7 @@ void	iterate(t_iterator *iterator)
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
 		iterator->index = 0;
 	else if (incrementer == -1 && iterator->index < 0)
-		iterator->index = iterator->max_size - 1;
+		iterator->index = iterator->max_size - 1 * (iterator->max_size != 0);
 	return ;
 }
 
@@ -56,7 +56,7 @@ bool	iterate_n_loops(t_iterator *iterator, int n)
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
 		iterator->index = 0;
 	else if (incrementer == -1 && iterator->index < 0)
-		iterator->index = iterator->max_size - 1;
+		iterator->index = iterator->max_size - 1 * (iterator->max_size != 0);
 	if (iterator->nb_loops >= n && iterator->prev_index == iterator->head)
 		return (false);
 	return (true);

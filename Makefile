@@ -18,13 +18,13 @@ CFILES	=	cleanup.c \
 			iterators.c \
 			parse.c \
 			print_utils.c \
-			push.c \
+			px.c \
 			push_swap.c \
-			rev_rotate.c \
-			rotate.c \
+			rrx.c \
+			rx.c \
 			sort.c \
 			sort_utils.c \
-			swap.c \
+			sx.c \
 			utils.c
 
 HFILES	= 	push_swap.h \
@@ -42,7 +42,7 @@ INCFLAGS	= -I$(INC)
 HEADERS		= $(addprefix $(INC)/, $(HFILES))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g -O2
+CFLAGS	= -Wall -Wextra -Werror -g -O3
 
 #
 # DEBUG build settings
@@ -59,15 +59,13 @@ LIBFT_FLAGS	= -lft -Llibft
 
 RM_OBJS			=	rm -rf $(OBJ_DIR)
 RM_OBJS_OUT		=	$$($(RM_OBJS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-RM_DBG		=	rm -rf debug_objs; rm $(DBG_EXE)
-RM_DBG_OUT	=	$$($(RM_DBG) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-RM_PROG			=	rm -f $(NAME)
-RM_PROG_OUT		=	$$($(RM_PROG) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
+RM_EXE			=	rm -f $(NAME)
+RM_EXE_OUT		=	$$($(RM_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 RM_LIBFT		=	make clean -sC ./libft
 RM_LIBFT_OUT	=	$$($(RM_LIBFT) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
-COMPILE_PUSH_SWAP		=	$(CC) $(CFLAGS) $(LIBFT_FLAGS) $(OBJS) -o $(NAME)
-COMPILE_PUSH_SWAP_OUT	=	$$($(COMPILE_PUSH_SWAP) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
+COMPILE_EXE		=	$(CC) $(CFLAGS) $(LIBFT_FLAGS) $(OBJS) -o $(NAME)
+COMPILE_EXE_OUT	=	$$($(COMPILE_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
 COMPILE_C		=	$(CC) $(CFLAGS) $(INCFLAGS) -o $@ -c $<
 COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
@@ -77,12 +75,14 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@echo -e "$(BLUE)>\t$^\t--> $@ $(RESET_COL)$(COMPILE_C_OUT)"	
 
 #
-# DEBUG obj compilation
+# DEBUG MACROS
 #
 COMPILE_DBG_EXE		=	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCFLAGS) $(DBG_OBJS) -o $(DBG_EXE)
 COMPILE_DBG_EXE_OUT	=	$$($(COMPILE_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 COMPILE_DBGC		=	$(CC) $(DBG_CFLAGS) $(INCFLAGS) -o $@ -c $<
 COMPILE_DBGC_OUT	=	$$($(COMPILE_DBGC) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
+RM_DBG_EXE			=	rm -rf debug_objs; rm $(DBG_EXE)
+RM_DBG_EXE_OUT		=	$$($(RM_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
 $(DBG_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(DBG_DIR)
@@ -98,7 +98,7 @@ all: $(NAME)
 
 
 $(NAME):	libft pretty_print $(OBJS)
-	@echo -e "\n$(BLUE)>>>>>>>> Compiling $(NAME) ...$(RESET_COL)$(COMPILE_PUSH_SWAP_OUT)"
+	@echo -e "\n$(BLUE)>>>>>>>> Compiling $(NAME) ...$(RESET_COL)$(COMPILE_EXE_OUT)"
 
 silent_libft:
 	@echo -e "------------------ libft.a ------------------\n"
@@ -125,11 +125,11 @@ clean_libft:
 	@echo -e "$(GREEN)>>>>>>>> libft cleaned\n>>>>>>>>$(RESET_COL)"
 
 clean_debug:
-	@echo -e "$(RED)>>>>>>>> Deleting debug obj files$(RESET_COL)$(RM_DBG_OUT)"
+	@echo -e "$(RED)>>>>>>>> Deleting debug obj files$(RESET_COL)$(RM_DBG_EXE_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> obj files deleted\n>>>>>>>>$(RESET_COL)"
 
 fclean:	clean clean_libft clean_debug
-	@echo -e "$(RED)>>>>>>>> Deleting $(NAME)$(RESET_COL)$(RM_PROG_OUT)"
+	@echo -e "$(RED)>>>>>>>> Deleting $(NAME)$(RESET_COL)$(RM_EXE_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> ./$(NAME) deleted\n>>>>>>>>$(RESET_COL)"
 
 re:	fclean all
