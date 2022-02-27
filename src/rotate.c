@@ -12,9 +12,16 @@ void	rotate(t_vector *stack)
 
 void    do_ra(t_main_cont *cont, t_vector *moves_list)
 {
-	// set_iterator(&cont->pos_biggest_a, cont->pos_biggest_a.index, cont->stack_a.nb_elems, CANONICAL);
+	if (DEBUG)
+	{
+		print_move(RA);
+		print_stacks(cont);
+		print_stacks_info(cont);
+	}
 	rotate(&cont->stack_a);
 	moves_list->add_back(moves_list, RA);
+	iterate_once(&cont->pos_smallest_a, REVERSE);
+	iterate_once(&cont->pos_biggest_a, REVERSE);
 	if (DEBUG)
 	{
 		print_move(RA);
@@ -28,6 +35,8 @@ void    do_rb(t_main_cont *cont, t_vector *moves_list)
 {
 	rotate(&cont->stack_b);
 	moves_list->add_back(moves_list, RB);
+	iterate_once(&cont->pos_smallest_b, REVERSE);
+	iterate_once(&cont->pos_biggest_b, REVERSE);
 	if (DEBUG)
 	{
 		print_move(RB);
@@ -37,8 +46,20 @@ void    do_rb(t_main_cont *cont, t_vector *moves_list)
 	return ;
 }
 
-
-
-	// if ((move & 0xFF) == 'a' || (move & 0xFF) == 'r')
-	// if ((move & 0xFF) == 'b' || (move & 0xFF) == 'r')
-	// 	rotate(&cont->stack_b);
+void	do_rr(t_main_cont *cont, t_vector *moves_list)
+{
+	rotate(&cont->stack_a);
+	rotate(&cont->stack_b);
+	moves_list->add_back(moves_list, RR);
+	iterate_once(&cont->pos_smallest_a, REVERSE);
+	iterate_once(&cont->pos_biggest_a, REVERSE);
+	iterate_once(&cont->pos_smallest_b, REVERSE);
+	iterate_once(&cont->pos_biggest_b, REVERSE);
+	if (DEBUG)
+	{
+		print_move(RR);
+		print_stacks(cont);
+		print_stacks_info(cont);
+	}	
+	return ;
+}

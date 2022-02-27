@@ -1,30 +1,24 @@
 #include "push_swap.h"
 
-void	assign_inputs(t_main_cont *cont, char **args, int size)
+void	assign_inputs(t_main_cont *cont, char **args)
 {
 	int	i;
 
-	if (DEBUG)
-		printf("in assign_inputs size = %d\n", size);
 	if (init_devec(&cont->stack_a) == FAILURE)
 		exit_on_err("Oopsie fucky in the vector department for stack_a\n");
 	if (init_devec(&cont->stack_b) == FAILURE)
 		exit_on_err("Oopsie fucky in the vector department for stack_b\n");
-	i = 0;
-	while (args[i] != NULL)
-	{
-		if (cont->stack_a.add_back(&cont->stack_a, ft_atoi(args[i])))
-		{
-			cleanup(cont);
-			exit_on_err("vec_add_back done fucked up\n");
-		}
-		i++;
-	}
-	normalize_stack_values(&cont->stack_a);
 	if (init_devec(&cont->moves_list) == FAILURE)
 		exit_on_err("Oopsie fucky in the vector department for moves_list\n");
-	cont->pos_smallest_a.index = get_pos_smallest_value(&cont->stack_a);
-	cont->pos_biggest_a.index = get_pos_biggest_value(&cont->stack_a);
+	i = -1;
+	while (args[++i] != NULL)
+		if (cont->stack_a.add_back(&cont->stack_a, ft_atoi(args[i])))
+			exit_on_err("vec_add_back done fucked up\n");
+	normalize_stack_values(&cont->stack_a);
+	set_iterator(&cont->pos_smallest_a, get_pos_smallest_val(&cont->stack_a), \
+			cont->stack_a.nb_elems, CANONICAL);
+	set_iterator(&cont->pos_biggest_a, get_pos_biggest_val(&cont->stack_a), \
+			cont->stack_a.nb_elems, REVERSE);
 	cont->pos_smallest_b.index = 0;
 	cont->pos_biggest_b.index = 0;
 	return ;

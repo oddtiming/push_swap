@@ -86,12 +86,13 @@ typedef struct s_iterator
 	int		prev_index;
 	int		max_size;
 	int		nb_loops;
-	bool	direction;
+	bool	is_reverse;
 }	t_iterator;
 
 void	set_iterator(t_iterator *iterator, int head, int size, bool direction);
 void	iterate(t_iterator *iterator);
-bool	iterate_one_loop(t_iterator *iterator);
+void	iterate_once(t_iterator *iterator, bool is_reverse);
+bool	iterate_n_loops(t_iterator *iterator, int n);
 
 //TYPEDEFS
 typedef struct s_main_cont
@@ -123,31 +124,34 @@ typedef enum e_moves
 //Functions
 //PARSING
 void	parse(int argc, char *argv[], t_main_cont *cont);
-void	assign_inputs(t_main_cont *cont, char **args, int size);
+void	assign_inputs(t_main_cont *cont, char **args);
 void	normalize_stack_values(t_vector *stack);
 
 
 //MOVES
 void	rotate(t_vector *stack);
-void	rev_rotate(t_vector *stack);
-void	swap(t_vector *stack);
-void	push(t_vector *stack_src, t_vector *stack_dest);
 void    do_ra(t_main_cont *cont, t_vector *moves_list);
 void    do_rb(t_main_cont *cont, t_vector *moves_list);
 void    do_rr(t_main_cont *cont, t_vector *moves_list);
-void    do_rra(t_main_cont *cont, t_vector *moves_list, int move);
-void    do_rrb(t_main_cont *cont, t_vector *moves_list, int move);
-void    do_rrr(t_main_cont *cont, t_vector *moves_list, int move);
-void    do_push(t_main_cont *cont, t_vector *moves_list, int move);
-void    do_swap(t_main_cont *cont, t_vector *moves_list, int move);
+void	rev_rotate(t_vector *stack);
+void    do_rra(t_main_cont *cont, t_vector *moves_list);
+void    do_rrb(t_main_cont *cont, t_vector *moves_list);
+void    do_rrr(t_main_cont *cont, t_vector *moves_list);
+void	swap(t_vector *stack);
+void    do_sa(t_main_cont *cont, t_vector *moves_list);
+void    do_sb(t_main_cont *cont, t_vector *moves_list);
+void    do_ss(t_main_cont *cont, t_vector *moves_list);
+void	push(t_vector *stack_src, t_vector *stack_dest);
+void    do_pa(t_main_cont *cont, t_vector *moves_list);
+void    do_pb(t_main_cont *cont, t_vector *moves_list);
 
 //SORT
 void	sort(t_main_cont *cont);
 
 //  SORT UTILS
 int		is_sorted_at_pos(t_vector *stack);
-int		get_pos_smallest_value(t_vector *stack);
-int		get_pos_biggest_value(t_vector *stack);
+int		get_pos_smallest_val(t_vector *stack);
+int		get_pos_biggest_val(t_vector *stack);
 void	rotate_pos_in_a_to_0(t_main_cont *cont, t_vector *moves_list, int pos);
 void	rotate_pos_in_b_to_0(t_main_cont *cont, t_vector *moves_list, int pos);
 

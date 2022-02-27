@@ -17,8 +17,6 @@ static bool	has_duplicates(int *array, int size)
 		while (compare_pos < size)
 		{
 			compare_value = array[compare_pos];
-			if (DEBUG)
-				printf("is %d == %d?\n", curr_value, compare_value);
 			if (curr_value == compare_value)
 				return (true);
 			compare_pos++;
@@ -100,7 +98,7 @@ void	parse(int argc, char *argv[], t_main_cont *cont)
 		i++;
 	if (args_split[i] != NULL)
 		exit_on_err("one of the inputs is not an int\n");
-	assign_inputs(cont, args_split, i);
+	assign_inputs(cont, args_split);
 	if (has_duplicates(cont->stack_a.elems, cont->stack_a.nb_elems))
 		exit_on_err("Duplicate inputs\n");
 	// ft_print_split(args_split, "argv");

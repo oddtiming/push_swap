@@ -10,16 +10,54 @@ void	swap(t_vector *stack)
 	return ;
 }
 
-void    do_swap(t_main_cont *cont, t_vector *moves_list, int move)
+void    do_sa(t_main_cont *cont, t_vector *moves_list)
 {
-	if ((move & 0xFF) == 'a' || (move & 0xFF) == 's')
-		swap(&cont->stack_a);
-	if ((move & 0xFF) == 'b' || (move & 0xFF) == 's')
-		swap(&cont->stack_b);
-	moves_list->add_back(moves_list, move);
+	if (cont->pos_smallest_a.index == 0 || cont->pos_smallest_a.index == 1)
+		iterate_once(&cont->pos_smallest_a, cont->pos_smallest_a.index);
+	if (cont->pos_biggest_a.index == 0 || cont->pos_biggest_a.index == 1)
+		iterate_once(&cont->pos_biggest_a, cont->pos_biggest_a.index);
+	swap(&cont->stack_a);
+	moves_list->add_back(moves_list, SA);
 	if (DEBUG)
 	{
-		print_move(move);
+		print_move(SA);
+		print_stacks(cont);
+	}
+	return ;
+}
+
+void    do_sb(t_main_cont *cont, t_vector *moves_list)
+{
+	if (cont->pos_smallest_b.index == 0 || cont->pos_smallest_b.index == 1)
+		iterate_once(&cont->pos_smallest_b, cont->pos_smallest_b.index);
+	if (cont->pos_biggest_b.index == 0 || cont->pos_biggest_b.index == 1)
+		iterate_once(&cont->pos_biggest_b, cont->pos_biggest_b.index);
+	swap(&cont->stack_b);
+	moves_list->add_back(moves_list, SB);
+	if (DEBUG)
+	{
+		print_move(SB);
+		print_stacks(cont);
+	}
+	return ;
+}
+
+void    do_ss(t_main_cont *cont, t_vector *moves_list)
+{
+	if (cont->pos_smallest_a.index == 0 || cont->pos_smallest_a.index == 1)
+		iterate_once(&cont->pos_smallest_a, cont->pos_smallest_a.index);
+	if (cont->pos_biggest_a.index == 0 || cont->pos_biggest_a.index == 1)
+		iterate_once(&cont->pos_biggest_a, cont->pos_biggest_a.index);
+	if (cont->pos_smallest_b.index == 0 || cont->pos_smallest_b.index == 1)
+		iterate_once(&cont->pos_smallest_b, cont->pos_smallest_b.index);
+	if (cont->pos_biggest_b.index == 0 || cont->pos_biggest_b.index == 1)
+		iterate_once(&cont->pos_biggest_b, cont->pos_biggest_b.index);
+	swap(&cont->stack_a);
+	swap(&cont->stack_b);
+	moves_list->add_back(moves_list, SS);
+	if (DEBUG)
+	{
+		print_move(SS);
 		print_stacks(cont);
 	}
 	return ;

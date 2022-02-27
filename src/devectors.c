@@ -45,8 +45,8 @@ bool vec_add_back(t_vector *vec, int new_elem)
 	vec->nb_elems += 1;
 	if (new_elem > vec->biggest_elem)
 		vec->biggest_elem = new_elem;
-	if (new_elem < vec->smallest_elem)
-		vec->smallest_elem = 0;
+	else if (new_elem < vec->smallest_elem)
+		vec->smallest_elem = new_elem;
 	status = SUCCESS;
 	return (status);
 }
@@ -67,8 +67,8 @@ bool vec_add_front(t_vector *vec, int new_elem)
 	vec->capacity_before_head -= 1;
 	if (new_elem > vec->biggest_elem)
 		vec->biggest_elem = new_elem;
-	if (new_elem < vec->smallest_elem)
-		vec->smallest_elem = 0;
+	else if (new_elem < vec->smallest_elem)
+		vec->smallest_elem = new_elem;
 	status = SUCCESS;
 	return (status);
 }
@@ -104,29 +104,23 @@ bool vec_resize_back(t_vector *vec, int new_size)
 	int		*temp;
 	int		total_new_size;
 	int		pos_in_vector;
-	bool	status;
 
 	total_new_size = new_size + vec->capacity_before_head;
-	//To switch to a bzero, or write a ft_calloc
 	if (ft_assign_calloc((void **)&temp, total_new_size, sizeof(int)))
-		status = FAILURE;
-	else
+		return (FAILURE);
+	temp += vec->capacity_before_head;
+	pos_in_vector = 0;
+	while (pos_in_vector < vec->nb_elems)
 	{
-		temp += vec->capacity_before_head;
-		pos_in_vector = 0;
-		while (pos_in_vector < vec->nb_elems)
-		{
-			temp[pos_in_vector] = vec->elems[pos_in_vector];
-			pos_in_vector++;
-		}
-		vec->elems = temp;
-		free(vec->malloced_space);
-		vec->malloced_space = temp - vec->capacity_before_head;
-		vec->capacity_after_head = new_size;
-		vec->capacity_total = total_new_size;
-		status = SUCCESS;
+		temp[pos_in_vector] = vec->elems[pos_in_vector];
+		pos_in_vector++;
 	}
-	return (status);
+	free(vec->malloced_space);
+	vec->malloced_space = temp - vec->capacity_before_head;
+	vec->elems = temp;
+	vec->capacity_after_head = new_size;
+	vec->capacity_total = total_new_size;
+	return (SUCCESS);
 }
 
 bool vec_resize_front(t_vector *vec, int new_size)
@@ -134,28 +128,23 @@ bool vec_resize_front(t_vector *vec, int new_size)
 	int		*temp;
 	int		total_new_size;
 	int		pos_in_vector;
-	bool	status;
 
 	total_new_size = new_size + vec->capacity_after_head;
-	//To switch to a bzero, or write a ft_calloc
 	if (ft_assign_calloc((void **)&temp, total_new_size, sizeof(int)))
-		status = FAILURE;
-	else
+		return (FAILURE);
+	temp += new_size;
+	pos_in_vector = 0;
+	while (pos_in_vector < vec->nb_elems)
 	{
-		temp += new_size;
-		pos_in_vector = 0;
-		while (pos_in_vector < vec->nb_elems)
-		{
-			temp[pos_in_vector] = vec->elems[pos_in_vector];
-			pos_in_vector++;
-		}
-		vec->elems = temp;
-		vec->malloced_space = temp - new_size;
-		vec->capacity_before_head = new_size;
-		vec->capacity_total = total_new_size;
-		status = SUCCESS;
+		temp[pos_in_vector] = vec->elems[pos_in_vector];
+		pos_in_vector++;
 	}
-	return (status);
+	free(vec->malloced_space);
+	vec->malloced_space = temp - new_size;
+	vec->elems = temp;
+	vec->capacity_before_head = new_size;
+	vec->capacity_total = total_new_size;
+	return (SUCCESS);
 }
 
 void vec_free_list(t_vector *vec)
@@ -174,18 +163,13 @@ int	vec_get_smallest_elem(t_vector *vec)
 {
 	int			pos_in_stack;
 	int			smallest_value;
-	int			pos_smallest_value;
 
 	smallest_value = INT_MAX;
-	pos_smallest_value = 0;
 	pos_in_stack = 0;
 	while (pos_in_stack < vec->nb_elems)
 	{
 		if (vec->elems[pos_in_stack] < smallest_value)
-		{
 			smallest_value = vec->elems[pos_in_stack];
-			pos_smallest_value = pos_in_stack;
-		}
 		pos_in_stack++;
 	}
 	return (smallest_value);
@@ -195,18 +179,13 @@ int	vec_get_biggest_elem(t_vector *vec)
 {
 	int			pos_in_stack;
 	int			biggest_value;
-	int			pos_biggest_value;
 
 	biggest_value = INT_MIN;
-	pos_biggest_value = 0;
 	pos_in_stack = 0;
 	while (pos_in_stack < vec->nb_elems)
 	{
 		if (vec->elems[pos_in_stack] > biggest_value)
-		{
 			biggest_value = vec->elems[pos_in_stack];
-			pos_biggest_value = pos_in_stack;
-		}
 		pos_in_stack++;
 	}
 	return (biggest_value);

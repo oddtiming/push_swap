@@ -20,7 +20,7 @@ typedef struct s_iterator
 	int		max_size;
 	int		prev_index;
 	int		nb_loops;
-	bool	direction;
+	bool	is_reverse;
 }	t_iterator;
 
 void	set_iterator(t_iterator *iterator, int head, int size, bool direction);
@@ -33,7 +33,7 @@ void	set_iterator(t_iterator *iterator, int head, int size, bool direction)
 	iterator->index = head;
 	iterator->head = head;
 	iterator->max_size = size;
-	iterator->direction = direction;
+	iterator->is_reverse = direction;
 	//Will be incremented in the first loop to set at 0 once iterate starts
 	iterator->nb_loops = -1;
 	iterator->prev_index = -1;
@@ -48,7 +48,7 @@ void	iterate(t_iterator *iterator)
 		iterator->nb_loops += 1;
 	iterator->prev_index = iterator->index;
 	//-1 if direction == REVERSE, +1 if direction == CANONICAL
-	incrementer = iterator->direction * -1 + !iterator->direction * 1;
+	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
 		iterator->index = 0;
@@ -67,7 +67,7 @@ bool	iterate_one_loop(t_iterator *iterator)
 		iterator->nb_loops += 1;
 	iterator->prev_index = iterator->index;
 	//-1 if direction == REVERSE, +1 if direction == CANONICAL
-	incrementer = iterator->direction * -1 + !iterator->direction * 1;
+	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
 		iterator->index = 0;
