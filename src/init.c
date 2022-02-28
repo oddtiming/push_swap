@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	assign_inputs(t_main_cont *cont, char **args)
+void	init(t_main_cont *cont, char **args)
 {
 	int	i;
 
@@ -25,6 +25,22 @@ void	assign_inputs(t_main_cont *cont, char **args)
 	set_iterator(&cont->pos_min_val_b, 0, 0, REVERSE);
 	set_iterator(&cont->pos_max_val_b, 0, 0, CANONICAL);
 	init_reverse_moves_array(cont->reverse_fcts);
+	return ;
+}
+
+void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *))
+{
+	array[REV_SA] = &do_sa;
+	array[REV_SB] = &do_sb;
+	array[REV_SS] = &do_ss;
+	array[REV_RA] = &do_rra;
+	array[REV_RB] = &do_rrb;
+	array[REV_RR] = &do_rrr;
+	array[REV_RRA] = &do_ra;
+	array[REV_RRB] = &do_rb;
+	array[REV_RRR] = &do_rr;
+	array[REV_PA] = &do_pb;
+	array[REV_PB] = &do_pa;
 	return ;
 }
 

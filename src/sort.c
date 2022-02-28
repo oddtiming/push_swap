@@ -1,26 +1,5 @@
 #include "push_swap.h"
 
-// bool	try_rotate(t_main_cont *cont)
-// {
-// 	t_deque	*smallest_moves_list;
-
-// 	smallest_moves_list = malloc(sizeof(t_deque));
-// 	if (!smallest_moves_list)
-// 		exit_on_err("try_rotate: smallest_moves_list malloc error\n");
-// 	init_deque(smallest_moves_list);
-// 	if (!is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
-// 	{
-// 		smallest_moves_list->free_list(smallest_moves_list);
-// 		free(smallest_moves_list);
-// 		return (false);
-// 	}
-// 	rotate_pos_in_a_to_0(cont, smallest_moves_list, cont->pos_min_val_a.index);
-// 	cont->moves_list.free_list(&cont->moves_list);
-// 	cont->moves_list = *smallest_moves_list;
-// 	free(smallest_moves_list);
-// 	return (true);
-// }
-
 bool	try_swap(t_main_cont *cont)
 {
 	t_iterator	iterator;
@@ -39,6 +18,28 @@ bool	try_swap(t_main_cont *cont)
 	}
 	return (false);
 }
+
+
+//Here's the logic for insert_b:
+//	Should be recursive and take a moves_list as a parameter;
+//	for each iteration, the fct should:
+//		- keep in store the positions for the N smallest nb_moves to insert
+//		- Iterate through these N values to compare the outcomes recursively can be.
+//		- undo the last_move if the 
+//	at the end, the list with the smallest nb_moves is concatenated to cont's moves_list
+// void	insert_b(t_main_cont *cont)
+// {
+// 	int	i;
+// 	int	smallest_nb_moves;
+	
+// 	smallest_nb_moves = INT_MAX;
+// 	i = 0;
+// 	while (i < cont->stack_b.nb_elems)
+// 	{
+// 		//Will return the minimal number of moves to insert elems[i]
+// 		calculate_insert_cost()
+// 	}
+// }
 
 void	sort_small(t_main_cont *cont)
 {

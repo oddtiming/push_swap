@@ -38,9 +38,9 @@ SRCS	= $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJ_DIR	= obj
 OBJS	= $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 
-INC			= include
-INCFLAGS	= -I$(INC)
-HEADERS		= $(addprefix $(INC)/, $(HFILES))
+INCL		= include
+INCLFLAGS	= -I$(INCL)
+HEADERS		= $(addprefix $(INCL)/, $(HFILES))
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g -O2
@@ -65,10 +65,10 @@ RM_EXE_OUT		=	$$($(RM_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' 
 RM_LIBFT		=	make clean -sC ./libft
 RM_LIBFT_OUT	=	$$($(RM_LIBFT) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
-COMPILE_EXE		=	$(CC) $(CFLAGS) $(LIBFT_FLAGS) $(OBJS) -o $(NAME)
+COMPILE_EXE		=	$(CC) $(CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(OBJS) -o $(NAME)
 COMPILE_EXE_OUT	=	$$($(COMPILE_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
-COMPILE_C		=	$(CC) $(CFLAGS) $(INCFLAGS) -o $@ -c $<
+COMPILE_C		=	$(CC) $(CFLAGS) $(INCLFLAGS) -o $@ -c $<
 COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
@@ -78,9 +78,9 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 #
 # DEBUG MACROS
 #
-COMPILE_DBG_EXE		=	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCFLAGS) $(DBG_OBJS) -o $(DBG_EXE)
+COMPILE_DBG_EXE		=	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(DBG_OBJS) -o $(DBG_EXE)
 COMPILE_DBG_EXE_OUT	=	$$($(COMPILE_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-COMPILE_DBGC		=	$(CC) $(DBG_CFLAGS) $(INCFLAGS) -o $@ -c $<
+COMPILE_DBGC		=	$(CC) $(DBG_CFLAGS) $(INCLFLAGS) -o $@ -c $<
 COMPILE_DBGC_OUT	=	$$($(COMPILE_DBGC) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 RM_DBG_EXE			=	rm -rf debug_objs; rm $(DBG_EXE)
 RM_DBG_EXE_OUT		=	$$($(RM_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')

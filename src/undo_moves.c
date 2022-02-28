@@ -1,36 +1,18 @@
 #include "push_swap.h"
 
-enum e_moves_to_indices
-{
-	REV_SA = 0,
-	REV_SB = 1,
-	REV_SS = 2,
-	REV_RA = 3,
-	REV_RB = 4,
-	REV_RR = 5,
-	REV_RRA = 6,
-	REV_RRB = 7,
-	REV_RRR = 8,
-	REV_PA = 9,
-	REV_PB = 10
-}	t_moves_to_indices;
-
-void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *))
-{
-	array[REV_SA] = &do_sa;
-	array[REV_SB] = &do_sb;
-	array[REV_SS] = &do_ss;
-	array[REV_RA] = &do_rra;
-	array[REV_RB] = &do_rrb;
-	array[REV_RR] = &do_rrr;
-	array[REV_RRA] = &do_ra;
-	array[REV_RRB] = &do_rb;
-	array[REV_RRR] = &do_rr;
-	array[REV_PA] = &do_pb;
-	array[REV_PB] = &do_pa;
-	return ;
-}
-
+/* 
+ * REV_SA  = 0 	|	(a => 0) + 3 * (s => 0)	==> 0 	| rev_fcts[0] ==> &do_sa
+ * REV_SB  = 1 	|	(b => 1) + 3 * (s => 0)	==> 1 	| rev_fcts[1] ==> &do_sb
+ * REV_SS  = 2 	|
+ * REV_RA  = 3 	|	{...}
+ * REV_RB  = 4 	|
+ * REV_RR  = 5 	|	(r => 2) + 3 * (r => 1)	==> 5 	| rev_fcts[5] ==> &do_rrr
+ * REV_RRA = 6	|	{...}
+ * REV_RRB = 7	|	(b => 1) + 3 * (rr => q -> 2) ==> 7| rev_fcts[7] ==> &do_rb
+ * REV_RRR = 8	|	{...}
+ * REV_PA  = 9 	|
+ * REV_PB  = 10	|	(b => 1) + 3 * (p => 3)	==> 10	| rev_fcts[10] ==> &do_pa
+ */
 int	convert_move_to_index(int move)
 {
 	int	move_to_index;
