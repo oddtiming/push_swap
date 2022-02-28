@@ -45,8 +45,8 @@ typedef struct s_deque
 	int		*elems;
 	int		*malloced_space;
 	int		nb_elems;
-	int		min_elem;
-	int		max_elem;
+	int		elem_min;
+	int		elem_max;
 	int		capacity_total;
 	int		capacity_after_head;
 	int		capacity_before_head;
@@ -58,8 +58,8 @@ typedef struct s_deque
 	bool	(*resize_front)(t_deque *, int);
 	void	(*free_list)(t_deque *);
 	void	(*set_elem)(t_deque *, int, int);
-	int		(*get_min_elem)(t_deque *);
-	int		(*get_max_elem)(t_deque *);
+	int		(*get_elem_min)(t_deque *);
+	int		(*get_elem_max)(t_deque *);
 }	t_deque;
 
 //VECTORS
@@ -72,8 +72,8 @@ bool 	deque_resize_last(t_deque *deque, int new_size);
 bool 	deque_resize_front(t_deque *deque, int new_size);
 void 	deque_free_list(t_deque *deque);
 void	deque_set_elem(t_deque *deque, int pos, int new_value);
-int		deque_get_min_elem(t_deque *deque);
-int		deque_get_max_elem(t_deque *deque);
+int		deque_get_elem_min(t_deque *deque);
+int		deque_get_elem_max(t_deque *deque);
 
 //ITERATORS (still need to learn how to link headers...)
 # define REVERSE 1
@@ -96,15 +96,17 @@ void	iterate_once(t_iterator *iterator, bool is_reverse);
 bool	iterate_n_loops(t_iterator *iterator, int n);
 
 //TYPEDEFS
+typedef struct s_main_cont	t_main_cont;
 typedef struct s_main_cont
 {
-	t_deque	stack_a;
-	t_deque	stack_b;
-	t_deque	moves_list;
+	t_deque		stack_a;
+	t_deque		stack_b;
+	t_deque		moves_list;
 	t_iterator	pos_min_val_a;
 	t_iterator	pos_min_val_b;
 	t_iterator	pos_max_val_a;
 	t_iterator	pos_max_val_b;
+	void		(**reverse_fcts)(t_main_cont *, t_deque *);
 }	t_main_cont;
 
 typedef enum e_moves
@@ -127,6 +129,7 @@ typedef enum e_moves
 void	parse(int argc, char *argv[], t_main_cont *cont);
 void	assign_inputs(t_main_cont *cont, char **args);
 void	normalize_stack_values(t_deque *stack);
+void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 
 
 //MOVES
@@ -151,6 +154,9 @@ static inline void	rotate_update_iterators(t_iterator *iterator);
 static inline void	rev_rotate_update_iterators(t_iterator *iterator);
 static inline void	swap_update_iterator(t_iterator *iterator);
 static inline void	push_update_iterators(t_main_cont *cont);
+void				undo_moves(t_main_cont *cont, t_deque *moves_list);
+int					convert_move_to_index(int move);
+
 
 //SORT
 void	sort(t_main_cont *cont);
@@ -162,10 +168,11 @@ int		get_pos_biggest_val(t_deque *stack);
 void	rotate_pos_in_a_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
 void	rotate_pos_in_b_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
 
+
 //  SORT_SMALL
 void	sort_small(t_main_cont *cont);
 bool	try_rotate(t_main_cont *cont);
-// bool	try_swap(t_main_cont *cont, t_deque *smallest_moves_list);
+bool	try_swap(t_main_cont *cont);
 // bool	try_pb(t_main_cont *cont, t_deque *smallest_moves_list);
 // bool	try_invert4(t_main_cont *cont, t_deque *temp);
 

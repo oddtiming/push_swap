@@ -19,7 +19,9 @@ static inline void	push_update_iterators(t_main_cont *cont)
 void    do_pa(t_main_cont *cont, t_deque *moves_list)
 {
 	push(&cont->stack_b, &cont->stack_a);
-	moves_list->add_last(moves_list, PA);
+	if (moves_list)
+		moves_list->add_last(moves_list, PA);
+	
 	push_update_iterators(cont);
 
 	if (DEBUG)
@@ -29,13 +31,16 @@ void    do_pa(t_main_cont *cont, t_deque *moves_list)
 		print_stacks(cont);
 		print_stacks_info(cont);
 	}
+	
 	return ;
 }
 
 void    do_pb(t_main_cont *cont, t_deque *moves_list)
 {
 	push(&cont->stack_a, &cont->stack_b);
-	moves_list->add_last(moves_list, PB);
+	if (moves_list)
+		moves_list->add_last(moves_list, PB);
+	
 	push_update_iterators(cont);
 
 	if (DEBUG)
@@ -45,5 +50,6 @@ void    do_pb(t_main_cont *cont, t_deque *moves_list)
 		print_stacks(cont);
 		print_stacks_info(cont);
 	}
+	
 	return ;
 }

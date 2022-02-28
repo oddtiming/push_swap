@@ -7,7 +7,7 @@ int	get_pos_smallest_val(t_deque *stack)
 	pos_in_stack = 0;
 	if (stack->nb_elems == 0)
 		return (0);
-	while (stack->elems[pos_in_stack] != stack->min_elem)
+	while (stack->elems[pos_in_stack] != stack->elem_min)
 		pos_in_stack++;
 	return (pos_in_stack);
 }
@@ -19,7 +19,7 @@ int	get_pos_biggest_val(t_deque *stack)
 	pos_in_stack = 0;
 	if (stack->nb_elems == 0)
 		return (0);
-	while (stack->elems[pos_in_stack] != stack->max_elem)
+	while (stack->elems[pos_in_stack] != stack->elem_max)
 		pos_in_stack++;
 	return (pos_in_stack);
 }
@@ -44,6 +44,14 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
 	return (true);
 }
 
+/**
+ * will rotate stack_a to pos in as few moves as possible and add the
+ * rotations made to moves_list
+ * 
+ * @param cont 			main container
+ * @param moves_list 	moves to which rotations will be added
+ * @param pos 			pos to be rotated to pos_0
+ */
 void	rotate_pos_in_a_to_0(t_main_cont *cont, t_deque *moves_list, int pos)
 {
 	if (pos < cont->stack_a.nb_elems - pos)

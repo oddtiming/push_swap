@@ -34,16 +34,16 @@ void	print_stacks(t_main_cont *cont)
 void	print_stacks_info(t_main_cont *cont)
 {
 	printf(YELLOW"*stack_a*\n");
-	printf("\tstack_a.max_elem = %d\n", cont->stack_a.max_elem);
+	printf("\tstack_a.elem_max = %d\n", cont->stack_a.elem_max);
 	printf("\tcont->pos_max_val_a.index = %d\n", cont->pos_max_val_a.index);
-	printf("\tstack_a.min_elem = %d\n", cont->stack_a.min_elem);
+	printf("\tstack_a.elem_min = %d\n", cont->stack_a.elem_min);
 	printf("\tcont->pos_min_val_a.index = %d\n", cont->pos_min_val_a.index);
 	printf("\tstack_a.nb_elems = %d\n", cont->stack_a.nb_elems);
 
 	printf(YELLOW"*stack_b*\n");
-	printf("\tstack_b.max_elem = %d\n", cont->stack_b.max_elem);
+	printf("\tstack_b.elem_max = %d\n", cont->stack_b.elem_max);
 	printf("\tcont->pos_max_val_b.index = %d\n", cont->pos_max_val_b.index);
-	printf("\tstack_b.min_elem = %d\n", cont->stack_b.min_elem);
+	printf("\tstack_b.elem_min = %d\n", cont->stack_b.elem_min);
 	printf("\tcont->pos_min_val_b.index = %d\n", cont->pos_min_val_b.index);
 	printf("\tstack_b.nb_elems = %d\n"RESET_COL, cont->stack_b.nb_elems);
 	return ;
@@ -76,5 +76,12 @@ void    print_all_moves(t_deque *moves_list)
         print_move(moves_list->elems[i]);
         i++;
     }
+	if (DEBUG)
+	{
+		if (!i)
+			printf(RED"\n\t====== No move stored ======\n"RESET_COL);
+		else
+			printf(GREEN"\n\t====== Total nb_moves == %d ======\n"RESET_COL, i);
+	}
     return ;
 }

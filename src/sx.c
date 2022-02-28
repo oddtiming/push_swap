@@ -20,7 +20,8 @@ static inline void	swap_update_iterator(t_iterator *iterator)
 void    do_sa(t_main_cont *cont, t_deque *moves_list)
 {
 	swap(&cont->stack_a);
-	moves_list->add_last(moves_list, SA);
+	if (moves_list)
+		moves_list->add_last(moves_list, SA);
 
 	swap_update_iterator(&cont->pos_min_val_a);
 	swap_update_iterator(&cont->pos_max_val_a);
@@ -39,7 +40,8 @@ void    do_sa(t_main_cont *cont, t_deque *moves_list)
 void    do_sb(t_main_cont *cont, t_deque *moves_list)
 {
 	swap(&cont->stack_b);
-	moves_list->add_last(moves_list, SB);
+	if (moves_list)
+		moves_list->add_last(moves_list, SB);
 
 	swap_update_iterator(&cont->pos_min_val_b);
 	swap_update_iterator(&cont->pos_max_val_b);
@@ -59,7 +61,8 @@ void    do_ss(t_main_cont *cont, t_deque *moves_list)
 {
 	swap(&cont->stack_a);
 	swap(&cont->stack_b);
-	moves_list->add_last(moves_list, SS);
+	if (moves_list)
+		moves_list->add_last(moves_list, SS);
 
 	swap_update_iterator(&cont->pos_min_val_a);
 	swap_update_iterator(&cont->pos_max_val_a);

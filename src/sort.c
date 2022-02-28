@@ -1,43 +1,56 @@
 #include "push_swap.h"
 
-bool	try_rotate(t_main_cont *cont)
-{
-	t_deque	*smallest_moves_list;
-
-	smallest_moves_list = malloc(sizeof(t_deque));
-	if (!smallest_moves_list)
-		exit_on_err("smallest_moves_list malloc error\n");
-	init_deque(smallest_moves_list);
-	if (!is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
-	{
-		smallest_moves_list->free_list(smallest_moves_list);
-		free(smallest_moves_list);
-		return (0);
-	}
-	rotate_pos_in_a_to_0(cont, smallest_moves_list, cont->pos_min_val_a.index);
-	// if (cont->stack_b.nb_elems > 0)
-	// 	insert_b(cont);
-	cont->moves_list.free_list(&cont->moves_list);
-	cont->moves_list = *smallest_moves_list;
-	free(smallest_moves_list);
-	return (1);
-}
-
-// void	try_swap(t_main_cont *cont)
+// bool	try_rotate(t_main_cont *cont)
 // {
 // 	t_deque	*smallest_moves_list;
 
 // 	smallest_moves_list = malloc(sizeof(t_deque));
+// 	if (!smallest_moves_list)
+// 		exit_on_err("try_rotate: smallest_moves_list malloc error\n");
+// 	init_deque(smallest_moves_list);
+// 	if (!is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
+// 	{
+// 		smallest_moves_list->free_list(smallest_moves_list);
+// 		free(smallest_moves_list);
+// 		return (false);
+// 	}
+// 	rotate_pos_in_a_to_0(cont, smallest_moves_list, cont->pos_min_val_a.index);
+// 	cont->moves_list.free_list(&cont->moves_list);
+// 	cont->moves_list = *smallest_moves_list;
+// 	free(smallest_moves_list);
+// 	return (true);
 // }
+
+bool	try_swap(t_main_cont *cont)
+{
+	t_iterator	iterator;
+
+	set_iterator(&iterator, 0, cont->stack_a.nb_elems, CANONICAL);
+	while (iterate_n_loops(&iterator, 1))
+	{
+		rotate_pos_in_a_to_0(cont, &cont->moves_list, iterator.index);
+		do_sa(cont, &cont->moves_list);
+		if (is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
+			return (true);
+		undo_moves(cont, &cont->moves_list);
+	}
+	return (false);
+}
 
 void	sort_small(t_main_cont *cont)
 {
 	// t_deque	*temp;
 
-	if (try_rotate(cont))
+	if (is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
+	{
+		rotate_pos_in_a_to_0(cont, &cont->moves_list, cont->pos_min_val_a.index);
 		return ;
-	// else if (try_swap(cont))
-	// 	return ;
+	}
+	else if (try_swap(cont))
+		return ;
+	// if (cont->stack_b.nb_elems > 0)
+	// 	insert_b(cont);
+	
 	// else
 	// {
 	// 	try_pb(cont, smallest_moves_list);

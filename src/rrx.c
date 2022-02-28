@@ -19,7 +19,8 @@ static inline void	rev_rotate_update_iterators(t_iterator *iterator)
 void    do_rra(t_main_cont *cont, t_deque *moves_list)
 {
 	rev_rotate(&cont->stack_a);
-	moves_list->add_last(moves_list, RRA);
+	if (moves_list)
+		moves_list->add_last(moves_list, RRA);
 
 	rev_rotate_update_iterators(&cont->pos_min_val_a);
 	rev_rotate_update_iterators(&cont->pos_max_val_a);
@@ -37,7 +38,8 @@ void    do_rra(t_main_cont *cont, t_deque *moves_list)
 void    do_rrb(t_main_cont *cont, t_deque *moves_list)
 {
 	rev_rotate(&cont->stack_b);
-	moves_list->add_last(moves_list, RRB);
+	if (moves_list)
+		moves_list->add_last(moves_list, RRB);
 
 	rev_rotate_update_iterators(&cont->pos_min_val_b);
 	rev_rotate_update_iterators(&cont->pos_max_val_b);
@@ -56,7 +58,8 @@ void	do_rrr(t_main_cont *cont, t_deque *moves_list)
 {
 	rev_rotate(&cont->stack_a);
 	rev_rotate(&cont->stack_b);
-	moves_list->add_last(moves_list, RRR);
+	if (moves_list)
+		moves_list->add_last(moves_list, RRR);
 
 	rev_rotate_update_iterators(&cont->pos_min_val_b);
 	rev_rotate_update_iterators(&cont->pos_max_val_b);

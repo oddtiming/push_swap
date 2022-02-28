@@ -10,6 +10,9 @@ void	assign_inputs(t_main_cont *cont, char **args)
 		exit_on_err("Oopsie fucky in the deque department for stack_b\n");
 	if (init_deque(&cont->moves_list) == FAILURE)
 		exit_on_err("Oopsie fucky in the deque department for moves_list\n");
+	cont->reverse_fcts = malloc(11 * sizeof(void *));
+	if (!cont->reverse_fcts)
+		exit_on_err("reverse_fcts_my_ass\n");
 	i = -1;
 	while (args[++i] != NULL)
 		if (cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i])))
@@ -19,8 +22,9 @@ void	assign_inputs(t_main_cont *cont, char **args)
 			cont->stack_a.nb_elems, CANONICAL);
 	set_iterator(&cont->pos_max_val_a, get_pos_biggest_val(&cont->stack_a), \
 			cont->stack_a.nb_elems, REVERSE);
-	set_iterator(&cont->pos_min_val_b, 0, 0, CANONICAL);
-	set_iterator(&cont->pos_max_val_b, 0, 0, REVERSE);
+	set_iterator(&cont->pos_min_val_b, 0, 0, REVERSE);
+	set_iterator(&cont->pos_max_val_b, 0, 0, CANONICAL);
+	init_reverse_moves_array(cont->reverse_fcts);
 	return ;
 }
 

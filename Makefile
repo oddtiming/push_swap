@@ -25,6 +25,7 @@ CFILES	=	cleanup.c \
 			sort.c \
 			sort_utils.c \
 			sx.c \
+			undo_moves.c \
 			utils.c
 
 HFILES	= 	push_swap.h \
@@ -42,7 +43,7 @@ INCFLAGS	= -I$(INC)
 HEADERS		= $(addprefix $(INC)/, $(HFILES))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g -O3
+CFLAGS	= -Wall -Wextra -Werror -g -O2
 
 #
 # DEBUG build settings
