@@ -63,8 +63,10 @@ void	sort(t_main_cont *cont);
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);
+int		get_pos_of_val(t_deque  *stack, int val);
 int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
+int		get_next_bigger(t_deque *stack, int curr_val);
 void	rotate_pos_in_a_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
 void	rotate_pos_in_b_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
 
@@ -73,8 +75,6 @@ void	rotate_pos_in_b_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
 void	sort_small(t_main_cont *cont);
 bool	try_rotate(t_main_cont *cont);
 bool	try_swap(t_main_cont *cont);
-// bool	try_pb(t_main_cont *cont, t_deque *smallest_moves_list);
-// bool	try_invert4(t_main_cont *cont, t_deque *temp);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);

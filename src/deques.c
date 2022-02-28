@@ -14,6 +14,7 @@ bool init_deque(t_deque *deque)
 	deque->get_elem_min = &deque_get_elem_min;
 	deque->get_elem_max = &deque_get_elem_max;
 
+
 	//Malloc a block of memory designed to leave space on each side of the
 	//deque_head, so that values can be added on both ends with the same
 	//calculation cost, and there is still a single memory space.

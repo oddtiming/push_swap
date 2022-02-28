@@ -24,6 +24,24 @@ int	get_pos_biggest_val(t_deque *stack)
 	return (pos_in_stack);
 }
 
+int		get_next_bigger(t_deque *stack, int curr_val)
+{
+	int	pos;
+	int	next_bigger;
+
+	if (curr_val + 1 > stack->elem_max)
+		return (stack->elem_min);
+	next_bigger = INT_MAX;
+	pos = 0;
+	while (pos < stack->nb_elems)
+	{
+		if (stack->elems[pos] < next_bigger)
+			next_bigger = stack->elems[pos];
+		pos++;
+	}
+	return (next_bigger);
+}
+
 //Since the pos_smallest lives outside the deque (that's really dumb btw),
 //pos_smallest needs to be passed as a parameter for now. Should change it soon
 //	Returns true if sorted 

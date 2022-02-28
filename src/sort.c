@@ -27,19 +27,32 @@ bool	try_swap(t_main_cont *cont)
 //		- Iterate through these N values to compare the outcomes recursively can be.
 //		- undo the last_move if the 
 //	at the end, the list with the smallest nb_moves is concatenated to cont's moves_list
-// void	insert_b(t_main_cont *cont)
-// {
-// 	int	i;
-// 	int	smallest_nb_moves;
+//
+// FOR NOW, though, simply calculate which element is fastest to insert, mb recursively
+void	insert_b(t_main_cont *cont)
+{
+	int	i;
+	int	smallest_insert_cost;
+	int	smallest_insert_pos;
+	int	curr_insert_cost;
+	int	curr_insert_value;
 	
-// 	smallest_nb_moves = INT_MAX;
-// 	i = 0;
-// 	while (i < cont->stack_b.nb_elems)
-// 	{
-// 		//Will return the minimal number of moves to insert elems[i]
-// 		calculate_insert_cost()
-// 	}
-// }
+	smallest_insert_cost = INT_MAX;
+	i = 0;
+	while (i < cont->stack_b.nb_elems)
+	{
+		curr_insert_value = get_next_bigger(&cont->stack_a, cont->stack_b.elems[i]);
+		//Will calculate the minimum distance between two points in two stacks
+		//calculate_min_dist(cont, pos_in_a, pos_in_b)
+		curr_insert_cost = calculate_min_dist(cont, get_pos_of_val(&cont->stack_a, curr_insert_value), i);
+		if (curr_insert_cost < smallest_insert_cost)
+		{
+			smallest_insert_cost = curr_insert_cost;
+			smallest_insert_pos = i;
+		}
+	}
+	//do some rotate shit. Dunno, I'm getting tired
+}
 
 void	sort_small(t_main_cont *cont)
 {
