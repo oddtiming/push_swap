@@ -17,16 +17,19 @@ int	main(int argc, char *argv[])
 		print_stacks_info(cont);
 	}
 
-	do_pb(cont, &cont->moves_list);
-	do_pb(cont, &cont->moves_list);
-	do_ss(cont, &cont->moves_list);
-	do_rr(cont, &cont->moves_list);
-	do_pa(cont, &cont->moves_list);
-	do_pa(cont, &cont->moves_list);
+	// do_pb(cont, &cont->moves_list);
+	// do_pb(cont, &cont->moves_list);
+	// do_pb(cont, &cont->moves_list);
+	// do_sa(cont, &cont->moves_list);
+	// do_ss(cont, &cont->moves_list);
+	// do_ss(cont, &cont->moves_list);
+	// do_rr(cont, &cont->moves_list);
+	// do_pa(cont, &cont->moves_list);
+	// do_pa(cont, &cont->moves_list);
 	// print_stacks_info(cont);
 
-	undo_moves(cont, &cont->moves_list);
-	// sort(cont);
+	// undo_moves(cont, &cont->moves_list);
+	sort(cont);
 
 	print_all_moves(&cont->moves_list);
 

@@ -31,7 +31,10 @@ bool	try_swap(t_main_cont *cont)
 		rotate_pos_in_a_to_0(cont, &cont->moves_list, iterator.index);
 		do_sa(cont, &cont->moves_list);
 		if (is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
+		{
+			rotate_pos_in_a_to_0(cont, &cont->moves_list, cont->pos_min_val_a.index);
 			return (true);
+		}
 		undo_moves(cont, &cont->moves_list);
 	}
 	return (false);

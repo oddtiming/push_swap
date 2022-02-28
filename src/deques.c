@@ -161,7 +161,7 @@ void deque_free_list(t_deque *deque)
 
 void	deque_set_elem(t_deque *deque, int pos, int new_value)
 {
-	if (pos < deque->capacity_before_head || pos > deque->capacity_after_head)
+	if (-pos > deque->capacity_before_head || pos > deque->capacity_after_head)
 		return ;
 	deque->elems[pos] = new_value;
 	return ;

@@ -51,22 +51,14 @@ int	convert_move_to_index(int move)
 
 void	undo_moves(t_main_cont *cont, t_deque *moves_list)
 {
-	static void	(**reverse_moves_fcts)(t_main_cont *, t_deque *);
 	int			move_to_index;
 
-	if (!reverse_moves_fcts)
-	{
-		reverse_moves_fcts = malloc(11 * sizeof(void *));
-		init_reverse_moves_array(reverse_moves_fcts);
-	}
 	while (moves_list->nb_elems)
 	{
 		move_to_index = moves_list->elems[moves_list->nb_elems - 1];
 		move_to_index = convert_move_to_index(move_to_index);
-		reverse_moves_fcts[move_to_index](cont, NULL);
+		cont->reverse_fcts[move_to_index](cont, NULL);
 		moves_list->remove_last(moves_list);
 	}
-	free (reverse_moves_fcts);
-	reverse_moves_fcts = NULL;
 	return ;
 }
