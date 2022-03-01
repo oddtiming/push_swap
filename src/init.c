@@ -4,12 +4,10 @@ void	init(t_main_cont *cont, char **args)
 {
 	int	i;
 
-	if (init_deque(&cont->stack_a) == FAILURE)
-		exit_on_err("Oopsie fucky in the deque department for stack_a\n");
-	if (init_deque(&cont->stack_b) == FAILURE)
-		exit_on_err("Oopsie fucky in the deque department for stack_b\n");
-	if (init_deque(&cont->moves_list) == FAILURE)
-		exit_on_err("Oopsie fucky in the deque department for moves_list\n");
+	init_deque(&cont->stack_a);
+	init_deque(&cont->stack_b);
+	init_deque(&cont->temp_moves);
+	init_deque(&cont->final_moves);
 	cont->reverse_fcts = malloc(11 * sizeof(void *));
 	if (!cont->reverse_fcts)
 		exit_on_err("reverse_fcts_my_ass\n");
@@ -18,12 +16,12 @@ void	init(t_main_cont *cont, char **args)
 		if (cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i])))
 			exit_on_err("deque_add_last done fucked up\n");
 	normalize_stack_values(&cont->stack_a);
-	set_iterator(&cont->pos_min_val_a, get_pos_smallest_val(&cont->stack_a), \
+	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), \
 			cont->stack_a.nb_elems, 0);
-	set_iterator(&cont->pos_max_val_a, get_pos_biggest_val(&cont->stack_a), \
+	set_iterator(&cont->tail_a, get_pos_biggest_val(&cont->stack_a), \
 			cont->stack_a.nb_elems, 1);
-	set_iterator(&cont->pos_min_val_b, 0, 0, 1);
-	set_iterator(&cont->pos_max_val_b, 0, 0, 0);
+	set_iterator(&cont->head_b, 0, 0, 1);
+	set_iterator(&cont->tail_b, 0, 0, 0);
 	init_reverse_moves_array(cont->reverse_fcts);
 	return ;
 }

@@ -1,12 +1,13 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 4 3 2 1 0
+RUN_ARGS = 2 1 0 4 3
 
 SHELL	=	bash
 
 GREEN		=	\033[0;32m
 BLUE		=	\033[0;34m
+CYAN		=	\033[0;36m
 RED			=	\033[0;31m
 ON_RED		=	\033[41m
 RESET_COL	=	\033[0m
@@ -117,15 +118,15 @@ libft: silent_libft
 pretty_print: 
 	@echo -e "\n------------------- $(NAME) -------------------"
 
-clean:	
+clean:
 	@echo -e "$(RED)>>>>>>>> Deleting obj files$(RESET_COL)$(RM_OBJS_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> obj files deleted\n>>>>>>>>$(RESET_COL)"
 
-clean_libft:	
+clean_libft:
 	@echo -e "$(RED)>>>>>>>> make fclean -sC libft $(RESET_COL)$(RM_LIBFT_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> libft cleaned\n>>>>>>>>$(RESET_COL)"
 
-clean_debug:
+clean_debug: clean
 	@echo -e "$(RED)>>>>>>>> Deleting debug obj files$(RESET_COL)$(RM_DBG_EXE_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> obj files deleted\n>>>>>>>>$(RESET_COL)"
 
@@ -149,7 +150,7 @@ run: all
 pretty_print_debug:
 	@echo -e "$(RED)\n------------------- $(DBG_EXE) -------------------$(RESET_COL)\n"
 
-debug: libft pretty_print_debug $(DBG_OBJS)
+debug: all pretty_print_debug $(DBG_OBJS)
 	@echo -e "\n$(ON_RED)>>>>>>>> Compiling $(DBG_EXE) ...$(RESET_COL)$(COMPILE_DBG_EXE_OUT)"
 	./$(DBG_EXE) $(RUN_ARGS)
 

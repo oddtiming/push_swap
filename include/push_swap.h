@@ -32,24 +32,48 @@
 # endif
 # define YELLOW "\033[0;33m"
 # define MAGENTA "\033[0;35m"
+# define BLUE "\033[0;34m"
+# define CYAN "\033[0;36m"
 # define RED "\033[0;31m"
 # define GREEN "\033[0;32m"
 # define RESET_COL "\033[0m"
 //END OF REMOVE
 
 //TYPEDEFS
+typedef	struct s_stack_insert_info
+{
+	int	pos_best;
+	int	pos_curr;
+	int	val_best;
+	int	val_curr;
+	int	dist0_best;
+	int	dist0_curr;
+
+}	t_stack_insert_info;
+
+typedef	struct s_insert_info
+{
+	t_stack_insert_info	a_info;
+	t_stack_insert_info	b_info;
+	int					abs_dist0;
+	int					delta_insert_values;
+}	t_insert_info;
+
+
 typedef struct s_main_cont	t_main_cont;
 typedef struct s_main_cont
 {
 	t_deque		stack_a;
 	t_deque		stack_b;
-	t_deque		moves_list;
-	t_iterator	pos_min_val_a;
-	t_iterator	pos_min_val_b;
-	t_iterator	pos_max_val_a;
-	t_iterator	pos_max_val_b;
+	t_deque		temp_moves;
+	t_deque		final_moves;
+	t_iterator	head_a;
+	t_iterator	head_b;
+	t_iterator	tail_a;
+	t_iterator	tail_b;
 	void		(**reverse_fcts)(t_main_cont *, t_deque *);
 }	t_main_cont;
+
 
 //Functions
 //PARSING
@@ -61,6 +85,15 @@ void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 //SORT
 void	sort(t_main_cont *cont);
 void	insert_b(t_main_cont *cont);
+void	insert_elem_b(t_main_cont *cont, int pos_a, int pos_b);
+
+//  SORT_SMALL
+void	sort_small(t_main_cont *cont);
+bool	try_rotate(t_main_cont *cont);
+bool	try_swap(t_main_cont *cont);
+void	try_pb(t_main_cont *cont);
+bool	invert_4(t_main_cont *cont);
+void	copy_deque(t_deque *src, t_deque *dest);
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);
@@ -68,21 +101,13 @@ int		calculate_abs_min_dist(t_main_cont *cont, int pos_a, int pos_b);
 int		get_pos_of_val(t_deque  *stack, int val);
 int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
-int		get_next_bigger(t_deque *stack, int curr_val);
-void	rotate_to_0_in_a(t_main_cont *cont, t_deque *moves_list, int pos);
-void	rotate_to_0_in_b(t_main_cont *cont, t_deque *moves_list, int pos);
-
-
-//  SORT_SMALL
-void	sort_small(t_main_cont *cont);
-bool	try_rotate(t_main_cont *cont);
-bool	try_swap(t_main_cont *cont);
-void	try_pb(t_main_cont *cont);
-void	invert_4(t_main_cont *cont);
-void	copy_deque(t_deque *src, t_deque *dest);
-
-//ERROR HANDLING
-void	exit_on_err(char *err_message);
+int		get_next_bigger(t_deque *haystack, int curr_val);
+void	rotate_to_0_in_a(t_main_cont *cont, t_deque *temp_moves, int pos);
+void	rotate_to_0_in_b(t_main_cont *cont, t_deque *temp_moves, int pos);
+int 	ft_abs(int a);
+int 	ft_max(int a, int b);
+int 	ft_min(int a, int b);
+bool	ft_same_sign(int a, int b);
 
 //UTILS
 void	set_next_pos(int *pos, int size);
@@ -92,8 +117,11 @@ int		get_next_pos(int pos, int size);
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);
 void	print_move(int move);
-void    print_all_moves(t_deque *moves_list);
+void    print_all_moves(t_deque *temp_moves);
 void	print_stacks_info(t_main_cont *cont);
+
+//ERROR HANDLING
+void	exit_on_err(char *err_message);
 
 //CLEANUP
 void	cleanup(t_main_cont *cont);

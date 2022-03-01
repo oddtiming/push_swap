@@ -19,7 +19,7 @@ int	get_pos_smallest_val(t_deque *stack)
 	int	pos_in_stack;
 
 	pos_in_stack = 0;
-	if (stack->nb_elems == 0)
+	if (stack->nb_elems <= 0)
 		return (0);
 	while (stack->elems[pos_in_stack] != stack->elem_min)
 		pos_in_stack++;
@@ -31,7 +31,7 @@ int	get_pos_biggest_val(t_deque *stack)
 	int	pos_in_stack;
 
 	pos_in_stack = 0;
-	if (stack->nb_elems == 0)
+	if (stack->nb_elems <= 0)
 		return (0);
 	while (stack->elems[pos_in_stack] != stack->elem_max)
 		pos_in_stack++;
@@ -53,7 +53,7 @@ int		get_next_bigger(t_deque *stack, int curr_val)
 			return (next_bigger);
 		pos++;
 	}
-	return (get_next_bigger(stack, next_bigger + 1));
+	return (get_next_bigger(stack, curr_val + 1));
 }
 
 //Since the pos_smallest lives outside the deque (that's really dumb btw),
@@ -73,36 +73,46 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
 			return (false);
 		}
 	}
+
 	return (true);
 }
 
 /**
  * will rotate stack_a to pos in as few moves as possible and add the
- * rotations made to moves_list
+ * rotations made to temp_moves
  * 
  * @param cont 			main container
- * @param moves_list 	moves to which rotations will be added
+ * @param temp_moves 	moves to which rotations will be added
  * @param pos 			pos to be rotated to pos_0
  */
-void	rotate_pos_in_a_to_0(t_main_cont *cont, t_deque *moves_list, int pos)
+void	rotate_to_0_in_a(t_main_cont *cont, t_deque *temp_moves, int pos)
 {
+	if (DEBUG)
+	{
+		int revpos = pos - cont->stack_a.nb_elems;
+		printf(YELLOW"rotate_to_pos0=======> pos = %d, revpos = %d\n", pos, revpos);
+		if (pos < cont->stack_a.nb_elems - pos)
+			printf("Choosing ra; %d < %d\n"RESET_COL, pos, -revpos);
+		else
+			printf("Choosing rra; %d >= %d\n"RESET_COL, pos, -revpos);
+	}
 	if (pos < cont->stack_a.nb_elems - pos)
 		while (pos-- > 0)
-			do_ra(cont, moves_list);
+			do_ra(cont, temp_moves);
 	else
 		while (pos++ < cont->stack_a.nb_elems)
-			do_rra(cont, moves_list);
+			do_rra(cont, temp_moves);
 	return ;
 }
 
-void	rotate_pos_in_b_to_0(t_main_cont *cont, t_deque *moves_list, int pos)
+void	rotate_to_0_in_b(t_main_cont *cont, t_deque *temp_moves, int pos)
 {
 	if (pos < cont->stack_b.nb_elems - pos)
 		while (pos-- > 0)
-			do_rb(cont, moves_list);
+			do_rb(cont, temp_moves);
 	else
 		while (pos++ < cont->stack_b.nb_elems)
-			do_rrb(cont, moves_list);
+			do_rrb(cont, temp_moves);
 	return ;
 }
 

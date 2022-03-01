@@ -16,61 +16,58 @@ static inline void	rev_rotate_update_iterators(t_iterator *iterator)
 	return ;
 }
 
-void    do_rra(t_main_cont *cont, t_deque *moves_list)
+void    do_rra(t_main_cont *cont, t_deque *temp_moves)
 {
 	rev_rotate(&cont->stack_a);
-	if (moves_list)
-		moves_list->add_last(moves_list, RRA);
+	if (temp_moves)
+		temp_moves->add_last(temp_moves, RRA);
 
-	rev_rotate_update_iterators(&cont->pos_min_val_a);
-	rev_rotate_update_iterators(&cont->pos_max_val_a);
+	rev_rotate_update_iterators(&cont->head_a);
+	rev_rotate_update_iterators(&cont->tail_a);
 
 	if (DEBUG)
 	{
 		print_move(RRA);
 		print_stacks(cont);
-		print_stacks_info(cont);
 	}
 	
 	return ;
 }
 
-void    do_rrb(t_main_cont *cont, t_deque *moves_list)
+void    do_rrb(t_main_cont *cont, t_deque *temp_moves)
 {
 	rev_rotate(&cont->stack_b);
-	if (moves_list)
-		moves_list->add_last(moves_list, RRB);
+	if (temp_moves)
+		temp_moves->add_last(temp_moves, RRB);
 
-	rev_rotate_update_iterators(&cont->pos_min_val_b);
-	rev_rotate_update_iterators(&cont->pos_max_val_b);
+	rev_rotate_update_iterators(&cont->head_b);
+	rev_rotate_update_iterators(&cont->tail_b);
 
 	if (DEBUG)
 	{
 		print_move(RRB);
 		print_stacks(cont);
-		print_stacks_info(cont);
 	}
 	
 	return ;
 }
 
-void	do_rrr(t_main_cont *cont, t_deque *moves_list)
+void	do_rrr(t_main_cont *cont, t_deque *temp_moves)
 {
 	rev_rotate(&cont->stack_a);
 	rev_rotate(&cont->stack_b);
-	if (moves_list)
-		moves_list->add_last(moves_list, RRR);
+	if (temp_moves)
+		temp_moves->add_last(temp_moves, RRR);
 
-	rev_rotate_update_iterators(&cont->pos_min_val_b);
-	rev_rotate_update_iterators(&cont->pos_max_val_b);
-	rev_rotate_update_iterators(&cont->pos_min_val_a);
-	rev_rotate_update_iterators(&cont->pos_max_val_a);
+	rev_rotate_update_iterators(&cont->head_b);
+	rev_rotate_update_iterators(&cont->tail_b);
+	rev_rotate_update_iterators(&cont->head_a);
+	rev_rotate_update_iterators(&cont->tail_a);
 
 	if (DEBUG)
 	{
 		print_move(RRR);
 		print_stacks(cont);
-		print_stacks_info(cont);
 	}	
 	
 	return ;

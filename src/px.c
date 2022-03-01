@@ -9,18 +9,18 @@ void	push(t_deque *stack_src, t_deque *stack_dest)
 
 static inline void	push_update_iterators(t_main_cont *cont)
 {
-	set_iterator(&cont->pos_min_val_a, get_pos_smallest_val(&cont->stack_a), cont->stack_a.nb_elems, 0);
-	set_iterator(&cont->pos_max_val_a, get_pos_biggest_val(&cont->stack_a), cont->stack_a.nb_elems, 0);
-	set_iterator(&cont->pos_min_val_b, get_pos_smallest_val(&cont->stack_b), cont->stack_b.nb_elems, 1);
-	set_iterator(&cont->pos_max_val_b, get_pos_biggest_val(&cont->stack_b), cont->stack_b.nb_elems, 1);
+	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), cont->stack_a.nb_elems, 0);
+	set_iterator(&cont->tail_a, get_pos_biggest_val(&cont->stack_a), cont->stack_a.nb_elems, 0);
+	set_iterator(&cont->head_b, get_pos_smallest_val(&cont->stack_b), cont->stack_b.nb_elems, 1);
+	set_iterator(&cont->tail_b, get_pos_biggest_val(&cont->stack_b), cont->stack_b.nb_elems, 1);
 	return ;
 }
 
-void    do_pa(t_main_cont *cont, t_deque *moves_list)
+void    do_pa(t_main_cont *cont, t_deque *temp_moves)
 {
 	push(&cont->stack_b, &cont->stack_a);
-	if (moves_list)
-		moves_list->add_last(moves_list, PA);
+	if (temp_moves)
+		temp_moves->add_last(temp_moves, PA);
 	
 	push_update_iterators(cont);
 
@@ -29,17 +29,16 @@ void    do_pa(t_main_cont *cont, t_deque *moves_list)
 		printf("%s\n", __FUNCTION__);
 		print_move(PA);
 		print_stacks(cont);
-		print_stacks_info(cont);
 	}
 	
 	return ;
 }
 
-void    do_pb(t_main_cont *cont, t_deque *moves_list)
+void    do_pb(t_main_cont *cont, t_deque *temp_moves)
 {
 	push(&cont->stack_a, &cont->stack_b);
-	if (moves_list)
-		moves_list->add_last(moves_list, PB);
+	if (temp_moves)
+		temp_moves->add_last(temp_moves, PB);
 	
 	push_update_iterators(cont);
 
@@ -48,7 +47,6 @@ void    do_pb(t_main_cont *cont, t_deque *moves_list)
 		printf("%s\n", __FUNCTION__);
 		print_move(PB);
 		print_stacks(cont);
-		print_stacks_info(cont);
 	}
 	
 	return ;

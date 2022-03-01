@@ -34,16 +34,32 @@ int	convert_move_to_index(int move)
 	return (move_to_index);
 }
 
-void	undo_moves(t_main_cont *cont, t_deque *moves_list)
+void	undo_moves(t_main_cont *cont, t_deque *temp_moves)
 {
 	int			move_to_index;
 
-	while (moves_list->nb_elems)
+	while (temp_moves->nb_elems)
 	{
-		move_to_index = moves_list->elems[moves_list->nb_elems - 1];
+		move_to_index = temp_moves->elems[temp_moves->nb_elems - 1];
 		move_to_index = convert_move_to_index(move_to_index);
 		cont->reverse_fcts[move_to_index](cont, NULL);
-		moves_list->remove_last(moves_list);
+		temp_moves->remove_last(temp_moves);
+	}
+	return ;
+}
+
+void	undo_n_moves(t_main_cont *cont, t_deque *temp_moves, int n)
+{
+	int			move_to_index;
+
+	if (n <= 0)
+		return ;
+	while (n-- && temp_moves->nb_elems)
+	{
+		move_to_index = temp_moves->elems[temp_moves->nb_elems - 1];
+		move_to_index = convert_move_to_index(move_to_index);
+		cont->reverse_fcts[move_to_index](cont, NULL);
+		temp_moves->remove_last(temp_moves);
 	}
 	return ;
 }
