@@ -61,7 +61,6 @@ void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 //SORT
 void	sort(t_main_cont *cont);
 void	insert_b(t_main_cont *cont);
-void	invert_4(t_main_cont *cont);
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);
@@ -70,14 +69,17 @@ int		get_pos_of_val(t_deque  *stack, int val);
 int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
 int		get_next_bigger(t_deque *stack, int curr_val);
-void	rotate_pos_in_a_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
-void	rotate_pos_in_b_to_0(t_main_cont *cont, t_deque *moves_list, int pos);
+void	rotate_to_0_in_a(t_main_cont *cont, t_deque *moves_list, int pos);
+void	rotate_to_0_in_b(t_main_cont *cont, t_deque *moves_list, int pos);
 
 
 //  SORT_SMALL
 void	sort_small(t_main_cont *cont);
 bool	try_rotate(t_main_cont *cont);
 bool	try_swap(t_main_cont *cont);
+void	try_pb(t_main_cont *cont);
+void	invert_4(t_main_cont *cont);
+void	copy_deque(t_deque *src, t_deque *dest);
 
 //ERROR HANDLING
 void	exit_on_err(char *err_message);

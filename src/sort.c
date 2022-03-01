@@ -7,13 +7,10 @@ bool	try_swap(t_main_cont *cont)
 	set_iterator(&iterator, 0, cont->stack_a.nb_elems, 0);
 	while (iterate_n_loops(&iterator, 1))
 	{
-		rotate_pos_in_a_to_0(cont, &cont->moves_list, iterator.index);
+		rotate_to_0_in_a(cont, &cont->moves_list, iterator.index);
 		do_sa(cont, &cont->moves_list);
 		if (is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
-		{
-			rotate_pos_in_a_to_0(cont, &cont->moves_list, cont->pos_min_val_a.index);
 			return (true);
-		}
 		undo_moves(cont, &cont->moves_list);
 	}
 	return (false);
@@ -221,6 +218,8 @@ void	insert_b(t_main_cont *cont)
 	insert_elem_b(cont, best_pos_in_a, best_pos_in_b);
 	if (cont->stack_b.nb_elems)
 		insert_b(cont);
+	else
+		rotate_to_0_in_a(cont, &cont->moves_list, cont->pos_max_val_a.index);
 }
 
 void	invert_4(t_main_cont *cont)
@@ -231,20 +230,66 @@ void	invert_4(t_main_cont *cont)
 	do_ra(cont, &cont->moves_list);
 	do_sa(cont, &cont->moves_list);
 	insert_b(cont, &cont->moves_list);
-	rotate_pos_in_a_to_0(cont, &cont->moves_list, cont->pos_min_val_a.index);
+}
+
+void	copy_deque(t_deque *src, t_deque *dest)
+{
+	int	i;
+
+	while (i < src->nb_elems)
+	{
+		dest->add_last(dest, src->elems[i]);
+		i++;
+	}
+	return ;
+}
+
+void	try_pb(t_main_cont *cont)
+{
+	int		i;
+	int		j;
+	int		min_moves;
+	t_deque	temp_moves;
+
+	min_moves = INT_MAX;
+	init_deque(temp_moves)
+	if (cont->stack_a.nb_elems < 3)
+	{
+		insert_b(cont);
+		return ;
+	}
+	i = 0;
+	while (i < cont->stack_a.nb_elems)
+	{
+		rotate_to_0_in_a(cont, &cont->moves_list, i);
+		do_pb(cont, &cont->moves_list);
+		j = 0;
+		while (j < cont->stack_b.nb_elems)
+		{
+			//need to add try_swap and done
+			rotate_to_0_in_a(cont, &cont->moves_list, j);
+			do_pb(cont, &cont->moves_list);
+			insert_b(cont);
+			if (cont->moves_list.nb_elems < min_moves)
+				copy_deque(&cont->moves_list, &temp_moves);
+			undo_moves(cont, &cont->moves_list);
+			j++;
+		}
+		i++;
+	}
+	copy_deque(&temp_moves, &cont->mopves_list);
+	return ;
 }
 
 void	sort_small(t_main_cont *cont)
 {
 	// t_deque	*temp;
 
-	if (is_sorted(&cont->stack_a, cont->pos_min_val_a.index))
+	if (is_sorted(&cont->stack_a, cont->pos_min_val_a.index) || try_swap(cont))
 	{
-		rotate_pos_in_a_to_0(cont, &cont->moves_list, cont->pos_min_val_a.index);
+		rotate_to_0_in_a(cont, &cont->moves_list, cont->pos_min_val_a.index);
 		return ;
 	}
-	else if (try_swap(cont))
-		return ;
 	// if (cont->stack_b.nb_elems > 0)
 	// 	insert_b(cont);
 	
