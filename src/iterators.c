@@ -24,7 +24,7 @@ void	iterate(t_iterator *iterator)
 	int	incrementer;
 
 	iterator->prev_index = iterator->index;
-	//-1 if direction == REVERSE, +1 if direction == CANONICAL
+	//-1 if direction == 1, +1 if direction == 0
 	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
@@ -50,7 +50,7 @@ bool	iterate_n_loops(t_iterator *iterator, int n)
 	if (iterator->index == iterator->head)
 		iterator->nb_loops += 1;
 	iterator->prev_index = iterator->index;
-	//-1 if direction == REVERSE, +1 if direction == CANONICAL
+	//-1 if direction == 1, +1 if direction == 0
 	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)

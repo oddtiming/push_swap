@@ -11,7 +11,7 @@
 
 
 # define REVERSE 1
-# define CANONICAL 0
+# define 0 0
 
 typedef struct s_iterator
 {
@@ -47,7 +47,7 @@ void	iterate(t_iterator *iterator)
 	if (iterator->index == iterator->head)
 		iterator->nb_loops += 1;
 	iterator->prev_index = iterator->index;
-	//-1 if direction == REVERSE, +1 if direction == CANONICAL
+	//-1 if direction == REVERSE, +1 if direction == 0
 	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
@@ -66,7 +66,7 @@ bool	iterate_one_loop(t_iterator *iterator)
 	if (iterator->index == iterator->head)
 		iterator->nb_loops += 1;
 	iterator->prev_index = iterator->index;
-	//-1 if direction == REVERSE, +1 if direction == CANONICAL
+	//-1 if direction == REVERSE, +1 if direction == 0
 	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
@@ -86,7 +86,7 @@ int	main(void)
 
 	size = 5;
 	head = 0;
-	set_iterator(&iterator, head, size, CANONICAL);
+	set_iterator(&iterator, head, size, 0);
 	while (iterate_one_loop(&iterator))
 	{
 		printf("curr_index = %d\n", iterator.index);

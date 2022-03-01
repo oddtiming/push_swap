@@ -113,7 +113,8 @@ bool deque_resize_last(t_deque *deque, int new_size)
 	int		pos_in_deque;
 
 	total_new_size = new_size + deque->capacity_before_head;
-	if (ft_assign_calloc((void **)&temp, total_new_size, sizeof(int)))
+	temp = malloc(total_new_size * sizeof(int));
+	if (!temp)
 		return (FAILURE);
 	temp += deque->capacity_before_head;
 	pos_in_deque = 0;
@@ -137,7 +138,8 @@ bool deque_resize_front(t_deque *deque, int new_size)
 	int		pos_in_deque;
 
 	total_new_size = new_size + deque->capacity_after_head;
-	if (ft_assign_calloc((void **)&temp, total_new_size, sizeof(int)))
+	temp = malloc(total_new_size * sizeof(int));
+	if (!temp)
 		return (FAILURE);
 	temp += new_size;
 	pos_in_deque = 0;

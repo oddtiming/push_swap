@@ -19,11 +19,11 @@ void	init(t_main_cont *cont, char **args)
 			exit_on_err("deque_add_last done fucked up\n");
 	normalize_stack_values(&cont->stack_a);
 	set_iterator(&cont->pos_min_val_a, get_pos_smallest_val(&cont->stack_a), \
-			cont->stack_a.nb_elems, CANONICAL);
+			cont->stack_a.nb_elems, 0);
 	set_iterator(&cont->pos_max_val_a, get_pos_biggest_val(&cont->stack_a), \
-			cont->stack_a.nb_elems, REVERSE);
-	set_iterator(&cont->pos_min_val_b, 0, 0, REVERSE);
-	set_iterator(&cont->pos_max_val_b, 0, 0, CANONICAL);
+			cont->stack_a.nb_elems, 1);
+	set_iterator(&cont->pos_min_val_b, 0, 0, 1);
+	set_iterator(&cont->pos_max_val_b, 0, 0, 0);
 	init_reverse_moves_array(cont->reverse_fcts);
 	return ;
 }

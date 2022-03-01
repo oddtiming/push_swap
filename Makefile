@@ -1,7 +1,7 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 3 4 0 1 2
+RUN_ARGS = 3 6 0 8 1 9 4 5 2 7
 
 SHELL	=	bash
 

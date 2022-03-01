@@ -1,5 +1,19 @@
 #include "push_swap.h"
 
+int	get_pos_of_val(t_deque *stack, int val)
+{
+	int	pos;
+
+	pos = 0;
+	while (pos < stack->nb_elems)
+	{
+		if (stack->elems[pos] == val)
+			return (pos);
+		pos++;
+	}
+	return (-1);
+}
+
 int	get_pos_smallest_val(t_deque *stack)
 {
 	int	pos_in_stack;
@@ -31,15 +45,15 @@ int		get_next_bigger(t_deque *stack, int curr_val)
 
 	if (curr_val + 1 > stack->elem_max)
 		return (stack->elem_min);
-	next_bigger = INT_MAX;
+	next_bigger = curr_val + 1;
 	pos = 0;
 	while (pos < stack->nb_elems)
 	{
-		if (stack->elems[pos] < next_bigger)
-			next_bigger = stack->elems[pos];
+		if (stack->elems[pos] == next_bigger)
+			return (next_bigger);
 		pos++;
 	}
-	return (next_bigger);
+	return (get_next_bigger(stack, next_bigger + 1));
 }
 
 //Since the pos_smallest lives outside the deque (that's really dumb btw),
@@ -50,7 +64,7 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
 {
 	t_iterator	iter;
 
-	set_iterator(&iter, pos_smallest, stack->nb_elems, CANONICAL);
+	set_iterator(&iter, pos_smallest, stack->nb_elems, 0);
 	while (iterate_n_loops(&iter, 1))
 	{
 		if (!(stack->elems[iter.index] > stack->elems[iter.prev_index]) \

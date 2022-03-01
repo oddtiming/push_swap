@@ -76,7 +76,8 @@ bool			vec_2d_resize(t_vec_2d *vec_2d, int new_size)
 	int			pos_in_vector;
 	bool		status;
 
-	if (ft_assign_calloc((void **)&temp, new_size, sizeof(t_vector)))
+	temp = malloc(new_size * sizeof(vector));
+	if (!temp)
 		status = FAILURE;
 	else
 	{

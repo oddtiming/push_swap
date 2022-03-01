@@ -12,7 +12,7 @@ void	rev_rotate(t_deque *stack)
 
 static inline void	rev_rotate_update_iterators(t_iterator *iterator)
 {
-	iterate_once(iterator, CANONICAL);
+	iterate_once(iterator, 0);
 	return ;
 }
 

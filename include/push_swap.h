@@ -60,9 +60,11 @@ void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 
 //SORT
 void	sort(t_main_cont *cont);
+void	insert_b(t_main_cont *cont);
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);
+int		calculate_abs_min_dist(t_main_cont *cont, int pos_a, int pos_b);
 int		get_pos_of_val(t_deque  *stack, int val);
 int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
@@ -83,7 +85,6 @@ void	exit_on_err(char *err_message);
 void	set_next_pos(int *pos, int size);
 int		get_pos_in_stack(int *stack, int size, int value);
 int		get_next_pos(int pos, int size);
-bool	ft_assign_calloc(void **ptr, size_t count, size_t size);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);

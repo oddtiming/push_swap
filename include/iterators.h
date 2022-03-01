@@ -18,7 +18,7 @@ typedef struct s_iterator
 	bool	is_reverse;
 }	t_iterator;
 
-void	set_iterator(t_iterator *iterator, int head, int size, bool direction);
+void	set_iterator(t_iterator *iterator, int head, int size, bool is_reverse);
 void	set_iter_head(t_iterator *iterator, int new_head);
 void	iterate(t_iterator *iterator);
 void	iterate_once(t_iterator *iterator, bool is_reverse);
