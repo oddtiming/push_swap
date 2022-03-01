@@ -33,19 +33,19 @@ void	print_stacks(t_main_cont *cont)
 
 void	print_stacks_info(t_main_cont *cont)
 {
-	printf(YELLOW"*stack_a*\n");
-	printf("\tstack_a.elem_max = %d\n", cont->stack_a.elem_max);
-	printf("\tcont->pos_max_val_a.index = %d\n", cont->pos_max_val_a.index);
-	printf("\tstack_a.elem_min = %d\n", cont->stack_a.elem_min);
-	printf("\tcont->pos_min_val_a.index = %d\n", cont->pos_min_val_a.index);
-	printf("\tstack_a.nb_elems = %d\n", cont->stack_a.nb_elems);
+	printf(YELLOW"**stack_a**\n");
+	printf("\tmax elem in a = %d\n", cont->stack_a.elem_max);
+	printf("\tpos max val in a = %d\n", cont->pos_max_val_a.index);
+	printf("\tmin elem nin a = %d\n", cont->stack_a.elem_min);
+	printf("\tpos min val in a = %d\n", cont->pos_min_val_a.index);
+	printf("\tsize of stack_a = %d\n", cont->stack_a.nb_elems);
 
-	printf(YELLOW"*stack_b*\n");
-	printf("\tstack_b.elem_max = %d\n", cont->stack_b.elem_max);
-	printf("\tcont->pos_max_val_b.index = %d\n", cont->pos_max_val_b.index);
-	printf("\tstack_b.elem_min = %d\n", cont->stack_b.elem_min);
-	printf("\tcont->pos_min_val_b.index = %d\n", cont->pos_min_val_b.index);
-	printf("\tstack_b.nb_elems = %d\n"RESET_COL, cont->stack_b.nb_elems);
+	printf(YELLOW"**stack_b**\n");
+	printf("\tmax elem in b = %d\n", cont->stack_b.elem_max);
+	printf("\tpos max val in b = %d\n", cont->pos_max_val_b.index);
+	printf("\tmin elem nin b = %d\n", cont->stack_b.elem_min);
+	printf("\tpos min val in b = %d\n", cont->pos_min_val_b.index);
+	printf("\tsize of stack_b = %d\n"RESET_COL, cont->stack_b.nb_elems);
 	return ;
 }
 

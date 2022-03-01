@@ -61,6 +61,7 @@ void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 //SORT
 void	sort(t_main_cont *cont);
 void	insert_b(t_main_cont *cont);
+void	invert_4(t_main_cont *cont);
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);

@@ -223,6 +223,17 @@ void	insert_b(t_main_cont *cont)
 		insert_b(cont);
 }
 
+void	invert_4(t_main_cont *cont)
+{
+	do_pb(cont, &cont->moves_list);
+	do_sa(cont, &cont->moves_list);
+	do_ra(cont, &cont->moves_list);
+	do_ra(cont, &cont->moves_list);
+	do_sa(cont, &cont->moves_list);
+	insert_b(cont, &cont->moves_list);
+	rotate_pos_in_a_to_0(cont, &cont->moves_list, cont->pos_min_val_a.index);
+}
+
 void	sort_small(t_main_cont *cont)
 {
 	// t_deque	*temp;
