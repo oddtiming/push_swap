@@ -49,10 +49,10 @@ void	print_stacks_info(t_main_cont *cont)
 	printf("\tpos min val in b = %d\n", cont->head_b.index);
 	printf("\tsize of stack_b = %d\n"RESET_COL, cont->stack_b.nb_elems);
 
+	printf(CYAN"\t==> TEMP TOTAL: %d \n"RESET_COL, cont->temp_moves.nb_elems);
 	print_all_moves(&cont->temp_moves);
-	printf(CYAN"\t==> TOTAL: %d \n"RESET_COL, cont->temp_moves.nb_elems);
+	printf(CYAN"\t==> BEST TOTAL: %d \n"RESET_COL, cont->final_moves.nb_elems);
 	print_all_moves(&cont->final_moves);
-	printf(CYAN"\t==> TOTAL: %d \n"RESET_COL, cont->final_moves.nb_elems);
 
 	return ;
 }
