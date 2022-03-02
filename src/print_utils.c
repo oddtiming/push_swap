@@ -37,20 +37,20 @@ void	print_stacks_info(t_main_cont *cont)
 
 	printf(YELLOW"**stack_a**\n");
 	printf("\tmax elem in a = %d\n", cont->stack_a.elem_max);
-	printf("\tpos max val in a = %d\n", cont->tail_a.index);
-	printf("\tmin elem min a = %d\n", cont->stack_a.elem_min);
-	printf("\tpos min val in a = %d\n", cont->head_a.index);
+	printf("\tpos: %d\n", cont->tail_a.index);
+	printf("\tmin elem in a = %d\n", cont->stack_a.elem_min);
+	printf("\tpos: %d\n", cont->head_a.index);
 	printf("\tsize of stack_a = %d\n", cont->stack_a.nb_elems);
 
 	printf(YELLOW"**stack_b**\n");
 	printf("\tmax elem in b = %d\n", cont->stack_b.elem_max);
-	printf("\tpos max val in b = %d\n", cont->tail_b.index);
-	printf("\tmin elem min b = %d\n", cont->stack_b.elem_min);
-	printf("\tpos min val in b = %d\n", cont->head_b.index);
+	printf("\tpos: %d\n", cont->tail_b.index);
+	printf("\tmin elem in b = %d\n", cont->stack_b.elem_min);
+	printf("\tpos: %d\n", cont->head_b.index);
 	printf("\tsize of stack_b = %d\n"RESET_COL, cont->stack_b.nb_elems);
 
-	printf(CYAN"\t==> TEMP TOTAL: %d \n"RESET_COL, cont->temp_moves.nb_elems);
-	print_all_moves(&cont->temp_moves);
+	printf(CYAN"\t==> TEMP TOTAL: %d \n"RESET_COL, cont->curr_moves.nb_elems);
+	print_all_moves(&cont->curr_moves);
 	printf(CYAN"\t==> BEST TOTAL: %d \n"RESET_COL, cont->final_moves.nb_elems);
 	print_all_moves(&cont->final_moves);
 
@@ -74,14 +74,14 @@ void    print_move(int move)
     return;
 }
 
-void    print_all_moves(t_deque *temp_moves)
+void    print_all_moves(t_deque *curr_moves)
 {
     int i;
 
     i = 0;
-    while (i < temp_moves->nb_elems)
+    while (i < curr_moves->nb_elems)
     {
-        print_move(temp_moves->elems[i]);
+        print_move(curr_moves->elems[i]);
         i++;
     }
 	if (DEBUG)

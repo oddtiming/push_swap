@@ -17,11 +17,11 @@ static inline void	swap_update_iterator(t_iterator *iterator)
 	return ;
 }
 
-void    do_sa(t_main_cont *cont, t_deque *temp_moves)
+void    do_sa(t_main_cont *cont, t_deque *curr_moves)
 {
 	swap(&cont->stack_a);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, SA);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, SA);
 
 	swap_update_iterator(&cont->head_a);
 	swap_update_iterator(&cont->tail_a);
@@ -36,11 +36,11 @@ void    do_sa(t_main_cont *cont, t_deque *temp_moves)
 	return ;
 }
 
-void    do_sb(t_main_cont *cont, t_deque *temp_moves)
+void    do_sb(t_main_cont *cont, t_deque *curr_moves)
 {
 	swap(&cont->stack_b);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, SB);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, SB);
 
 	swap_update_iterator(&cont->head_b);
 	swap_update_iterator(&cont->tail_b);
@@ -55,12 +55,12 @@ void    do_sb(t_main_cont *cont, t_deque *temp_moves)
 	return ;
 }
 
-void    do_ss(t_main_cont *cont, t_deque *temp_moves)
+void    do_ss(t_main_cont *cont, t_deque *curr_moves)
 {
 	swap(&cont->stack_a);
 	swap(&cont->stack_b);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, SS);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, SS);
 
 	swap_update_iterator(&cont->head_a);
 	swap_update_iterator(&cont->tail_a);

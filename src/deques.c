@@ -79,6 +79,7 @@ bool deque_add_last(t_deque *deque, int new_elem)
 void deque_free_list(t_deque *deque)
 {
 	free (deque->malloced_space);
+	deque->malloced_space = NULL;
 	return ;
 }
 
@@ -120,7 +121,7 @@ bool	deque_reinit_list(t_deque *deque)
 	deque->nb_elems			= 0;
 	deque->elem_min			= deque->get_elem_min(deque);
 	deque->elem_max			= deque->get_elem_max(deque);
-	deque->capacity_end	= VECTOR_INIT_SIZE;
+	deque->capacity_end		= VECTOR_INIT_SIZE;
 	deque->capacity_front	= VECTOR_INIT_SIZE;
 	deque->capacity_total	= 2 * VECTOR_INIT_SIZE;
 	deque->malloced_space	= malloc(2 * VECTOR_INIT_SIZE * sizeof(int));

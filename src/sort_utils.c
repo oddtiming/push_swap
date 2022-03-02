@@ -79,13 +79,13 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
 
 /**
  * will rotate stack_a to pos in as few moves as possible and add the
- * rotations made to temp_moves
+ * rotations made to curr_moves
  * 
  * @param cont 			main container
- * @param temp_moves 	moves to which rotations will be added
+ * @param curr_moves 	moves to which rotations will be added
  * @param pos 			pos to be rotated to pos_0
  */
-void	rotate_to_0_in_a(t_main_cont *cont, t_deque *temp_moves, int pos)
+void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 {
 	if (DEBUG)
 	{
@@ -98,21 +98,21 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *temp_moves, int pos)
 	}
 	if (pos < cont->stack_a.nb_elems - pos)
 		while (pos-- > 0)
-			do_ra(cont, temp_moves);
+			do_ra(cont, curr_moves);
 	else
 		while (pos++ < cont->stack_a.nb_elems)
-			do_rra(cont, temp_moves);
+			do_rra(cont, curr_moves);
 	return ;
 }
 
-void	rotate_to_0_in_b(t_main_cont *cont, t_deque *temp_moves, int pos)
+void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos)
 {
 	if (pos < cont->stack_b.nb_elems - pos)
 		while (pos-- > 0)
-			do_rb(cont, temp_moves);
+			do_rb(cont, curr_moves);
 	else
 		while (pos++ < cont->stack_b.nb_elems)
-			do_rrb(cont, temp_moves);
+			do_rrb(cont, curr_moves);
 	return ;
 }
 

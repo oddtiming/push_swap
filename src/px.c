@@ -16,11 +16,11 @@ static inline void	push_update_iterators(t_main_cont *cont)
 	return ;
 }
 
-void    do_pa(t_main_cont *cont, t_deque *temp_moves)
+void    do_pa(t_main_cont *cont, t_deque *curr_moves)
 {
 	push(&cont->stack_b, &cont->stack_a);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, PA);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, PA);
 	
 	push_update_iterators(cont);
 
@@ -34,11 +34,11 @@ void    do_pa(t_main_cont *cont, t_deque *temp_moves)
 	return ;
 }
 
-void    do_pb(t_main_cont *cont, t_deque *temp_moves)
+void    do_pb(t_main_cont *cont, t_deque *curr_moves)
 {
 	push(&cont->stack_a, &cont->stack_b);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, PB);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, PB);
 	
 	push_update_iterators(cont);
 

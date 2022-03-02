@@ -6,7 +6,10 @@ void	init(t_main_cont *cont, char **args)
 
 	init_deque(&cont->stack_a);
 	init_deque(&cont->stack_b);
-	init_deque(&cont->temp_moves);
+	init_deque(&cont->curr_moves);
+	init_deque(&cont->best_moves);
+	//To know that it wasn't inited yet, and safely pass it to free
+	cont->best_moves.free_list(&cont->best_moves);
 	init_deque(&cont->final_moves);
 	cont->reverse_fcts = malloc(11 * sizeof(void *));
 	if (!cont->reverse_fcts)
@@ -23,6 +26,8 @@ void	init(t_main_cont *cont, char **args)
 	set_iterator(&cont->head_b, 0, 0, 1);
 	set_iterator(&cont->tail_b, 0, 0, 0);
 	init_reverse_moves_array(cont->reverse_fcts);
+	cont->best_delta_insert = INT_MAX;
+	cont->curr_delta_insert = 0;
 	return ;
 }
 

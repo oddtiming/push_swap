@@ -16,11 +16,11 @@ static inline void	rev_rotate_update_iterators(t_iterator *iterator)
 	return ;
 }
 
-void    do_rra(t_main_cont *cont, t_deque *temp_moves)
+void    do_rra(t_main_cont *cont, t_deque *curr_moves)
 {
 	rev_rotate(&cont->stack_a);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, RRA);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, RRA);
 
 	rev_rotate_update_iterators(&cont->head_a);
 	rev_rotate_update_iterators(&cont->tail_a);
@@ -34,11 +34,11 @@ void    do_rra(t_main_cont *cont, t_deque *temp_moves)
 	return ;
 }
 
-void    do_rrb(t_main_cont *cont, t_deque *temp_moves)
+void    do_rrb(t_main_cont *cont, t_deque *curr_moves)
 {
 	rev_rotate(&cont->stack_b);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, RRB);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, RRB);
 
 	rev_rotate_update_iterators(&cont->head_b);
 	rev_rotate_update_iterators(&cont->tail_b);
@@ -52,12 +52,12 @@ void    do_rrb(t_main_cont *cont, t_deque *temp_moves)
 	return ;
 }
 
-void	do_rrr(t_main_cont *cont, t_deque *temp_moves)
+void	do_rrr(t_main_cont *cont, t_deque *curr_moves)
 {
 	rev_rotate(&cont->stack_a);
 	rev_rotate(&cont->stack_b);
-	if (temp_moves)
-		temp_moves->add_last(temp_moves, RRR);
+	if (curr_moves)
+		curr_moves->add_last(curr_moves, RRR);
 
 	rev_rotate_update_iterators(&cont->head_b);
 	rev_rotate_update_iterators(&cont->tail_b);
