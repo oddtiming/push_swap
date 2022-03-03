@@ -3,6 +3,14 @@
 # Description
 
 42 Push_swap’s project; a little game to introduce sorting algorithms. 
+```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
+
 
 ## Goal
 
