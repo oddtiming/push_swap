@@ -16,29 +16,17 @@ int	main(int argc, char *argv[])
 		print_stacks_info(cont);
 	}
 
-	
+	// insert_b(cont, &cont->final_moves);	
 
 	// do_pb(cont, &cont->curr_moves);
-	// try_invert_4(cont);
+	// try_swap(cont);
+
 	// insert_b(cont);
 	// print_all_moves(&cont->curr_moves);
 	// print_stacks_info(cont);
 	// do_pb(cont, &cont->curr_moves);
 	// do_sa(cont, &cont->curr_moves);
 	// insert_elem_b(cont, 2, 1);
-	// do_pb(cont, &cont->curr_moves);
-	// do_pb(cont, &cont->curr_moves);
-	// do_pb(cont, &cont->curr_moves);
-	// do_rr(cont, &cont->curr_moves);
-	// do_rr(cont, &cont->curr_moves);
-	// do_rrr(cont, &cont->curr_moves);
-	// do_rrr(cont, &cont->curr_moves);
-	// do_ss(cont, &cont->curr_moves);
-	// do_pa(cont, &cont->curr_moves);
-	// do_pa(cont, &cont->curr_moves);
-	// do_pa(cont, &cont->curr_moves);
-	// do_pa(cont, &cont->curr_moves);
-	// do_pa(cont, &cont->curr_moves);
 
 	
 

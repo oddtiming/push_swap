@@ -59,7 +59,7 @@ typedef	struct s_insert_info
 	t_stack_insert_info	b_info;
 	int					min_cost;
 	int					curr_cost;
-	int					best_delta_insert;
+	int					min_delta_insert;
 	int					curr_delta_insert;
 }	t_insert_info;
 
@@ -67,18 +67,15 @@ typedef	struct s_insert_info
 typedef struct s_main_cont	t_main_cont;
 typedef struct s_main_cont
 {
-	t_deque		stack_a;
-	t_deque		stack_b;
-	t_deque		curr_moves;
-	t_deque		best_moves;
-	t_deque		final_moves;
-	t_iterator	head_a;
-	t_iterator	head_b;
-	t_iterator	tail_a;
-	t_iterator	tail_b;
-	void		(**reverse_fcts)(t_main_cont *, t_deque *);
-	int			best_delta_insert;
-	int			curr_delta_insert;
+	t_deque			stack_a;
+	t_deque			stack_b;
+	t_deque			final_moves;
+	t_deque			curr_moves;
+	t_deque			best_moves;
+	t_iterator		head_a;
+	t_iterator		head_b;
+	void			(**reverse_fcts)(t_main_cont *, t_deque *);
+	int				min_nb_moves;
 }	t_main_cont;
 
 
@@ -91,20 +88,24 @@ void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 
 //SORT
 void	sort(t_main_cont *cont);
-void	insert_b(t_main_cont *cont);
-int		calculate_min_cost(t_main_cont *cont, t_insert_info *info);
-void	insert_elem_b(t_main_cont *cont, int pos_a, int pos_b);
-void	compare_moves(t_main_cont *cont, t_deque *temp_moves);
-void	compare_delta_inserts(t_main_cont *cont);
 
 
 //  SORT_SMALL
 void	sort_small(t_main_cont *cont);
-bool	try_rotate(t_main_cont *cont);
+bool	try_sort_small(t_main_cont *cont);
 bool	try_swap(t_main_cont *cont);
-void	try_pb(t_main_cont *cont);
 bool	try_invert_4(t_main_cont *cont);
-void	copy_deque(t_deque *src, t_deque *dest);
+bool	try_solution(t_main_cont *cont, t_deque *temp_moves);
+bool	check_if_best_moves(t_main_cont *cont, t_deque *temp_moves);
+void	discard_moves(t_main_cont *cont, t_deque *temp_moves);
+
+// Inserting
+void	insert_b(t_main_cont *cont, t_deque *temp_moves);
+void	init_insert_info(t_insert_info *info);
+void	update_insert_info(t_main_cont *cont, t_insert_info *info);
+int		calculate_insert_cost(t_insert_info *info);
+void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info);
+
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);
@@ -114,15 +115,15 @@ int		get_pos_biggest_val(t_deque *stack);
 int		get_next_bigger(t_deque *haystack, int curr_val);
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos);
-int 	ft_abs(int a);
-int 	ft_max(int a, int b);
-int 	ft_min(int a, int b);
-bool	ft_same_sign(int a, int b);
 
 //UTILS
 void	set_next_pos(int *pos, int size);
 int		get_pos_in_stack(int *stack, int size, int value);
 int		get_next_pos(int pos, int size);
+int 	ft_abs(int a);
+int 	ft_max(int a, int b);
+int 	ft_min(int a, int b);
+bool	ft_same_sign(int a, int b);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);

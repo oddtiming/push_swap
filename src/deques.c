@@ -19,7 +19,7 @@ void init_deque(t_deque *deque)
 	//Malloc a block of memory designed to leave space on each side of the
 	//deque_head, so that values can be added on both ends with the same
 	//calculation cost, and there is still a single memory space.
-	deque->nb_elems			= 0;
+	deque->size			= 0;
 	deque->elem_min			= deque->get_elem_min(deque);
 	deque->elem_max			= deque->get_elem_max(deque);
 	deque->capacity_end		= VECTOR_INIT_SIZE;
@@ -33,7 +33,15 @@ void init_deque(t_deque *deque)
 	return ;
 }
 
-bool deque_add_front(t_deque *deque, int new_elem)
+void	new_deque(t_deque **deque)
+{
+	*deque = malloc(sizeof(t_deque));
+	if (!*deque)
+		exit_on_err("new_deque error\n");
+	init_deque(*deque);
+}
+
+bool	deque_add_front(t_deque *deque, int new_elem)
 {
 	bool		status;
 
@@ -45,7 +53,7 @@ bool deque_add_front(t_deque *deque, int new_elem)
 	}
 	deque->elems -= 1;
 	deque->elems[0] = new_elem;
-	deque->nb_elems += 1;
+	deque->size += 1;
 	deque->capacity_front -= 1;
 	deque->capacity_end += 1;
 	if (new_elem > deque->elem_max)
@@ -60,14 +68,14 @@ bool deque_add_last(t_deque *deque, int new_elem)
 {
 	bool		status;
 
-	if (deque->nb_elems == deque->capacity_end)
+	if (deque->size == deque->capacity_end)
 	{
 		status = deque_resize_end(deque, deque->capacity_total * 2);
 		if (status == FAILURE)
 			return (status);
 	}
-	deque->elems[deque->nb_elems] = new_elem;
-	deque->nb_elems += 1;
+	deque->elems[deque->size] = new_elem;
+	deque->size += 1;
 	if (new_elem > deque->elem_max)
 		deque->elem_max = new_elem;
 	if (new_elem < deque->elem_min)
@@ -90,7 +98,7 @@ int	deque_get_elem_max(t_deque *deque)
 
 	biggest_value = INT_MIN;
 	pos_in_stack = 0;
-	while (pos_in_stack < deque->nb_elems)
+	while (pos_in_stack < deque->size)
 	{
 		if (deque->elems[pos_in_stack] > biggest_value)
 			biggest_value = deque->elems[pos_in_stack];
@@ -106,7 +114,7 @@ int	deque_get_elem_min(t_deque *deque)
 
 	smallest_value = INT_MAX;
 	pos_in_stack = 0;
-	while (pos_in_stack < deque->nb_elems)
+	while (pos_in_stack < deque->size)
 	{
 		if (deque->elems[pos_in_stack] < smallest_value)
 			smallest_value = deque->elems[pos_in_stack];
@@ -118,7 +126,7 @@ int	deque_get_elem_min(t_deque *deque)
 bool	deque_reinit_list(t_deque *deque)
 {
 	free(deque->malloced_space);
-	deque->nb_elems			= 0;
+	deque->size			= 0;
 	deque->elem_min			= deque->get_elem_min(deque);
 	deque->elem_max			= deque->get_elem_max(deque);
 	deque->capacity_end		= VECTOR_INIT_SIZE;
@@ -142,7 +150,7 @@ void	deque_remove_front(t_deque *deque)
 	deque->elems += 1;
 	deque->capacity_front += 1;
 	deque->capacity_end -= 1;
-	deque->nb_elems -= 1;
+	deque->size -= 1;
 	if (elem_to_be_removed == deque->elem_min)
 		deque->elem_min = deque->get_elem_min(deque);
 	if (elem_to_be_removed == deque->elem_max)
@@ -155,9 +163,9 @@ void	deque_remove_last(t_deque *deque)
 {
 	int	elem_to_be_removed;
 
-	elem_to_be_removed = deque->elems[deque->nb_elems - 1];
-	deque->elems[deque->nb_elems - 1] = 0;
-	deque->nb_elems -= 1;
+	elem_to_be_removed = deque->elems[deque->size - 1];
+	deque->elems[deque->size - 1] = 0;
+	deque->size -= 1;
 	if (elem_to_be_removed == deque->elem_min)
 		deque->elem_min = deque->get_elem_min(deque);
 	if (elem_to_be_removed == deque->elem_max)
@@ -177,7 +185,7 @@ bool deque_resize_front(t_deque *deque, int new_size)
 		return (FAILURE);
 	temp += new_size;
 	pos_in_deque = 0;
-	while (pos_in_deque < deque->nb_elems)
+	while (pos_in_deque < deque->size)
 	{
 		temp[pos_in_deque] = deque->elems[pos_in_deque];
 		pos_in_deque++;
@@ -202,7 +210,7 @@ bool deque_resize_end(t_deque *deque, int new_size)
 		return (FAILURE);
 	temp += deque->capacity_front;
 	pos_in_deque = 0;
-	while (pos_in_deque < deque->nb_elems)
+	while (pos_in_deque < deque->size)
 	{
 		temp[pos_in_deque] = deque->elems[pos_in_deque];
 		pos_in_deque++;

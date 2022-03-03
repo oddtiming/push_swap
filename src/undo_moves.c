@@ -38,9 +38,10 @@ void	undo_moves(t_main_cont *cont, t_deque *curr_moves)
 {
 	int			move_to_index;
 
-	while (curr_moves->nb_elems)
+	move_to_index = 0;
+	while (curr_moves->size)
 	{
-		move_to_index = curr_moves->elems[curr_moves->nb_elems - 1];
+		move_to_index = curr_moves->elems[curr_moves->size - 1];
 		move_to_index = convert_move_to_index(move_to_index);
 		cont->reverse_fcts[move_to_index](cont, NULL);
 		curr_moves->remove_last(curr_moves);
@@ -54,9 +55,10 @@ void	undo_n_moves(t_main_cont *cont, t_deque *curr_moves, int n)
 
 	if (n <= 0)
 		return ;
-	while (n-- && curr_moves->nb_elems)
+	move_to_index = 0;
+	while (n-- && curr_moves->size)
 	{
-		move_to_index = curr_moves->elems[curr_moves->nb_elems - 1];
+		move_to_index = curr_moves->elems[curr_moves->size - 1];
 		move_to_index = convert_move_to_index(move_to_index);
 		cont->reverse_fcts[move_to_index](cont, NULL);
 		curr_moves->remove_last(curr_moves);

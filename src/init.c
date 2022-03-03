@@ -8,8 +8,6 @@ void	init(t_main_cont *cont, char **args)
 	init_deque(&cont->stack_b);
 	init_deque(&cont->curr_moves);
 	init_deque(&cont->best_moves);
-	//To know that it wasn't inited yet, and safely pass it to free
-	cont->best_moves.free_list(&cont->best_moves);
 	init_deque(&cont->final_moves);
 	cont->reverse_fcts = malloc(11 * sizeof(void *));
 	if (!cont->reverse_fcts)
@@ -20,14 +18,10 @@ void	init(t_main_cont *cont, char **args)
 			exit_on_err("deque_add_last done fucked up\n");
 	normalize_stack_values(&cont->stack_a);
 	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), \
-			cont->stack_a.nb_elems, 0);
-	set_iterator(&cont->tail_a, get_pos_biggest_val(&cont->stack_a), \
-			cont->stack_a.nb_elems, 1);
+			cont->stack_a.size, 0);
 	set_iterator(&cont->head_b, 0, 0, 1);
-	set_iterator(&cont->tail_b, 0, 0, 0);
 	init_reverse_moves_array(cont->reverse_fcts);
-	cont->best_delta_insert = INT_MAX;
-	cont->curr_delta_insert = 0;
+	cont->min_nb_moves = INT_MAX;
 	return ;
 }
 
@@ -54,22 +48,22 @@ void	normalize_stack_values(t_deque *stack)
 	int	pos_in_stack;
 	int	i;
 
-	normalized_stack = malloc(stack->nb_elems * sizeof(int));
+	normalized_stack = malloc(stack->size * sizeof(int));
 	if (!normalized_stack)
 		exit_on_err("Malloc back at it again");
 	pos_in_stack = 0;
-	while (pos_in_stack < stack->nb_elems)
+	while (pos_in_stack < stack->size)
 	{
 		nb_smaller_values = 0;
 		i = -1;
-		while (++i < stack->nb_elems)
+		while (++i < stack->size)
 			if (stack->elems[i] < stack->elems[pos_in_stack])
 				nb_smaller_values++;
 		normalized_stack[pos_in_stack] = nb_smaller_values;
 		pos_in_stack++;
 	}
 	i = -1;
-	while (++i < stack->nb_elems)
+	while (++i < stack->size)
 		stack->set_elem(stack, i, normalized_stack[i]);
 	free(normalized_stack);
 	return ;

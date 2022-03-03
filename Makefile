@@ -1,7 +1,7 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 4 3 2 1 0
+RUN_ARGS = 4 3 2 0 1
 
 SHELL	=	bash
 
@@ -14,8 +14,10 @@ RESET_COL	=	\033[0m
 
 CFILES	=	cleanup.c \
 			deques.c \
+			deque_operators.c \
 			errors.c \
 			init.c \
+			insert.c \
 			iterators.c \
 			parse.c \
 			print_utils.c \
@@ -26,6 +28,7 @@ CFILES	=	cleanup.c \
 			sort.c \
 			sort_utils.c \
 			sx.c \
+			try_x.c \
 			undo_moves.c \
 			utils.c
 
@@ -83,7 +86,7 @@ COMPILE_DBG_EXE		=	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(DBG_OBJS) -
 COMPILE_DBG_EXE_OUT	=	$$($(COMPILE_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 COMPILE_DBGC		=	$(CC) $(DBG_CFLAGS) $(INCLFLAGS) -o $@ -c $<
 COMPILE_DBGC_OUT	=	$$($(COMPILE_DBGC) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-RM_DBG_EXE			=	rm -rf debug_objs; rm $(DBG_EXE)
+RM_DBG_EXE			=	rm $(DBG_EXE)
 RM_DBG_EXE_OUT		=	$$($(RM_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
 $(DBG_DIR)/%.o: $(SRC_DIR)/%.c

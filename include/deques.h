@@ -11,7 +11,7 @@ typedef struct s_deque
 {
 	int		*elems;
 	int		*malloced_space;
-	int		nb_elems;
+	int		size;
 	int		elem_min;
 	int		elem_max;
 	int		capacity_total;
@@ -32,6 +32,7 @@ typedef struct s_deque
 
 //VECTORS
 void 	init_deque(t_deque *deque);
+void	new_deque(t_deque **deque);
 bool 	deque_add_front(t_deque *deque, int new_elem);
 bool 	deque_add_last(t_deque *deque, int new_elem);
 void 	deque_free_list(t_deque *deque);
@@ -43,5 +44,10 @@ void	deque_remove_last(t_deque *deque);
 bool 	deque_resize_end(t_deque *deque, int new_size);
 bool 	deque_resize_front(t_deque *deque, int new_size);
 void	deque_set_elem(t_deque *deque, int pos, int new_value);
+
+//OPERATORS
+void	copy_deque(t_deque *src, t_deque *dest);
+void	cat_deque(t_deque *src, t_deque *dest);
+void	cat_deque_front(t_deque *src, t_deque *dest);
 
 #endif

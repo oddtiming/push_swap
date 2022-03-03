@@ -24,13 +24,12 @@ void    do_sa(t_main_cont *cont, t_deque *curr_moves)
 		curr_moves->add_last(curr_moves, SA);
 
 	swap_update_iterator(&cont->head_a);
-	swap_update_iterator(&cont->tail_a);
 
 	if (DEBUG)
 	{
 		print_move(SA);
-		print_stacks(cont);
-		printf("%s\n", __FUNCTION__);
+		// print_stacks(cont);
+		// printf("%s\n", __FUNCTION__);
 	}
 
 	return ;
@@ -43,13 +42,12 @@ void    do_sb(t_main_cont *cont, t_deque *curr_moves)
 		curr_moves->add_last(curr_moves, SB);
 
 	swap_update_iterator(&cont->head_b);
-	swap_update_iterator(&cont->tail_b);
 
 	if (DEBUG)
 	{
-		printf("%s\n", __FUNCTION__);
+		// printf("%s\n", __FUNCTION__);
 		print_move(SB);
-		print_stacks(cont);
+		// print_stacks(cont);
 	}
 
 	return ;
@@ -63,15 +61,13 @@ void    do_ss(t_main_cont *cont, t_deque *curr_moves)
 		curr_moves->add_last(curr_moves, SS);
 
 	swap_update_iterator(&cont->head_a);
-	swap_update_iterator(&cont->tail_a);
 	swap_update_iterator(&cont->head_b);
-	swap_update_iterator(&cont->tail_b);
 
 	if (DEBUG)
 	{
 		printf("%s\n", __FUNCTION__);
 		print_move(SS);
-		print_stacks(cont);
+		// print_stacks(cont);
 	}
 
 	return ;

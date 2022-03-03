@@ -51,7 +51,7 @@ bool	try_pb(t_main_cont *cont)
 		if (DEBUG)
 		{
 			printf(RED"------after pushing stackA[%d]------\n"RESET_COL, pos_in_stack);
-			print_stacks(cont);
+			// print_stacks(cont);
 			
 		}
 		if (try_sa_dry_run(cont))
@@ -65,7 +65,7 @@ bool	try_pb(t_main_cont *cont)
 			if (DEBUG)
 			{
 				printf(GREEN"--------try_pb succeeded--------\n"RESET_COL);
-				print_stacks(cont);				
+				// print_stacks(cont);				
 			}
 			return (true);
 		}
@@ -131,7 +131,7 @@ bool	try_sa(t_main_cont *cont)
 			if (DEBUG)
 			{
 				printf(YELLOW"--------AFTER try_sa--------\n"RESET_COL);
-				print_stacks(cont);
+				// print_stacks(cont);
 			}
 			return (true);
 		}
@@ -194,7 +194,7 @@ void	insert_b(t_main_cont *cont)
 		if (DEBUG)
 		{
 			printf(YELLOW"--------AFTER pa--------\n"RESET_COL);
-			print_stacks(cont);
+			// print_stacks(cont);
 		}
 	}
 	insertion_val = get_smallest_pos(cont->A, cont->sizeA);
@@ -248,7 +248,7 @@ void	sort_5(t_main_cont *cont)
 		if (DEBUG)
 		{
 			printf("--------SOLVED BOARD--------");
-			print_stacks(cont);
+			// print_stacks(cont);
 		}
 		return ;
 	}
@@ -260,7 +260,7 @@ void	sort_5(t_main_cont *cont)
 		if (DEBUG)
 		{
 			printf(YELLOW"--------AFTER pb--------\n"RESET_COL);
-			print_stacks(cont);
+			// print_stacks(cont);
 		}
 		sort_5(cont);
 	}

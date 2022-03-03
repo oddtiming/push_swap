@@ -9,10 +9,8 @@ void	push(t_deque *stack_src, t_deque *stack_dest)
 
 static inline void	push_update_iterators(t_main_cont *cont)
 {
-	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), cont->stack_a.nb_elems, 0);
-	set_iterator(&cont->tail_a, get_pos_biggest_val(&cont->stack_a), cont->stack_a.nb_elems, 0);
-	set_iterator(&cont->head_b, get_pos_smallest_val(&cont->stack_b), cont->stack_b.nb_elems, 1);
-	set_iterator(&cont->tail_b, get_pos_biggest_val(&cont->stack_b), cont->stack_b.nb_elems, 1);
+	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), cont->stack_a.size, 0);
+	set_iterator(&cont->head_b, get_pos_smallest_val(&cont->stack_b), cont->stack_b.size, 1);
 	return ;
 }
 
@@ -26,9 +24,9 @@ void    do_pa(t_main_cont *cont, t_deque *curr_moves)
 
 	if (DEBUG)
 	{
-		printf("%s\n", __FUNCTION__);
+		// printf("%s\n", __FUNCTION__);
 		print_move(PA);
-		print_stacks(cont);
+		// print_stacks(cont);
 	}
 	
 	return ;
@@ -44,9 +42,9 @@ void    do_pb(t_main_cont *cont, t_deque *curr_moves)
 
 	if (DEBUG)
 	{
-		printf("%s\n", __FUNCTION__);
+		// printf("%s\n", __FUNCTION__);
 		print_move(PB);
-		print_stacks(cont);
+		// print_stacks(cont);
 	}
 	
 	return ;

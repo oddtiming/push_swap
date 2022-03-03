@@ -1,11 +1,12 @@
 #include "push_swap.h"
 
+//Get the pos in the stack of a given value. If not found (-1) is returned
 int	get_pos_of_val(t_deque *stack, int val)
 {
 	int	pos;
 
 	pos = 0;
-	while (pos < stack->nb_elems)
+	while (pos < stack->size)
 	{
 		if (stack->elems[pos] == val)
 			return (pos);
@@ -19,7 +20,7 @@ int	get_pos_smallest_val(t_deque *stack)
 	int	pos_in_stack;
 
 	pos_in_stack = 0;
-	if (stack->nb_elems <= 0)
+	if (stack->size <= 0)
 		return (0);
 	while (stack->elems[pos_in_stack] != stack->elem_min)
 		pos_in_stack++;
@@ -31,7 +32,7 @@ int	get_pos_biggest_val(t_deque *stack)
 	int	pos_in_stack;
 
 	pos_in_stack = 0;
-	if (stack->nb_elems <= 0)
+	if (stack->size <= 0)
 		return (0);
 	while (stack->elems[pos_in_stack] != stack->elem_max)
 		pos_in_stack++;
@@ -47,7 +48,7 @@ int		get_next_bigger(t_deque *stack, int curr_val)
 		return (stack->elem_min);
 	next_bigger = curr_val + 1;
 	pos = 0;
-	while (pos < stack->nb_elems)
+	while (pos < stack->size)
 	{
 		if (stack->elems[pos] == next_bigger)
 			return (next_bigger);
@@ -64,7 +65,7 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
 {
 	t_iterator	iter;
 
-	set_iterator(&iter, pos_smallest, stack->nb_elems, 0);
+	set_iterator(&iter, pos_smallest, stack->size, 0);
 	while (iterate_n_loops(&iter, 1))
 	{
 		if (!(stack->elems[iter.index] > stack->elems[iter.prev_index]) \
@@ -89,29 +90,29 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 {
 	if (DEBUG)
 	{
-		int revpos = pos - cont->stack_a.nb_elems;
+		int revpos = pos - cont->stack_a.size;
 		printf(YELLOW"rotate_to_pos0=======> pos = %d, revpos = %d\n", pos, revpos);
-		if (pos < cont->stack_a.nb_elems - pos)
+		if (pos < cont->stack_a.size - pos)
 			printf("Choosing ra; %d < %d\n"RESET_COL, pos, -revpos);
 		else
 			printf("Choosing rra; %d >= %d\n"RESET_COL, pos, -revpos);
 	}
-	if (pos < cont->stack_a.nb_elems - pos)
+	if (pos < cont->stack_a.size - pos)
 		while (pos-- > 0)
 			do_ra(cont, curr_moves);
 	else
-		while (pos++ < cont->stack_a.nb_elems)
+		while (pos++ < cont->stack_a.size)
 			do_rra(cont, curr_moves);
 	return ;
 }
 
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos)
 {
-	if (pos < cont->stack_b.nb_elems - pos)
+	if (pos < cont->stack_b.size - pos)
 		while (pos-- > 0)
 			do_rb(cont, curr_moves);
 	else
-		while (pos++ < cont->stack_b.nb_elems)
+		while (pos++ < cont->stack_b.size)
 			do_rrb(cont, curr_moves);
 	return ;
 }
