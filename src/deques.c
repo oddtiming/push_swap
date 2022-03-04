@@ -127,8 +127,8 @@ bool	deque_reinit_list(t_deque *deque)
 {
 	free(deque->malloced_space);
 	deque->size				= 0;
-	deque->min_elem			= INT_MAX - 1;
-	deque->max_elem			= INT_MIN + 1;
+	deque->min_elem			= INT_MAX - 100;
+	deque->max_elem			= INT_MIN + 100;
 	deque->capacity_end		= VECTOR_INIT_SIZE;
 	deque->capacity_front	= VECTOR_INIT_SIZE;
 	deque->capacity_total	= 2 * VECTOR_INIT_SIZE;

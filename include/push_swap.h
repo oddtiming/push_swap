@@ -11,6 +11,7 @@
 
 //TO REMOVE
 # include <stdio.h>
+# include <sys/wait.h>
 //END OF REMOVE
 
 //libft for ft_putstr_fd(), ft_strlen(), ft_split()

@@ -27,16 +27,20 @@ int	main(int argc, char *argv[])
 	// 	if ()
 	// }
 
-	for (int i = cont->stack_a.size; i > 0; i--)
+	while (cont->stack_a.size > 3)
 	{
-		if ()
-		do_pb(cont, &cont->final_moves);
+		// if (cont->stack_a.elems[0] > cont->stack_a.elems[1])
+			do_pb(cont, &cont->final_moves);
+		// else
+		// 	do_ra(cont, &cont->final_moves);
 	}
+	if (!is_sorted(&cont->stack_a, cont->head_a.index))
+		do_sa(cont, &cont->final_moves);
 	insert_b(cont, &cont->final_moves);
 	rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
-	print_stacks(cont);
+	// print_stacks(cont);
 	print_all_moves(&cont->final_moves);
-	printf(MAGENTA"\t==> FINAL TOTAL: %d \n"RESET_COL, cont->final_moves.size);
+	// printf(MAGENTA"\t==> FINAL TOTAL: %d \n"RESET_COL, cont->final_moves.size);
 	// print_stacks_info(cont);
 
 	// do_ra(cont, &cont->curr_moves);
