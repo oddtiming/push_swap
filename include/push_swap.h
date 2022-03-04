@@ -56,7 +56,6 @@ typedef	struct s_stack_insert_info
 	int	pos_best;
 	int	revpos_best;
 	int	val_best;
-
 }	t_stack_insert_info;
 
 typedef	struct s_insert_info
@@ -109,6 +108,7 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff);
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);
 void	update_insert_info(t_main_cont *cont, t_insert_info *info);
 int		calc_insert_cost(t_insert_info *info);
+int		calc_delta_insert(t_main_cont *cont, t_insert_info *info);
 void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
 
 
@@ -132,6 +132,7 @@ bool	ft_same_sign(int a, int b);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);
+void	print_single_stack(t_deque *stack);
 void	print_move(int move);
 void    print_all_moves(t_deque *curr_moves);
 void	print_stacks_info(t_main_cont *cont);

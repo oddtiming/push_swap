@@ -1,5 +1,25 @@
 #include "push_swap.h"
 
+void	print_single_stack(t_deque *stack)
+{
+	int	i;
+
+	printf("    |\033[38;5;5m [A] \033[0m|\n");
+	printf("+---+-----+\n");
+	i = 0;
+	while (i < stack->size)
+	{
+		printf("|%-3d|", i);
+		if (i < stack->size)
+			printf("\033[38;5;5m %-3d \033[0;0;0m|\n", stack->elems[i]);
+		else
+			printf("\t\033[0m|\n");
+		i++;
+	}
+	printf("+---+-----+\n");
+}
+
+
 void	print_stacks(t_main_cont *cont)
 {
 	int	*stack_a;

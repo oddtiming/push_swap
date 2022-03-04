@@ -16,7 +16,19 @@ void	init(t_main_cont *cont, char **args)
 	while (args[++i] != NULL)
 		if (cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i])))
 			exit_on_err("deque_add_last done fucked up\n");
+	if (DEBUG)
+	{
+		printf(CYAN"BEFORE normalization\n"RESET_COL);
+		print_stacks_info(cont);
+	}
 	normalize_stack_values(&cont->stack_a);
+
+	if (DEBUG)
+	{
+		printf(CYAN"AFTER normalization\n"RESET_COL);
+		print_stacks_info(cont);
+	}
+
 	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), \
 			cont->stack_a.size, 0);
 	set_iterator(&cont->head_b, 0, 0, 1);
@@ -64,7 +76,15 @@ void	normalize_stack_values(t_deque *stack)
 	}
 	i = -1;
 	while (++i < stack->size)
-		stack->set_elem(stack, i, normalized_stack[i]);
+	{
+		stack->add_last(stack, normalized_stack[i]);
+		stack->remove_front(stack);
+		if (DEBUG)
+		{
+			printf(CYAN"added %d\n"RESET_COL, normalized_stack[i]);
+			print_single_stack(stack);
+		}
+	}
 	free(normalized_stack);
 	return ;
 }

@@ -7,11 +7,12 @@
  * For now insert_b does not need a temp_moves_list, b/c it directly
  * inserts the value with lowest insert cost. If two values have the same
  * insert cost (absolute distance from 0), 
- * the one closest in value to its corresponding insert_val will be selected.
+ * the one closest in value to its corresponding insert_val,
+ * OR closest in value to value at end of stack in dest_stack will be selected.
  * 
  * A potential avenue of optimization would be to calculate in advance if
- * inserting suboptimal curr_pos can result in better overall result.
- * 	- Not sure how to test
+ * inserting suboptimal curr_pos can result in better overall result. 
+ * 	- Would need a linked list for that one, the one in the libft would work!
  * 
  * 
  */
@@ -208,6 +209,50 @@ void	init_insert_info(t_main_cont *cont, t_insert_info *info)
 	return ;
 }
 
+/*
+ * Calculating delta inserts:
+ *		delta insert = ft_max(
+ * 						stack_dest[insert_pos] - stack_src[pos], 
+ *						stack_src[pos] - stack_dest[insert_pos - 1])
+ *
+ * Could be done with an iterator.
+ * 
+ * Not sure if truly beneficial, but I think it is, because I think it 
+ * increases the order of the stack by having close values together.
+ * I'm going on a feeling for a sorting algorithm, lol.
+ * 
+ */	
+
+int	calc_delta_insert(t_main_cont *cont, t_insert_info *info)
+{
+	t_iterator		*iter;
+	t_stack_insert_info *a_info;
+	t_stack_insert_info *b_info;
+	int					delta_insert;
+
+	a_info = &info->a_info;
+	b_info = &info->b_info;
+	iter = malloc(sizeof(t_iterator));
+	if (!iter)
+		exit_on_err("calc_delta_insert: iter error\n");
+	set_iterator(iter, info->a_info.pos, cont->stack_a.size, 1);
+	iterate_once(iter, 1);
+	delta_insert = ft_max( \
+		ft_abs(a_info->val - b_info->val), \
+		ft_abs(b_info->val - cont->stack_a.elems[iter->index]));
+	// delta_insert = ft_abs(a_info->val - b_info->val);
+	if (DEBUG)
+	{
+		printf("delta_insert: \n \
+		ft_abs(a_info->val (%d) - b_info->val (%d) = %d \n \
+		ft_abs(info->b_info.val (%d) - stack_a.elems[iter->index] (%d) = %d)\n", \
+				a_info->val, b_info->val, ft_abs(a_info->val - b_info->val),
+				b_info->val, cont->stack_a.elems[iter->index], ft_abs(b_info->val - cont->stack_a.elems[iter->index]));
+	}
+	return (delta_insert);
+}
+
+
 void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 {
 	t_stack_insert_info *a_info;
@@ -223,7 +268,7 @@ void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 	//Will calculate the minimum distance between two points in two stacks
 	info->curr_cost = calc_insert_cost(info);
 	//curr_delta_cost needs to also take into account delta with last elem in stack_a
-	info->curr_delta_insert = ft_abs(a_info->val - b_info->val);
+	info->curr_delta_insert = calc_delta_insert(cont, info);
 	if ((info->curr_cost == info->min_cost && \
 		info->curr_delta_insert < info->min_delta_insert)\
 		|| info->curr_cost < info->min_cost)

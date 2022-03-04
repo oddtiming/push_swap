@@ -49,8 +49,6 @@ bool	try_swap(t_main_cont *cont)
 	return (false);
 }
 
-/////////////////////Switch the try_x to bool returns, and stop if they return true. to get rid of exit
-
 bool	try_sort_small(t_main_cont *cont)
 {
 	t_deque	*moves_buff;		
