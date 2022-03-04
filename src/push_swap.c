@@ -19,28 +19,10 @@ int	main(int argc, char *argv[])
 	// insert_b(cont, &cont->final_moves);	
 
 	// do_pb(cont, &cont->curr_moves);
-	// try_swap(cont);
-
-	// insert_b(cont);
-	// print_all_moves(&cont->curr_moves);
-	// print_stacks_info(cont);
+	// do_ra(cont, &cont->curr_moves);
 	// do_pb(cont, &cont->curr_moves);
-	// do_sa(cont, &cont->curr_moves);
-	// insert_elem_b(cont, 2, 1);
-
-	
-
-
-	// if (try_swap(cont))
-	// 	printf("try_swap success\n");
-	// else
-	// 	printf("try_swap failure\n");
-	// insert_b(cont);
-	// print_stacks_info(cont);
-	
-	// try_invert_4(cont);
-
-	// undo_moves(cont, &cont->curr_moves);
+	// try_swap(cont);
+	// print_all_moves(&cont->best_moves);
 
 
 	sort(cont);

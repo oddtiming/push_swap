@@ -12,8 +12,8 @@ typedef struct s_deque
 	int		*elems;
 	int		*malloced_space;
 	int		size;
-	int		elem_min;
-	int		elem_max;
+	int		min_elem;
+	int		max_elem;
 	int		capacity_total;
 	int		capacity_end;
 	int		capacity_front;

@@ -1,8 +1,10 @@
 #include "push_swap.h"
 
 //otherwise, will undo the list of moves passed as param
-bool	check_if_best_moves(t_main_cont *cont, t_deque *temp_moves)
+bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff)
 {
+	int	total_nb_moves;
+	
 	if (!is_sorted(&cont->stack_a, cont->head_a.index))
 	{
 		if (DEBUG)
@@ -10,38 +12,44 @@ bool	check_if_best_moves(t_main_cont *cont, t_deque *temp_moves)
 			print_stacks_info(cont);
 			exit_on_err("dat look sorted to you?\n");
 		}
+		return (false);
 	}
-	else if (cont->best_moves.malloced_space == NULL || \
-			cont->curr_moves.size + temp_moves->size < cont->best_moves.size)
+	total_nb_moves = cont->curr_moves.size;
+	if (moves_buff)
+		total_nb_moves += moves_buff->size;
+	if (total_nb_moves < cont->min_nb_moves)
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
-		cat_deque(temp_moves, &cont->best_moves);
+		cat_deque(moves_buff, &cont->best_moves);
 		cont->min_nb_moves = cont->best_moves.size;
-		if (cont->min_nb_moves <= 8)
+		if (cont->min_nb_moves <= 7)
 		{
 			if (DEBUG)
 			{
-				printf(RED"\t###############################\n"RESET_COL);
-				printf(GREEN"\tStack sorted in 8 or less moves\n"RESET_COL);
-				printf(RED"\t###############################\n"RESET_COL);
-				print_stacks_info(cont);
+				printf(RED"\t########################\n"RESET_COL);
+				printf(GREEN"\tStack sorted in %d moves\n"RESET_COL, cont->min_nb_moves);
+				printf(RED"\t########################\n"RESET_COL);
+				print_stacks(cont);
+				print_all_moves(&cont->best_moves);
 			}
-			return (true); /////////////////////// Only exit call, don't like it.
+			return (true);
 		}
-		if (DEBUG)
+		else if (DEBUG)
 		{
-			printf(GREEN"BEST MOVES UPDATED:");
+			printf(RED"\t##################\n"RESET_COL);
+			printf(GREEN"\tBEST MOVES UPDATED\n");
+			printf(RED"\t##################\n"RESET_COL);
+			printf(GREEN);
 			print_all_moves(&cont->best_moves);
+			printf(RESET_COL);
+			print_stacks(cont);
 		}
 	}
-	undo_moves(cont, temp_moves);
 	return (false);
 }
 
 void	sort_small(t_main_cont *cont)
 {
-	//check if already or almost already sorted
-	try_solution(cont, &cont->curr_moves);
 	try_sort_small(cont);
 	copy_deque(&cont->best_moves, &cont->final_moves);
 	return ;

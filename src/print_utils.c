@@ -36,14 +36,14 @@ void	print_stacks_info(t_main_cont *cont)
 	print_stacks(cont);
 
 	printf(YELLOW"**stack_a**\n");
-	printf("\tmax elem in a = %d\n", cont->stack_a.elem_max);
-	printf("\tmin elem in a = %d\n", cont->stack_a.elem_min);
+	printf("\tmax elem in a = %d\n", cont->stack_a.max_elem);
+	printf("\tmin elem in a = %d\n", cont->stack_a.min_elem);
 	printf("\tpos: %d\n", cont->head_a.index);
 	printf("\tsize of stack_a = %d\n", cont->stack_a.size);
 
 	printf(YELLOW"**stack_b**\n");
-	printf("\tmax elem in b = %d\n", cont->stack_b.elem_max);
-	printf("\tmin elem in b = %d\n", cont->stack_b.elem_min);
+	printf("\tmax elem in b = %d\n", cont->stack_b.max_elem);
+	printf("\tmin elem in b = %d\n", cont->stack_b.min_elem);
 	printf("\tpos: %d\n", cont->head_b.index);
 	printf("\tsize of stack_b = %d\n"RESET_COL, cont->stack_b.size);
 

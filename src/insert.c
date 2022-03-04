@@ -17,7 +17,7 @@
  */
 
 // insert b should do that and exactly that; insert b. 
-void	insert_b(t_main_cont *cont, t_deque *temp_moves)
+void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 {
 	t_insert_info info;
 
@@ -28,23 +28,17 @@ void	insert_b(t_main_cont *cont, t_deque *temp_moves)
 		printf(CYAN"Entered insert_b\n"RESET_COL);
 		print_stacks_info(cont);
 	}
-	// if (cont->stack_b.size == 0)
-	// {
-	// 	rotate_to_0_in_a(cont, temp_moves, cont->head_a.index);
-	// 	return ;
-	// }
-	init_insert_info(&info);
-	info.b_info.pos = 0;
 
-	while (cont->stack_b.size > 0 && info.b_info.pos < cont->stack_b.size)
+	// if b is not empty, will also call update_insert_info()
+	init_insert_info(cont, &info);
+	while (++info.b_info.pos < cont->stack_b.size)
 	{
-		// Attempt to not try EVERY value, but only those that can result in better results
-		// if it's reached too far and is smaller than half, reset to next_end - min_cost
-		if (cont->stack_b.size - info.b_info.pos > info.min_cost && \
-			cont->stack_b.size - info.min_cost < info.b_info.pos)
+		// Attempt to not try EVERY value, but only those that can result in fewer moves
+		// if stack_b pos is already further than min_moves, set pos to stack_b.size - min_cost
+		if (info.b_info.pos > info.min_cost && \
+			 info.b_info.pos < cont->stack_b.size - info.min_cost)
 			info.b_info.pos = cont->stack_b.size - info.min_cost;
 		update_insert_info(cont, &info);
-		info.b_info.pos++;
 	}
 	if (DEBUG)
 	{
@@ -53,8 +47,8 @@ void	insert_b(t_main_cont *cont, t_deque *temp_moves)
 	}
 	if (cont->stack_b.size > 0)
 	{
-		insert_elem_b(cont, temp_moves, &info);
-		insert_b(cont, temp_moves);
+		insert_elem_b(cont, moves_buff, &info);
+		insert_b(cont, moves_buff);
 	}
 	if (DEBUG)
 	{
@@ -64,26 +58,36 @@ void	insert_b(t_main_cont *cont, t_deque *temp_moves)
 }
 
 
-// This fct calculates the minimum number of moves to rotate both pos to 0.
-// If both stacks have the most efficient rotations in the same sense, return.
+// Calculates the minimum number of moves to rotate insert_pos in both to 0.
+// If both stacks have the most efficient rotations in the same sense, 
+//		return the biggest of the two.
 // Else, check if most efficient to rotate indepently or in same direction.
-int	calculate_insert_cost(t_insert_info *info)
+// 
+int	calc_insert_cost(t_insert_info *info)
 {
-	t_stack_insert_info	*a_info;
 	t_stack_insert_info	*b_info;
+	t_stack_insert_info	*a_info;
 	int 				curr_cost;
 
-	a_info = &info->a_info;
 	b_info = &info->b_info;
+	a_info = &info->a_info;
+		
+	b_info->dist0 = b_info->pos;
+	if (ft_abs(b_info->revpos) < b_info->pos)
+		b_info->dist0 = b_info->revpos;
+
 	a_info->dist0 = a_info->pos;
 	if (ft_abs(a_info->revpos) < a_info->pos)
 		a_info->dist0 = a_info->revpos;
-	b_info->dist0 = b_info->pos;
-	if ((ft_abs(b_info->revpos_best) == b_info->pos_best && \
-			a_info->dist0_best < 0) \
-			|| ft_abs(b_info->revpos) < b_info->pos)
+	//If equal in both directions, pick the one in the same direction as the other
+
+	if ((ft_abs(b_info->revpos) == b_info->pos && \
+			a_info->dist0 < 0))
 		b_info->dist0 = b_info->revpos;
-	//this is hella redundant, but at least it hopefully does what it needs to do
+	if ((ft_abs(a_info->revpos) == a_info->pos && \
+			b_info->dist0 < 0))
+		a_info->dist0 = a_info->revpos;
+	
 	curr_cost = ft_max(ft_abs(a_info->dist0), ft_abs(b_info->dist0));
 	if (ft_same_sign(a_info->dist0, b_info->dist0))
 		return (curr_cost);
@@ -93,7 +97,7 @@ int	calculate_insert_cost(t_insert_info *info)
 	return (curr_cost);
 }
 
-void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info)
+void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 {
 	t_stack_insert_info	*a_info;
 	t_stack_insert_info	*b_info;
@@ -112,13 +116,13 @@ void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info)
 				a_info->dist0_best--;
 				b_info->dist0_best--;
 				if (a_info->dist0_best < 0)
-					do_rb(cont, temp_moves);
+					do_rb(cont, moves_buff);
 				else if (b_info->dist0_best < 0)
-					do_ra(cont, temp_moves);
+					do_ra(cont, moves_buff);
 				else
-					do_rr(cont, temp_moves);
+					do_rr(cont, moves_buff);
 			}
-			do_pa(cont, temp_moves);
+			do_pa(cont, moves_buff);
 		}
 		else
 		{
@@ -127,13 +131,13 @@ void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info)
 				a_info->dist0_best++;
 				b_info->dist0_best++;
 				if (a_info->dist0_best > 0)
-					do_rrb(cont, temp_moves);
+					do_rrb(cont, moves_buff);
 				else if (b_info->dist0_best > 0)
-					do_rra(cont, temp_moves);
+					do_rra(cont, moves_buff);
 				else
-					do_rrr(cont, temp_moves);
+					do_rrr(cont, moves_buff);
 			}
-			do_pa(cont, temp_moves);
+			do_pa(cont, moves_buff);
 		}
 		return ;
 	}
@@ -148,13 +152,13 @@ void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info)
 				a_info->pos_best--;
 				b_info->pos_best--;
 				if (a_info->pos_best < 0)
-					do_rb(cont, temp_moves);
+					do_rb(cont, moves_buff);
 				else if (b_info->pos_best < 0)
-					do_ra(cont, temp_moves);
+					do_ra(cont, moves_buff);
 				else
-					do_rr(cont, temp_moves);
+					do_rr(cont, moves_buff);
 			}
-			do_pa(cont, temp_moves);
+			do_pa(cont, moves_buff);
 		}
 		else
 		{
@@ -163,13 +167,13 @@ void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info)
 				a_info->revpos_best++;
 				b_info->revpos_best++;
 				if (a_info->revpos_best >= 0)
-					do_rrb(cont, temp_moves);
+					do_rrb(cont, moves_buff);
 				else if (b_info->revpos_best >= 0)
-					do_rra(cont, temp_moves);
+					do_rra(cont, moves_buff);
 				else
-					do_rrr(cont, temp_moves);
+					do_rrr(cont, moves_buff);
 			}
-			do_pa(cont, temp_moves);
+			do_pa(cont, moves_buff);
 		}
 		return ;
 	}
@@ -178,25 +182,30 @@ void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info)
 	{
 		if (a_info->dist0_best >= 0)
 			while (a_info->dist0_best-- > 0)
-				do_ra(cont, temp_moves);
+				do_ra(cont, moves_buff);
 		else
 			while (a_info->dist0_best++ < 0)
-				do_rra(cont, temp_moves);
+				do_rra(cont, moves_buff);
 		if (b_info->dist0_best >= 0)
 			while (b_info->dist0_best-- > 0)
-				do_rb(cont, temp_moves);
+				do_rb(cont, moves_buff);
 		else
 			while (b_info->dist0_best++ < 0)
-				do_rrb(cont, temp_moves);
-		do_pa(cont, temp_moves);
+				do_rrb(cont, moves_buff);
+		do_pa(cont, moves_buff);
 	}
 	return ;	
 }
 
-void	init_insert_info(t_insert_info *info)
+void	init_insert_info(t_main_cont *cont, t_insert_info *info)
 {
-	info->min_cost = INT_MAX;
-	info->min_delta_insert = INT_MAX;
+	info->b_info.pos = 0;
+	info->min_cost = INT_MAX - 1;
+	info->min_delta_insert = INT_MAX - 1;
+
+	if (cont->stack_b.size > 0)
+		update_insert_info(cont, info);
+	return ;
 }
 
 void	update_insert_info(t_main_cont *cont, t_insert_info *info)
@@ -208,12 +217,12 @@ void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 	b_info = &info->b_info;
 	b_info->revpos = b_info->pos - cont->stack_b.size;
 	b_info->val = cont->stack_b.elems[b_info->pos];
-	a_info->val = get_next_bigger(&cont->stack_a, b_info->val);
+	a_info->val = get_next_value(&cont->stack_a, b_info->val);
 	a_info->pos = get_pos_of_val(&cont->stack_a, a_info->val);
 	a_info->revpos = a_info->pos - cont->stack_a.size;
 	//Will calculate the minimum distance between two points in two stacks
-	info->curr_cost = calculate_insert_cost(info);
-	//curr_delta_cost needs to also take into account delta with last elem in a
+	info->curr_cost = calc_insert_cost(info);
+	//curr_delta_cost needs to also take into account delta with last elem in stack_a
 	info->curr_delta_insert = ft_abs(a_info->val - b_info->val);
 	if ((info->curr_cost == info->min_cost && \
 		info->curr_delta_insert < info->min_delta_insert)\
@@ -224,9 +233,11 @@ void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 		b_info->val_best = b_info->val;
 		b_info->pos_best = b_info->pos;
 		b_info->revpos_best = b_info->revpos;
-		b_info->dist0_best = INT_MAX;
+		b_info->dist0_best = b_info->dist0;
 		a_info->val_best = a_info->val;
 		a_info->pos_best = a_info->pos;
 		a_info->revpos_best = a_info->revpos;
+		a_info->dist0_best = a_info->dist0;
 	}
+	return ;
 }

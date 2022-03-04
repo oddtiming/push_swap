@@ -24,7 +24,7 @@ static bool	ft_same_sign(int a, int b)
 // This fct calculates the minimum number of moves to rotate both pos to 0.
 // If both stacks have the most efficient rotations in the same sense, return.
 // Else, check if most efficient to rotate indepently or in same direction.
-int	calculate_abs_min_dist(int pos_a, int size_a, int pos_b, int size_b)
+int	calc_insert_cost(int pos_a, int size_a, int pos_b, int size_b)
 {
 	int revpos_a;
 	int dist_a;
@@ -58,30 +58,30 @@ int	main(void)
 	pos_a = 1;
 	pos_b = 4;
 	printf("size A\t: %d\nsize B\t: %d\npos_a\t: %d\npos_b\t: %d\n", size_a, size_b, pos_a, pos_b);
-	printf("dist_min==> %d\n", calculate_abs_min_dist(pos_a, size_a, pos_b, size_b));
+	printf("dist_min==> %d\n", calc_insert_cost(pos_a, size_a, pos_b, size_b));
 	size_a = 88;
 	size_b = 33;
 	pos_a = 35;
 	pos_b = 32;
 	printf("size A\t: %d\nsize B\t: %d\npos_a\t: %d\npos_b\t: %d\n", size_a, size_b, pos_a, pos_b);
-	printf("dist_min==> %d\n", calculate_abs_min_dist(pos_a, size_a, pos_b, size_b));
+	printf("dist_min==> %d\n", calc_insert_cost(pos_a, size_a, pos_b, size_b));
 	size_a = 67;
 	size_b = 33;
 	pos_a = 33;
 	pos_b = 31;
 	printf("size A\t: %d\nsize B\t: %d\npos_a\t: %d\npos_b\t: %d\n", size_a, size_b, pos_a, pos_b);
-	printf("dist_min==> %d\n", calculate_abs_min_dist(pos_a, size_a, pos_b, size_b));
+	printf("dist_min==> %d\n", calc_insert_cost(pos_a, size_a, pos_b, size_b));
 	size_a = 67;
 	size_b = 33;
 	pos_a = 63;
 	pos_b = 15;
 	printf("size A\t: %d\nsize B\t: %d\npos_a\t: %d\npos_b\t: %d\n", size_a, size_b, pos_a, pos_b);
-	printf("dist_min==> %d\n", calculate_abs_min_dist(pos_a, size_a, pos_b, size_b));
+	printf("dist_min==> %d\n", calc_insert_cost(pos_a, size_a, pos_b, size_b));
 	size_a = 67;
 	size_b = 33;
 	pos_a = 2;
 	pos_b = 32;
 	printf("size A\t: %d\nsize B\t: %d\npos_a\t: %d\npos_b\t: %d\n", size_a, size_b, pos_a, pos_b);
-	printf("dist_min==> %d\n", calculate_abs_min_dist(pos_a, size_a, pos_b, size_b));
+	printf("dist_min==> %d\n", calc_insert_cost(pos_a, size_a, pos_b, size_b));
 	return (0);
 }

@@ -20,8 +20,8 @@ void init_deque(t_deque *deque)
 	//deque_head, so that values can be added on both ends with the same
 	//calculation cost, and there is still a single memory space.
 	deque->size			= 0;
-	deque->elem_min			= deque->get_elem_min(deque);
-	deque->elem_max			= deque->get_elem_max(deque);
+	deque->min_elem			= deque->get_elem_min(deque);
+	deque->max_elem			= deque->get_elem_max(deque);
 	deque->capacity_end		= VECTOR_INIT_SIZE;
 	deque->capacity_front	= VECTOR_INIT_SIZE;
 	deque->capacity_total	= 2 * VECTOR_INIT_SIZE;
@@ -56,10 +56,10 @@ bool	deque_add_front(t_deque *deque, int new_elem)
 	deque->size += 1;
 	deque->capacity_front -= 1;
 	deque->capacity_end += 1;
-	if (new_elem > deque->elem_max)
-		deque->elem_max = new_elem;
-	if (new_elem < deque->elem_min)
-		deque->elem_min = new_elem;
+	if (new_elem > deque->max_elem)
+		deque->max_elem = new_elem;
+	if (new_elem < deque->min_elem)
+		deque->min_elem = new_elem;
 	status = SUCCESS;
 	return (status);
 }
@@ -76,10 +76,10 @@ bool deque_add_last(t_deque *deque, int new_elem)
 	}
 	deque->elems[deque->size] = new_elem;
 	deque->size += 1;
-	if (new_elem > deque->elem_max)
-		deque->elem_max = new_elem;
-	if (new_elem < deque->elem_min)
-		deque->elem_min = new_elem;
+	if (new_elem > deque->max_elem)
+		deque->max_elem = new_elem;
+	if (new_elem < deque->min_elem)
+		deque->min_elem = new_elem;
 	status = SUCCESS;
 	return (status);
 }
@@ -127,8 +127,8 @@ bool	deque_reinit_list(t_deque *deque)
 {
 	free(deque->malloced_space);
 	deque->size			= 0;
-	deque->elem_min			= deque->get_elem_min(deque);
-	deque->elem_max			= deque->get_elem_max(deque);
+	deque->min_elem			= deque->get_elem_min(deque);
+	deque->max_elem			= deque->get_elem_max(deque);
 	deque->capacity_end		= VECTOR_INIT_SIZE;
 	deque->capacity_front	= VECTOR_INIT_SIZE;
 	deque->capacity_total	= 2 * VECTOR_INIT_SIZE;
@@ -151,10 +151,10 @@ void	deque_remove_front(t_deque *deque)
 	deque->capacity_front += 1;
 	deque->capacity_end -= 1;
 	deque->size -= 1;
-	if (elem_to_be_removed == deque->elem_min)
-		deque->elem_min = deque->get_elem_min(deque);
-	if (elem_to_be_removed == deque->elem_max)
-		deque->elem_max = deque->get_elem_max(deque);
+	if (elem_to_be_removed == deque->min_elem)
+		deque->min_elem = deque->get_elem_min(deque);
+	if (elem_to_be_removed == deque->max_elem)
+		deque->max_elem = deque->get_elem_max(deque);
 	return ;
 }
 
@@ -166,10 +166,10 @@ void	deque_remove_last(t_deque *deque)
 	elem_to_be_removed = deque->elems[deque->size - 1];
 	deque->elems[deque->size - 1] = 0;
 	deque->size -= 1;
-	if (elem_to_be_removed == deque->elem_min)
-		deque->elem_min = deque->get_elem_min(deque);
-	if (elem_to_be_removed == deque->elem_max)
-		deque->elem_max = deque->get_elem_max(deque);
+	if (elem_to_be_removed == deque->min_elem)
+		deque->min_elem = deque->get_elem_min(deque);
+	if (elem_to_be_removed == deque->max_elem)
+		deque->max_elem = deque->get_elem_max(deque);
 	return ;
 }
 

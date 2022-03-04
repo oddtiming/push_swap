@@ -22,7 +22,7 @@ int	get_pos_smallest_val(t_deque *stack)
 	pos_in_stack = 0;
 	if (stack->size <= 0)
 		return (0);
-	while (stack->elems[pos_in_stack] != stack->elem_min)
+	while (stack->elems[pos_in_stack] != stack->min_elem)
 		pos_in_stack++;
 	return (pos_in_stack);
 }
@@ -34,18 +34,19 @@ int	get_pos_biggest_val(t_deque *stack)
 	pos_in_stack = 0;
 	if (stack->size <= 0)
 		return (0);
-	while (stack->elems[pos_in_stack] != stack->elem_max)
+	while (stack->elems[pos_in_stack] != stack->max_elem)
 		pos_in_stack++;
 	return (pos_in_stack);
 }
 
-int		get_next_bigger(t_deque *stack, int curr_val)
+// Will return the next bigger value in the index, or stack_x.min_elem
+int		get_next_value(t_deque *stack, int curr_val)
 {
 	int	pos;
 	int	next_bigger;
 
-	if (curr_val + 1 > stack->elem_max)
-		return (stack->elem_min);
+	if (curr_val + 1 > stack->max_elem)
+		return (stack->min_elem);
 	next_bigger = curr_val + 1;
 	pos = 0;
 	while (pos < stack->size)
@@ -54,7 +55,7 @@ int		get_next_bigger(t_deque *stack, int curr_val)
 			return (next_bigger);
 		pos++;
 	}
-	return (get_next_bigger(stack, curr_val + 1));
+	return (get_next_value(stack, curr_val + 1));
 }
 
 //Since the pos_smallest lives outside the deque (that's really dumb btw),

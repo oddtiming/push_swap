@@ -95,16 +95,16 @@ void	sort_small(t_main_cont *cont);
 bool	try_sort_small(t_main_cont *cont);
 bool	try_swap(t_main_cont *cont);
 bool	try_invert_4(t_main_cont *cont);
-bool	try_solution(t_main_cont *cont, t_deque *temp_moves);
-bool	check_if_best_moves(t_main_cont *cont, t_deque *temp_moves);
-void	discard_moves(t_main_cont *cont, t_deque *temp_moves);
+bool	try_solution(t_main_cont *cont, t_deque *moves_buff);
+bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff);
+void	discard_moves(t_main_cont *cont, t_deque *moves_buff);
 
 // Inserting
-void	insert_b(t_main_cont *cont, t_deque *temp_moves);
-void	init_insert_info(t_insert_info *info);
+void	insert_b(t_main_cont *cont, t_deque *moves_buff);
+void	init_insert_info(t_main_cont *cont, t_insert_info *info);
 void	update_insert_info(t_main_cont *cont, t_insert_info *info);
-int		calculate_insert_cost(t_insert_info *info);
-void	insert_elem_b(t_main_cont *cont, t_deque *temp_moves, t_insert_info *info);
+int		calc_insert_cost(t_insert_info *info);
+void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
 
 
 //  SORT UTILS
@@ -112,7 +112,7 @@ bool	is_sorted(t_deque *stack, int pos_smallest);
 int		get_pos_of_val(t_deque  *stack, int val);
 int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
-int		get_next_bigger(t_deque *haystack, int curr_val);
+int		get_next_value(t_deque *haystack, int curr_val);
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos);
 

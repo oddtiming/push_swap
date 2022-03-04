@@ -33,10 +33,6 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order by 
 The way I defined its problem, this project was not about building a sorting algorithm per se, but rather about modding and applying different sorting algorithms to a custom set of constraints. From the get-go, I had in mind that I should be comparing solutions to find the best for a given starting stack, because each algo has different edge cases, so it seemed like a good way to learn about the pros and cons of each of them, and come up with a custom solution for each set of values. 
 
 ### Ideas
-```diff
-# text in red
-@@ text in red (and bold)@@
-```
 - Start by finding a center at which the number of sorted values is maximal
 - I would like to do a virtual state or a duplicate of each stacks through which I could simulate a couple moves in advance, and add the best list of moves to a move buffer
     - The constraints could be:

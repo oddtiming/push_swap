@@ -1,7 +1,7 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 4 3 2 0 1
+RUN_ARGS = 2 3 1 0 4
 
 SHELL	=	bash
 
@@ -30,7 +30,7 @@ CFILES	=	cleanup.c \
 			sx.c \
 			try_x.c \
 			undo_moves.c \
-			utils.c
+			utils.c 
 
 HFILES	= 	push_swap.h \
 			deques.h
