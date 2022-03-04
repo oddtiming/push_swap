@@ -6,7 +6,7 @@
 
 ## Goal
 
-The goal is to sort a given stack of n values (`stack_a`) in ascending order by using a selected set of moves.
+The goal is to sort a given stack of n values (`stack_a`) in ascending order from the top of the stack by using a selected set of moves.
 
 - The values are taken in as executable parameters, and can be any signed integer values, without duplicates.
 - The first value entered in argv will be at the top of the stack (`index == 0`), the last will be at the bottom (`index == size - 1`)
@@ -30,9 +30,10 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order by 
 
 ## Problem definition
 
-The way I defined its problem, this project was not about building a sorting algorithm per se, but rather about modding and applying different sorting algorithms to a custom set of constraints. From the get-go, I had in mind that I should be comparing solutions to find the best for a given starting stack, because each algo has different edge cases, so it seemed like a good way to learn about the pros and cons of each of them, and come up with a custom solution for each set of values. 
+The way I defined its problem, this project was not about building a sorting algorithm per se, but rather about modding and applying different sorting algorithms to a custom set of constraints. From the get-go, I had in mind that I should be comparing solutions to find the best for a given starting stack, because each algo has different edge cases, so it seemed like a good way to learn about the pros and cons of each of them, and come up with a custom solution for each set of values.
 
 ### Ideas
+
 - Start by finding a center at which the number of sorted values is maximal
 - I would like to do a virtual state or a duplicate of each stacks through which I could simulate a couple moves in advance, and add the best list of moves to a move buffer
     - The constraints could be:
@@ -312,3 +313,62 @@ Should also add a value to iterators or  make min_
 ## Debug Galore March 3, 2022
 
 ---
+
+So I think it’s time for me to start implementing unit tests for each of the functions. I’ll start with the foundational ones, like calculate_insert_costs
+
+- Bug:
+    - Description: infinite loop of rra
+        - Case: ./push_swap_debug 4 3 2 0 1
+    - Possible causes: seems to be a faulty insert_b, since testing pb and try_swap it in isolation pinpointed the loop to insert_b
+    - Fix #1: Added update_insert_info() to init_insert_info() when b is not empty
+        - Result: now the function properly works in not inserting anything when not needed
+    - Fix #2: properly updated a_info→dist0 in calc_insert_info()
+        - oops
+    - Fix #3: added recursive exit condition in try_sort_small
+    if (try_sort_small()) return (true);
+        - Result: Now seems to be working as intended
+        
+- Bug #1:
+    - Description: seg fault when I change min nb_moves from 8 to 7
+        - Case: ./push_swap 2 4 1 0 3
+    - Possible causes: trying impossible solutions before reaching the correct one
+    - Fix #1: added a condition for stack_a.size ≤ 3 after try_swap
+        - Result:
+            - fixed 2 4 1 0 3
+            - fucked up 2 3 1 0 4
+        - Thoughts: seems to be a an error in double rotation
+    - Fix #2: change sense of rotation if equal in both directions
+        
+        ```c
+        if ((ft_abs(b_info->revpos) == b_info->pos && a_info->dist0 < 0))
+          b_info->dist0 = b_info->revpos;
+        if ((ft_abs(a_info->revpos) == a_info->pos && b_info->dist0 < 0))
+          a_info->dist0 = a_info->revpos;
+        ```
+        
+        - Result:
+            - fixed 2 3 1 0 4
+            - fucked up 2 1 0 4 3
+        - Thoughts: invert_4 doesn’t seem to be called
+    - Fix #3: added sort in main
+        - oops
+- Issue #1:
+    - Description: always seg faulted when min_moves !< 8. In other words, when the recursion was not stopped by a successful call to try_solution→check_if_min_moves.
+    - Possible causes: the “false” branch of the recursion was not properly handling freeing and allocating memory
+    - Fix #1: Adding discard_moves to try_solution
+        - Result :
+            - cleaned up when successful
+            - more segfaults when unsuccessful
+        - thoughts: discarding the solution should only happen when check_if_min_moves returns true, otherwise it’s up to the calling function to manage its memory freeing/allocation
+    - Fix #2: Call discard_moves at the end of each solution, and new_deque at the beginning of every new one.
+        - Result:
+            - Malloc error: object being freed was not allocated left and right
+            - List of curr_moves was never properly freed
+        - Thoughts: I realized I was doing undo_n_moves AND calling discard_moves, which undid the moves.
+    - Fix #3: don’t call discard_moves for try_sort_small
+        - Result:
+            - It’s fixed. it’s all fixed
+            - except...  small leaks of 128 bytes on certain sorts
+    - Fix #4: added a call to discard_moves() after try_swap
+        - Result:
+            - Voilà
