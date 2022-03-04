@@ -2,60 +2,37 @@
 
 int	main(int argc, char *argv[])
 {
-	t_main_container	cont;
-	
-	ft_bzero(&cont, sizeof(t_main_container));
+	t_main_cont	*cont;
 
-	parse(argc, argv, &cont);
+	cont = malloc(sizeof(t_main_cont));
+	if (!cont)
+		exit_on_err("t_main_cont malloc error");
+	ft_bzero(cont, sizeof(t_main_cont));
+	parse(argc, argv, cont);
 	if (DEBUG)
 	{
-		printf("\n----Initial Stacks----\n\n");
-		print_stacks(&cont);
-	}
-	cont.A = normalize_stack_values(cont.A, cont.size);
-	if (DEBUG)
-	{
+		printf("size of main struct is %zu, lol\n", sizeof(t_main_cont));
 		printf("\n----After normalization----\n\n");
-		print_stacks(&cont);
+		print_stacks_info(cont);
 	}
 
+	// insert_b(cont, &cont->final_moves);	
 
-	sort(&cont);
-	cleanup(&cont);
-	return (0);
+	// do_pb(cont, &cont->curr_moves);
+	// do_ra(cont, &cont->curr_moves);
+	// do_pb(cont, &cont->curr_moves);
+	// try_swap(cont);
+	// print_all_moves(&cont->best_moves);
+
+
+	sort(cont);
+
+	print_all_moves(&cont->final_moves);
+	if (DEBUG)
+	{
+		print_stacks_info(cont);
+	}
+
+	cleanup(cont);
+	return (EXIT_SUCCESS);
 }
-	// print_stacks(&cont);
-
-	// make_move(&cont, PB);
-	// make_move(&cont, PB);
-	// make_move(&cont, PB);
-	// make_move(&cont, PB);
-	// print_stacks(&cont);
-
-	// make_move(&cont, RRR);
-	// print_stacks(&cont);
-	// make_move(&cont, RR);
-	// print_stacks(&cont);
-	// make_move(&cont, SS);
-	// print_stacks(&cont);
-	// make_move(&cont, PA);
-	// make_move(&cont, PA);
-	// make_move(&cont, PA);
-	// make_move(&cont, PA);
-	// print_stacks(&cont);
-	// make_move(&cont, RR);
-	// print_stacks(&cont);
-	// make_move(&cont, RRR);
-	// print_stacks(&cont);
-	// make_move(&cont, SS);
-	// print_stacks(&cont);
-
-
-	// rotate(cont.A, cont.sizeA, false);
-	// printf("\n----After rotate----\n\n");
-	// print_stacks(&cont);
-
-	// rotate(cont.A, cont.sizeA, true);
-	// rotate(cont.A, cont.sizeA, true);
-	// printf("\n----After 2x reverse rotate----\n\n");
-	// print_stacks(&cont);

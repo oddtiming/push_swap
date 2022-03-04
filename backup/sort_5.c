@@ -1,34 +1,34 @@
 #include "push_swap.h"
 #define NOT_SORTED -1
 
-void	rotate_a_to_pos0(t_main_container *cont,  int pos)
+void	rotate_a_to_pos0(t_main_cont *cont,  int pos)
 {
-	if (pos < cont->size - pos)
+	if (pos < cont->sizeA - pos)
 		while (pos-- > 0)
 			make_rab(&cont->A, cont->sizeA, RA);
 	else
-		while (pos++ < size)
+		while (pos++ < cont->sizeA)
 			make_rrab(&cont->A, cont->size, RRA);
 	if (DEBUG)
 	{
 		printf(YELLOW"--------AFTER rotate_a_to_pos0--------\n"RESET_COL);
-		print_single_stack(*stack, size);
+		print_single_stack(cont->A, cont->sizeA);
 	}
 	return ;
 }
 
-void	rotate_a_to_pos0_dry_run(t_main_container *cont,  int pos)
+void	rotate_a_to_pos0_dry_run(t_main_cont *cont,  int pos)
 {
-	if (pos < cont->size - pos)
+	if (pos < cont->sizeA - pos)
 		while (pos-- > 0)
 			rotate(&cont->A, cont->sizeA);
 	else
-		while (pos++ < size)
+		while (pos++ < cont->sizeA)
 			rev_rotate(&cont->A, cont->size);
 	return ;
 }
 
-bool	try_pb(t_main_container *cont)
+bool	try_pb(t_main_cont *cont)
 {
 	int	pos_in_stack;
 	int	stack_head_value;
@@ -36,8 +36,8 @@ bool	try_pb(t_main_container *cont)
 
 	if (DEBUG)
 		printf(RED"-----ENTERED try_pb!!!-----\n"RESET_COL);
-	smallest_val = try_ra_dry_run(cont->A, cont->size);
-	if (smallest_val > NOT_SORTED)
+	smallest_val = get_smallest_val(cont->A, cont->sizeA);
+	if (nb_sorted_at_pos(cont->A, cont->sizeA, smallest_val))
 	{
 		rotate_a_to_pos0(cont, smallest_val);
 		return (true);
@@ -46,26 +46,26 @@ bool	try_pb(t_main_container *cont)
 	stack_head_value = cont->A[0];
 	while (pos_in_stack < cont->sizeA)
 	{
-		rotate_a_to_pos0_dry_run(&cont->A, cont->size, pos_in_stack);
+		rotate_a_to_pos0_dry_run(cont, pos_in_stack);
 		push(cont, PB);
 		if (DEBUG)
 		{
 			printf(RED"------after pushing stackA[%d]------\n"RESET_COL, pos_in_stack);
-			print_stacks(cont);
+			// print_stacks(cont);
 			
 		}
 		if (try_sa_dry_run(cont))
 		{
 			push(cont, PA);
 			rotate_a_to_pos0_dry_run(cont, get_pos_in_stack(cont->A, cont->sizeA, stack_head_value));
-			rotate_a_to_pos0(&cont->A, cont->size, pos_in_stack);
+			rotate_a_to_pos0(cont, pos_in_stack);
 			make_push(cont, PB);
 			try_sa(cont);
 			insert_b(cont);
 			if (DEBUG)
 			{
 				printf(GREEN"--------try_pb succeeded--------\n"RESET_COL);
-				print_stacks(cont);				
+				// print_stacks(cont);				
 			}
 			return (true);
 		}
@@ -79,7 +79,7 @@ bool	try_pb(t_main_container *cont)
 	return (false);
 }
 
-bool	try_sa_dry_run(t_main_container *cont)
+bool	try_sa_dry_run(t_main_cont *cont)
 {
 	int *stack;
 	int size;
@@ -107,7 +107,7 @@ bool	try_sa_dry_run(t_main_container *cont)
 	return (false);
 }
 
-bool	try_sa(t_main_container *cont)
+bool	try_sa(t_main_cont *cont)
 {
 	int *stack;
 	int size;
@@ -131,7 +131,7 @@ bool	try_sa(t_main_container *cont)
 			if (DEBUG)
 			{
 				printf(YELLOW"--------AFTER try_sa--------\n"RESET_COL);
-				print_stacks(cont);
+				// print_stacks(cont);
 			}
 			return (true);
 		}
@@ -142,32 +142,32 @@ bool	try_sa(t_main_container *cont)
 	return (false);
 }
 
-int	try_ra_dry_run(t_main_container *cont)
+int	try_ra_dry_run(t_main_cont *cont)
 {
 	int	smallest_val;
 
 	smallest_val = get_smallest_pos(cont->A, cont->size);
-	if (nb_sorted_at_pos(cont->A, cont->size, smallest_val) == size)
+	if (nb_sorted_at_pos(cont->A, cont->size, smallest_val) == cont->sizeA)
 	{
 		return (smallest_val);
 	}
 	return (NOT_SORTED);
 }
 
-bool	try_ra(t_main_container *cont)
+bool	try_ra(t_main_cont *cont)
 {
 	int	smallest_val;
 
 	smallest_val = get_smallest_pos(cont->A, cont->size);
-	if (nb_sorted_at_pos(cont->A, cont->size, smallest_val) == size)
+	if (nb_sorted_at_pos(cont->A, cont->size, smallest_val) == cont->sizeA)
 	{
-		rotate_a_to_pos0(&cont->A, cont->size, smallest_val);
+		rotate_a_to_pos0(cont, smallest_val);
 		return (true);
 	}
 	return (false);
 }
 
-void	insert_b(t_main_container *cont)
+void	insert_b(t_main_cont *cont)
 {
 	int	pos_of_b0_in_a;
 	int	insertion_val;
@@ -194,7 +194,7 @@ void	insert_b(t_main_container *cont)
 		if (DEBUG)
 		{
 			printf(YELLOW"--------AFTER pa--------\n"RESET_COL);
-			print_stacks(cont);
+			// print_stacks(cont);
 		}
 	}
 	insertion_val = get_smallest_pos(cont->A, cont->sizeA);
@@ -202,7 +202,7 @@ void	insert_b(t_main_container *cont)
 	return ;
 }
 
-bool	try_rotate_and_swap(t_main_container *cont)
+bool	try_rotate_and_swap(t_main_cont *cont)
 {
 	int stack_head;
 
@@ -241,14 +241,14 @@ bool	try_rotate_and_swap(t_main_container *cont)
 //Theoretical minimum stays 8 moves with implementation of 
 // invert_4() == sa; ra x2; sa;
 
-void	sort_5(t_main_container *cont)
+void	sort_5(t_main_cont *cont)
 {
 	if (try_rotate_and_swap(cont) == true)
 	{
 		if (DEBUG)
 		{
 			printf("--------SOLVED BOARD--------");
-			print_stacks(cont);
+			// print_stacks(cont);
 		}
 		return ;
 	}
@@ -260,7 +260,7 @@ void	sort_5(t_main_container *cont)
 		if (DEBUG)
 		{
 			printf(YELLOW"--------AFTER pb--------\n"RESET_COL);
-			print_stacks(cont);
+			// print_stacks(cont);
 		}
 		sort_5(cont);
 	}

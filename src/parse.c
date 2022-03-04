@@ -2,22 +2,26 @@
 
 static bool	has_duplicates(int *array, int size)
 {
-	int	i;
-	int	j;
+	int	curr_pos;
+	int	curr_value;
+	int	compare_pos;
+	int	compare_value;
 
-	i = 0;
+	curr_pos = 0;
 	if (!array || size < 0)
 		return (false);
-	while (i < size - 1)
+	while (curr_pos < size - 1)
 	{
-		j = i + 1;
-		while (j < size)
+		curr_value = array[curr_pos];
+		compare_pos = curr_pos + 1;
+		while (compare_pos < size)
 		{
-			if (array[j] == array[i])
+			compare_value = array[compare_pos];
+			if (curr_value == compare_value)
 				return (true);
-			j++;
+			compare_pos++;
 		}
-		i++;
+		curr_pos++;
 	}
 	return (false);
 }
@@ -79,13 +83,13 @@ static char	**split_args(int argc, char *argv[])
 	return (args_split);
 }
 
-void	parse(int argc, char *argv[], t_main_container *stacks)
+void	parse(int argc, char *argv[], t_main_cont *cont)
 {
 	char	**args_split;
 	int		i;
 
 	if (argc < _ARGC_MIN)
-		exit_on_err("Wrong number of inputs\n");
+		exit_on_err("Come on, give me at least ONE input\n");
 	args_split = split_args(argc, argv);
 	if (!args_split || !args_split[0])
 		exit_on_err("args_split is somehow NULL?\n");
@@ -94,8 +98,8 @@ void	parse(int argc, char *argv[], t_main_container *stacks)
 		i++;
 	if (args_split[i] != NULL)
 		exit_on_err("one of the inputs is not an int\n");
-	assign_inputs(args_split, stacks, i);
-	if (has_duplicates(stacks->A, stacks->size) == true)
+	init(cont, args_split);
+	if (has_duplicates(cont->stack_a.elems, cont->stack_a.size))
 		exit_on_err("Duplicate inputs\n");
 	// ft_print_split(args_split, "argv");
 	ft_free_split(args_split);

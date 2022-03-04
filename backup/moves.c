@@ -38,7 +38,7 @@ static void	private_push(int **stack_src, int **stack_dest, \
 	*stack_src += 1;
 }
 
-void	push(t_main_container *cont, int move)
+void	push(t_main_cont *cont, int move)
 {
 	if (move == PA)
 		private_push(&cont->B, &cont->A, &cont->sizeB, &cont->sizeA);
