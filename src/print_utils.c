@@ -47,7 +47,7 @@ void	print_stacks_info(t_main_cont *cont)
 	printf("\tpos: %d\n", cont->head_b.index);
 	printf("\tsize of stack_b = %d\n"RESET_COL, cont->stack_b.size);
 
-	printf(CYAN"\t==> TEMP TOTAL: %d \n"RESET_COL, cont->curr_moves.size);
+	printf(CYAN"\t==> CURR TOTAL: %d \n"RESET_COL, cont->curr_moves.size);
 	print_all_moves(&cont->curr_moves);
 	printf(BLUE"\t==> BEST TOTAL: %d \n"RESET_COL, cont->best_moves.size);
 	print_all_moves(&cont->best_moves);
