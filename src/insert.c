@@ -47,10 +47,10 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 			 info->b_info.pos < cont->stack_b.size - info->min_cost)
 			info->b_info.pos = cont->stack_b.size - info->min_cost;
 		update_insert_info(cont, info);
-		if (info->min_cost < 0)
-		{
-			update_insert_info(cont, info);
-		}
+		// if (info->min_cost < 0)
+		// {
+		// 	update_insert_info(cont, info);
+		// }
 	}
 	if (DEBUG)
 	{
@@ -68,19 +68,19 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 	{
 		//TO REMOVE
 		// if (info.min_cost < 0)
-		// if (cont->stack_a.elems[0] > cont->stack_a.elems[1])
-		// {
-		// printf("wtf happened after\n");
-		// print_stacks(cont);
-		// printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
-		// printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
-		// printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
-		// printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
-		// printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
-		// printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
-		// printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
-		// printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
-		// }
+		if (DEBUG && cont->stack_a.elems[0] > cont->stack_a.elems[1])
+		{
+		printf("wtf happened after\n");
+		print_stacks(cont);
+		printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
+		printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
+		printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
+		printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
+		printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
+		printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
+		printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
+		printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
+		}
 		//EOREMOVE
 		
 		insert_elem_b(cont, moves_buff, info);
@@ -153,26 +153,29 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 	{
 		//TO REMOVE
 		// if (info.min_cost < 0)
-		// if (cont->stack_a.elems[0] > cont->stack_a.elems[1])
-		// {
-		// printf("wtf happened after\n");
-		// print_stacks(cont);
-		// printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
-		// printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
-		// printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
-		// printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
-		// printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
-		// printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
-		// printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
-		// printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
-		// }
+		if (DEBUG && cont->stack_a.elems[0] > cont->stack_a.elems[1])
+		{
+			printf("wtf happened after\n");
+			print_stacks(cont);
+			printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
+			printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
+			printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
+			printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
+			printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
+			printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
+			printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
+			printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
+		}
 		//EOREMOVE
 	}
 	// case for they both need to go in the same sense
 	if (ft_same_sign(a_info->dist0_best, b_info->dist0_best))
 	{
 
-		// printf(MAGENTA"\t ---> picked same_sign\n"RESET_COL);
+		if (DEBUG)
+		{
+			printf(MAGENTA"\t ---> picked same_sign\n"RESET_COL);
+		}
 		if (a_info->dist0_best > 0 || b_info->dist0_best > 0)
 		{
 			while (info->min_cost-- > 0)
@@ -209,7 +212,10 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 	// but it's still better to move them in same direction
 	else if (ft_min(ft_max(a_info->pos_best, b_info->pos_best), ft_max(-a_info->revpos, -b_info->revpos)) < ft_abs(a_info->dist0_best) + ft_abs(b_info->dist0_best) )
 	{
-		// printf(CYAN"\t ---> picked the weird one\n"RESET_COL);
+		if (DEBUG)
+		{
+			printf(CYAN"\t ---> picked the weird one\n"RESET_COL);
+		}
 		if (ft_max(a_info->pos_best, b_info->pos_best) < ft_max(-a_info->revpos, -b_info->revpos))
 		{
 			while (info->min_cost-- > 0)
@@ -245,7 +251,10 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 	// case where they each do their own thing. that's okay too.
 	else
 	{
-		// printf(RED"\t ---> picked independent strong woman\n"RESET_COL);
+		if (DEBUG)
+		{
+			printf(RED"\t ---> picked independent strong woman\n"RESET_COL);
+		}
 		if (a_info->dist0_best >= 0)
 			while (a_info->dist0_best-- > 0)
 				do_ra(cont, moves_buff);
