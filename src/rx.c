@@ -24,12 +24,6 @@ void    do_ra(t_main_cont *cont, t_deque *curr_moves)
 
 	rotate_update_iterators(&cont->head_a);
 
-	if (DEBUG)
-	{
-		print_move(RA);
-		// print_stacks(cont);
-	}
-
 	return ;
 }
 
@@ -40,12 +34,6 @@ void    do_rb(t_main_cont *cont, t_deque *curr_moves)
 		curr_moves->add_last(curr_moves, RB);
 
 	rotate_update_iterators(&cont->head_b);
-
-	if (DEBUG)
-	{
-		print_move(RB);
-		// print_stacks(cont);
-	}
 
 	return ;
 }
@@ -59,12 +47,6 @@ void	do_rr(t_main_cont *cont, t_deque *curr_moves)
 
 	rotate_update_iterators(&cont->head_a);
 	rotate_update_iterators(&cont->head_b);
-
-	if (DEBUG)
-	{
-		print_move(RR);
-		// print_stacks(cont);
-	}	
 
 	return ;
 }

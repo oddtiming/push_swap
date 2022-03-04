@@ -8,8 +8,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
+
 //TO REMOVE
 # include <stdio.h>
+# include <sys/wait.h>
 //END OF REMOVE
 
 //libft for ft_putstr_fd(), ft_strlen(), ft_split()
@@ -25,6 +27,11 @@
 # define VECTOR_INIT_SIZE 16
 # define SUCCESS 0
 # define FAILURE 1
+
+//DEFINES
+# define _ARGC_MIN 2
+# define VALID_INPUTS 1
+# define MAX_MOVES_FOR_5 9
 
 //TO REMOVE
 # ifndef DEBUG
@@ -50,7 +57,6 @@ typedef	struct s_stack_insert_info
 	int	pos_best;
 	int	revpos_best;
 	int	val_best;
-
 }	t_stack_insert_info;
 
 typedef	struct s_insert_info
@@ -78,7 +84,6 @@ typedef struct s_main_cont
 	int				min_nb_moves;
 }	t_main_cont;
 
-
 //Functions
 //PARSING
 void	parse(int argc, char *argv[], t_main_cont *cont);
@@ -104,6 +109,7 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff);
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);
 void	update_insert_info(t_main_cont *cont, t_insert_info *info);
 int		calc_insert_cost(t_insert_info *info);
+int		calc_delta_insert(t_main_cont *cont, t_insert_info *info);
 void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
 
 
@@ -127,6 +133,7 @@ bool	ft_same_sign(int a, int b);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);
+void	print_single_stack(t_deque *stack);
 void	print_move(int move);
 void    print_all_moves(t_deque *curr_moves);
 void	print_stacks_info(t_main_cont *cont);

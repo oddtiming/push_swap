@@ -126,9 +126,9 @@ int	deque_get_elem_min(t_deque *deque)
 bool	deque_reinit_list(t_deque *deque)
 {
 	free(deque->malloced_space);
-	deque->size			= 0;
-	deque->min_elem			= deque->get_elem_min(deque);
-	deque->max_elem			= deque->get_elem_max(deque);
+	deque->size				= 0;
+	deque->min_elem			= INT_MAX - 100;
+	deque->max_elem			= INT_MIN + 100;
 	deque->capacity_end		= VECTOR_INIT_SIZE;
 	deque->capacity_front	= VECTOR_INIT_SIZE;
 	deque->capacity_total	= 2 * VECTOR_INIT_SIZE;
@@ -136,7 +136,8 @@ bool	deque_reinit_list(t_deque *deque)
 	if (!deque->malloced_space)
 		return (FAILURE);
 	ft_bzero(deque->malloced_space, 2 * VECTOR_INIT_SIZE);
-	deque->elems			= &(deque->malloced_space[VECTOR_INIT_SIZE]);
+	//MADE A CHANGE HERE BY REMOVING THE ADDRESS ASSIGNATION
+	deque->elems			= deque->malloced_space + VECTOR_INIT_SIZE;
 	return (SUCCESS);
 }
 

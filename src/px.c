@@ -22,13 +22,6 @@ void    do_pa(t_main_cont *cont, t_deque *curr_moves)
 	
 	push_update_iterators(cont);
 
-	if (DEBUG)
-	{
-		// printf("%s\n", __FUNCTION__);
-		print_move(PA);
-		// print_stacks(cont);
-	}
-	
 	return ;
 }
 
@@ -40,12 +33,5 @@ void    do_pb(t_main_cont *cont, t_deque *curr_moves)
 	
 	push_update_iterators(cont);
 
-	if (DEBUG)
-	{
-		// printf("%s\n", __FUNCTION__);
-		print_move(PB);
-		// print_stacks(cont);
-	}
-	
 	return ;
 }
