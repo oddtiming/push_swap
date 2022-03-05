@@ -5,6 +5,7 @@
     - [Problem definition](#15)
     - [Initial ideas](#17)
     - [Structs](#19)
+        - [Iterators](#51)
 - [Project journal](#19)
     - [Start solve5](#70)
     - [Refactor](#71)
