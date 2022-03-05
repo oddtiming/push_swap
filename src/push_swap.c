@@ -27,18 +27,18 @@ int	main(int argc, char *argv[])
 	// 	if ()
 	// }
 
-	while (cont->stack_a.size > 3)
-	{
-			do_pb(cont, &cont->final_moves);
-	}
-	if (!is_sorted(&cont->stack_a, cont->head_a.index))
-		do_sa(cont, &cont->final_moves);
-	// do_pb(cont, &cont->final_moves);
-	// do_pb(cont, &cont->final_moves);
-	// do_pb(cont, &cont->final_moves);
-	insert_b(cont, &cont->final_moves);
-	rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
-	print_all_moves(&cont->final_moves);
+	// while (cont->stack_a.size > 3)
+	// {
+	// 		do_pb(cont, &cont->final_moves);
+	// }
+	// if (!is_sorted(&cont->stack_a, cont->head_a.index))
+	// 	do_sa(cont, &cont->final_moves);
+	// // do_pb(cont, &cont->final_moves);
+	// // do_pb(cont, &cont->final_moves);
+	// // do_pb(cont, &cont->final_moves);
+	// insert_b(cont, &cont->final_moves);
+	// rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
+	// print_all_moves(&cont->final_moves);
 	// print_stacks(cont);
 	// printf(MAGENTA"\t==> FINAL TOTAL: %d \n"RESET_COL, cont->final_moves.size);
 	// print_stacks_info(cont);
@@ -49,9 +49,9 @@ int	main(int argc, char *argv[])
 	// print_all_moves(&cont->best_moves);
 
 
-	// sort(cont);
+	sort(cont);
 
-	// print_all_moves(&cont->final_moves);
+	print_all_moves(&cont->final_moves);
 	if (DEBUG)
 	{
 		print_stacks_info(cont);
