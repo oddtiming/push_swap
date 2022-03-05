@@ -1,10 +1,24 @@
 # push_swap
+[Description](#10)
+    [Goal](#11)
+    [Allowed moves](#13)
+    [Problem definition](#15)
+    [Initial ideas](#17)
+    [Structs](#19)
+[Project journal](#19)
+    [Start solve5](#70)
+    [Refactor](#71)
+    [Haven’t actually finished sort_5. Hihi](#72)
+    [Start sort_big](#73)
+    [Vectors working, moves list working, onto t_iterator, and bigger things](#74)
+    [moves_list, t_insert_info, and more...](#75)
+    [Debug Galore](#76)
 
-# Description
+# Description {#10}
 
 42 Push_swap’s project; a little game to introduce sorting algorithms. 
 
-## Goal
+## Goal {#11}
 
 The goal is to sort a given stack of n values (`stack_a`) in ascending order from the top of the stack by using a selected set of moves.
 
@@ -13,7 +27,7 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order fro
 - Although the final sorted values needs to be in the first stack, you dispose of an adjust stack, (`stack_b`), to which you can temporarily push values.
 - For the values to be parsed outside the scope of the program, the sequence of moves used to sort need to be written to STDOUT.
 
-## Allowed moves
+## Allowed moves {#13}
 
 - rotate (`rx`)
     - Notation: `ra, rb, rr (both)`
@@ -28,11 +42,11 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order fro
     - Notation: `pa (b→a), pb (a→b)`
     - Take the value at the top of one stack to the top of `stack_x`.
 
-## Problem definition
+## Problem definition {#15}
 
 The way I defined its problem, this project was not about building a sorting algorithm per se, but rather about modding and applying different sorting algorithms to a custom set of constraints. From the get-go, I had in mind that I should be comparing solutions to find the best for a given starting stack, because each algo has different edge cases, so it seemed like a good way to learn about the pros and cons of each of them, and come up with a custom solution for each set of values.
 
-### Ideas
+### Ideas {#17}
 
 - Start by finding a center at which the number of sorted values is maximal
 - I would like to do a virtual state or a duplicate of each stacks through which I could simulate a couple moves in advance, and add the best list of moves to a move buffer
@@ -40,10 +54,10 @@ The way I defined its problem, this project was not about building a sorting alg
         - Does it increase the number of sorted from center?
         
 
-## Structs
+## Structs {#19}
 
 <aside>
-🎡 **t_iterator**
+### 🎡 **t_iterator** {#51}
 
 - int head
 - int index
@@ -53,7 +67,7 @@ The way I defined its problem, this project was not about building a sorting alg
 - bool is_reverse
 </aside>
 
-## Start solve5 February 17, 2022
+## Start solve5 February 17, 2022 {#70}
 
 I’ve been watching videos on sorting algorithms, and trying to understand [VBrazhnik’s algorithm](https://github.com/VBrazhnik/Push_swap/wiki/Algorithm), which maxes out at **522 for 100** values, and at **5468 for 500** values. It seems to rely on a hybrid between two comparison parameters, both going full completion, only the best of which he chooses to output... It seems quite smart, and I do believe that if I end up writing out a couple of different algorithms, I should carry out all of them, at least until they reach a number of moves bigger than the smallest number of moves already performed
 (e.g. if quick sort gives out 675 operations, and divide and conquer is already at 676, stop there)
@@ -127,14 +141,14 @@ e.g. : move(t_stacks *stacks, t_move move, char stackID)
         1. —No—> pb
         2. Is the list sorted at some pos? —>Yes—> insert_b
 
-### Refactor
+### Refactor {#71}
 
 - Allocate 3x the memory needed for both stacks, this way rotates and pushes will only necessitate a change of index, no reindexation. It is not memory efficiant (requires 300% of the memory), but it will max out at 8000 bytes too many for a stack of 500 (500 entries x 2 stacks x 2 times too big x 4 bytes per int = 8000), and it will save a trmendous amount of reindexation.
 - Then move on to circular doubly linked list, which will require quite a large amount of refactorization, plus writing some core functions in the libft (dblst_addback(), dblst_addfront(), dblst_new(), dblst_clear(), dblst_delone(),
 
 ---
 
-## Haven’t actually finished sort_5. Hihi February 22, 2022
+## Haven’t actually finished sort_5. Hihi February 22, 2022 {#72}
 
 ---
 
@@ -190,7 +204,7 @@ I'm stopping for the day because that seems like quite a lot of refactoring up a
 
 ---
 
-## Start sort_big February 23, 2022
+## Start sort_big February 23, 2022 {#73}
 
 ---
 
@@ -235,7 +249,7 @@ So it is currently 11:30am, and ahead of me lies have a full day of coding of wh
 
 ---
 
-## Vectors working, moves list working, onto t_iterator, and bigger things February 26, 2022
+## Vectors working, moves list working, onto t_iterator, and bigger things February 26, 2022 {#74}
 
 ---
 
@@ -278,7 +292,7 @@ change insert_b to favor insert values with smallest delta between insert_val_a 
 
 ---
 
-## moves_list, t_insert_info, and more... March 2, 2022
+## moves_list, t_insert_info, and more... March 2, 2022 {#75}
 
 ---
 
@@ -310,7 +324,7 @@ Should also add a value to iterators or  make min_
 
 ---
 
-## Debug Galore March 3, 2022
+## Debug Galore March 3, 2022 {#76}
 
 ---
 
