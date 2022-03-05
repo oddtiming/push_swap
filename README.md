@@ -15,7 +15,7 @@
     - [moves_list, t_insert_info, and more...](#75)
     - [Debug Galore](#76)
 
-# Description {#10}
+# Description {10}
 
 42 Push_swap’s project; a little game to introduce sorting algorithms. 
 
