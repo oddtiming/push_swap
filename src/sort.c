@@ -57,8 +57,17 @@ void	sort_small(t_main_cont *cont)
 
 void	sort(t_main_cont *cont)
 {
-	if (cont->stack_a.size < 10)
+	if (cont->stack_a.size <= 7)
 		sort_small(cont);
+	else
+	{
+		while (cont->stack_a.size != 6)
+		{
+			do_pb(cont, &cont->curr_moves);
+		}
+		sort_small(cont);
+	}
+
 	return ;
 }
 

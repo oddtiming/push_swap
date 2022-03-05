@@ -108,10 +108,10 @@ void	discard_moves(t_main_cont *cont, t_deque *moves_buff);
 void	insert_b(t_main_cont *cont, t_deque *moves_buff);
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);
 void	update_insert_info(t_main_cont *cont, t_insert_info *info);
-int		calc_insert_cost(t_insert_info *info);
+bool	is_new_best_moves(t_insert_info *info);
 int		calc_delta_insert(t_main_cont *cont, t_insert_info *info);
+int		calc_insert_cost(t_insert_info *info);
 void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
-
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);
