@@ -1,7 +1,7 @@
 # push_swap
 - [Description](#description)
-    - [Goal](#11)
-    - [Allowed moves](#13)
+    - [Goal](#goal)
+    - [Allowed moves](#allowedmoves)
     - [Problem definition](#15)
     - [Initial ideas](#17)
     - [Structs](#19)
@@ -28,7 +28,7 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order fro
 - Although the final sorted values needs to be in the first stack, you dispose of an adjust stack, (`stack_b`), to which you can temporarily push values.
 - For the values to be parsed outside the scope of the program, the sequence of moves used to sort need to be written to STDOUT.
 
-## Allowed moves {#13}
+## Allowed moves
 
 - rotate (`rx`)
     - Notation: `ra, rb, rr (both)`
