@@ -32,11 +32,11 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 
 	if (DEBUG)
 	{
-		printf(CYAN"Entered insert_b\n"RESET_COL);
-		// print_stacks_info(cont);
+		printf(CYAN"Entered insert_b with %d elements in b \n"RESET_COL, cont->stack_b.size);
+		print_stacks(cont);
 	}
 
-	// if b is not empty, will also call update_insert_info()
+	// if b is not empty, init will also call update_insert_info()
 	init_insert_info(cont, info);
 
 	while (++info->b_info.pos < cont->stack_b.size)
@@ -46,23 +46,25 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 		if (info->b_info.pos > info->min_cost && \
 			 info->b_info.pos < cont->stack_b.size - info->min_cost)
 			info->b_info.pos = cont->stack_b.size - info->min_cost;
+
 		update_insert_info(cont, info);
-		// if (info->min_cost < 0)
-		// {
-		// 	update_insert_info(cont, info);
-		// }
 	}
 	if (DEBUG)
 	{
 		printf(YELLOW"insert_b found best elem to be stack_b[%d] == %d\n"RESET_COL, info->b_info.pos_best, cont->stack_b.elems[info->b_info.pos_best]);
 		printf(YELLOW"corresponding insert value was stack_a[%d] == %d\n"RESET_COL, info->a_info.pos_best, cont->stack_a.elems[info->a_info.pos_best]);
+		printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
+		printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
+		printf(YELLOW"info.a_info.revpos_best = %d \n"RESET_COL, info->a_info.revpos_best);
+		printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
+		printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
+		printf(YELLOW"info.b_info.revpos_best = %d \n"RESET_COL, info->b_info.revpos_best);
+		printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
+		printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
+		printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
+		printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
 	}
-	
-	// else
-	// {
-	// 	print_all_moves(moves_buff);
-	// 	exit (0);
-	// }
+
 
 	if (cont->stack_b.size > 0)
 	{
@@ -70,29 +72,35 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 		// if (info.min_cost < 0)
 		if (DEBUG && cont->stack_a.elems[0] > cont->stack_a.elems[1])
 		{
-		printf("wtf happened after\n");
-		print_stacks(cont);
-		printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
-		printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
-		printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
-		printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
-		printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
-		printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
-		printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
-		printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
+			printf("wtf happened here?!? \n");
+			print_stacks(cont);
 		}
 		//EOREMOVE
 		
 		insert_elem_b(cont, moves_buff, info);
+
+		if (DEBUG)
+		{
+			printf(BLUE"last 5 moves: \n"RESET_COL);
+			for (int i = 5; i && moves_buff->size > 5 - i; i--)
+				print_move(moves_buff->elems[moves_buff->size - i]);
+		}
+
 		//NEW
 		free(info);
 		info = NULL;
 
+		if (!is_sorted(&cont->stack_a, cont->head_a.index))
+		{
+			printf("fucked up right here\n");
+			print_stacks(cont);
+			printf(BLUE"last 35 moves: \n"RESET_COL);
+			for (int i = 35; i && moves_buff->size > 35 - i; i--)
+				print_move(moves_buff->elems[moves_buff->size - i]);
+			exit(1);
+		}
+
 		insert_b(cont, moves_buff);
-	}
-	if (DEBUG)
-	{
-		printf(CYAN"After insert_b\n"RESET_COL);
 	}
 
 	//NEW
@@ -100,6 +108,8 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 	info = NULL;
 	return ;
 }
+
+//NEXT_BIGGER SHOULD CALCULATE IN BOTH DIRECTIONS
 
 
 // Calculates the minimum number of moves to rotate insert_pos in both to 0.
@@ -134,8 +144,7 @@ int	calc_insert_cost(t_insert_info *info)
 	curr_cost = ft_max(ft_abs(a_info->dist0), ft_abs(b_info->dist0));
 	if (ft_same_sign(a_info->dist0, b_info->dist0))
 		return (ft_abs(curr_cost));
-	else
-		curr_cost = ft_abs(ft_min(ft_max(a_info->pos, b_info->pos), ft_max(-a_info->revpos, -b_info->revpos)));
+	curr_cost = ft_abs(ft_min(ft_max(a_info->pos, b_info->pos), ft_max(-a_info->revpos, -b_info->revpos)));
 	curr_cost = ft_abs(ft_min(curr_cost, ft_abs(a_info->dist0) + ft_abs(b_info->dist0)));
 	return (curr_cost);
 }
@@ -153,14 +162,18 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 	{
 		//TO REMOVE
 		// if (info.min_cost < 0)
-		if (DEBUG && cont->stack_a.elems[0] > cont->stack_a.elems[1])
+		if (info->min_cost < 0 || \
+			(cont->stack_a.elems[0] > cont->stack_a.elems[1] && \
+			cont->stack_a.elems[1] != cont->stack_a.min_elem))
 		{
 			printf("wtf happened after\n");
 			print_stacks(cont);
 			printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
 			printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
+			printf(YELLOW"info.a_info.revpos_best = %d \n"RESET_COL, info->a_info.revpos_best);
 			printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
 			printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
+			printf(YELLOW"info.b_info.revpos_best = %d \n"RESET_COL, info->b_info.revpos_best);
 			printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
 			printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
 			printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
@@ -216,7 +229,7 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 		{
 			printf(CYAN"\t ---> picked the weird one\n"RESET_COL);
 		}
-		if (ft_max(a_info->pos_best, b_info->pos_best) < ft_max(-a_info->revpos, -b_info->revpos))
+		if (info->min_cost == a_info->pos_best || info->min_cost == b_info->pos_best)
 		{
 			while (info->min_cost-- > 0)
 			{
@@ -237,9 +250,9 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 			{
 				a_info->revpos_best++;
 				b_info->revpos_best++;
-				if (a_info->revpos_best >= 0)
+				if (a_info->revpos_best > 0)
 					do_rrb(cont, moves_buff);
-				else if (b_info->revpos_best >= 0)
+				else if (b_info->revpos_best > 0)
 					do_rra(cont, moves_buff);
 				else
 					do_rrr(cont, moves_buff);
@@ -297,34 +310,61 @@ void	init_insert_info(t_main_cont *cont, t_insert_info *info)
  * 
  */	
 
+// Conditions: 
+
+int	calc_delta_two_values(t_main_cont *cont, int val_a, int val_b)
+{
+	int	delta_insert;
+	int	max_a;
+	int	min_a; 
+	int	max_b; 
+	int	min_b;
+
+	max_a = cont->stack_a.max_elem;
+	min_a = cont->stack_a.min_elem;
+	max_b = cont->stack_b.max_elem;
+	min_b = cont->stack_b.min_elem;
+	delta_insert = ft_abs(val_a - val_b); // is now equal to the diff between the two
+	//if bigger than half the absolute diff
+	if (delta_insert <= (ft_max(max_a, max_b) + 1) / 2)
+		return (delta_insert);
+	delta_insert = (max_a - val_a) + (val_b - min_b) + 1;
+	if (val_b > val_a)
+		delta_insert = (max_b - val_b) + (val_a - min_a) + 1;
+	return (delta_insert);
+}
+
 //Need to add absolute distance from previous one
 int	calc_delta_insert(t_main_cont *cont, t_insert_info *info)
 {
-	t_iterator		*iter;
-	t_stack_insert_info *a_info;
-	t_stack_insert_info *b_info;
-	int					delta_insert;
+	t_iterator	*iter;
+	int			delta_insert;
 
-	a_info = &info->a_info;
-	b_info = &info->b_info;
 	iter = malloc(sizeof(t_iterator));
 	if (!iter)
 		exit_on_err("calc_delta_insert: iter error\n");
 	set_iterator(iter, info->a_info.pos, cont->stack_a.size, 1);
 	iterate_once(iter, 1);
-	delta_insert = ft_max( \
-		ft_abs(a_info->val - b_info->val), \
-		ft_abs(b_info->val - cont->stack_a.elems[iter->index]));
-	// delta_insert = ft_abs(a_info->val - b_info->val);
-	if (DEBUG)
-	{
-		printf("delta_insert: \n \
-		ft_abs(a_info->val (%d) - b_info->val (%d) = %d \n \
-		ft_abs(info->b_info.val (%d) - stack_a.elems[iter->index] (%d) = %d)\n", \
-				a_info->val, b_info->val, ft_abs(a_info->val - b_info->val),
-				b_info->val, cont->stack_a.elems[iter->index], ft_abs(b_info->val - cont->stack_a.elems[iter->index]));
-	}
+	delta_insert = calc_delta_two_values(cont, cont->stack_a.elems[iter->index], cont->stack_b.elems[iter->index]);
+	delta_insert = ft_min(delta_insert, \
+		calc_delta_two_values(cont, info->a_info.val, info->b_info.val));
+	free(iter);
 	return (delta_insert);
+}
+
+bool	is_new_best_moves(t_insert_info *info)
+{
+	if (info->curr_cost > info->min_cost)
+		return (false);
+	if (info->curr_cost == info->min_cost)
+	{
+		if (info->curr_delta_insert > info->min_delta_insert)
+			return (false);
+		// if (info->curr_delta_insert == info->min_delta_insert && \
+		// 		info->b_info.val < info->b_info.val_best) //Not sure about that last part
+		// 	return (false);
+	}
+	return (true);
 }
 
 
@@ -344,10 +384,13 @@ void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 	info->curr_cost = calc_insert_cost(info);
 	//curr_delta_cost needs to also take into account delta with last elem in stack_a
 	info->curr_delta_insert = calc_delta_insert(cont, info);
-	if ((info->curr_cost == info->min_cost && \
-		info->curr_delta_insert < info->min_delta_insert)\
-		|| info->curr_cost < info->min_cost)
-	// if (info->curr_cost < info->min_cost)
+	// if ((info->curr_cost == info->min_cost && \
+	// 	info->curr_delta_insert < info->min_delta_insert)\
+	// 	|| info->curr_cost < info->min_cost)
+	// if ((info->curr_cost == info->min_cost && \
+		// b_info->val > b_info->val_best)\
+		// || info->curr_cost < info->min_cost)
+	if (is_new_best_moves(info))
 	{
 		b_info->val_best = b_info->val;
 		b_info->pos_best = b_info->pos;
@@ -362,3 +405,5 @@ void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 	}
 	return ;
 }
+
+//Need to add condition where delta cost and min cost are equal, pick one with highetst value

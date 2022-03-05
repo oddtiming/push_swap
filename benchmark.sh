@@ -6,13 +6,13 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/29 17:15:18 by vbrazhni          #+#    #+#              #
-#    Updated: 2022/03/04 02:24:10 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/03/05 00:01:28 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
-MAX=0
+MAX=5550
 ITERATIONS=1
 LIMIT=5500
 FILE=problem_100
@@ -36,6 +36,7 @@ do
 		if [ "$NUMBER" -gt "$MAX" ]
 			then
 			MAX=$NUMBER;
+			echo $ARG
 		fi
 		echo $i ":" $NUMBER
 		let SUM+=$NUMBER;
