@@ -1,11 +1,11 @@
 # push_swap
 - [Description](#description)
     - [Goal](#goal)
-    - [Allowed moves](#allowedmoves)
-    - [Problem definition](#15)
-    - [Initial ideas](#17)
-    - [Structs](#19)
-        - [Iterators](#51)
+    - [Allowed moves](#allowed moves)
+    - [Problem definition](#problem definition)
+    - [Initial ideas](#ideas)
+    - [Structs](#structs)
+        - [Iterators](#t_iterator)
 - [Project journal](#19)
     - [Start solve5](#70)
     - [Refactor](#71)
@@ -19,7 +19,7 @@
 
 42 Push_swap’s project; a little game to introduce sorting algorithms. 
 
-## Goal {#11}
+## Goal
 
 The goal is to sort a given stack of n values (`stack_a`) in ascending order from the top of the stack by using a selected set of moves.
 
@@ -57,9 +57,11 @@ The way I defined its problem, this project was not about building a sorting alg
 
 ## Structs {#19}
 
-<aside>
-### 🎡 **t_iterator** {#51}
 
+### t_iterator 🎡
+
+<aside>
+	
 - int head
 - int index
 - int prev_index
