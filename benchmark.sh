@@ -6,13 +6,15 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/29 17:15:18 by vbrazhni          #+#    #+#              #
-#    Updated: 2022/03/05 00:01:28 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/03/05 00:20:50 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
-MAX=5550
+MAX=0
+MAX_MOVES=5500
+NB_ABOVE=0
 ITERATIONS=1
 LIMIT=5500
 FILE=problem_100
@@ -33,10 +35,14 @@ do
 			echo $NUMBER >> $FILE
 			echo $ARG >> $FILE
 		fi
+		if [ "$NUMBER" -gt "$MAX_MOVES" ]
+			then
+			let NB_ABOVE+=1;
+			echo $ARG
+		fi
 		if [ "$NUMBER" -gt "$MAX" ]
 			then
 			MAX=$NUMBER;
-			echo $ARG
 		fi
 		echo $i ":" $NUMBER
 		let SUM+=$NUMBER;
@@ -44,4 +50,5 @@ do
 done
 
 echo "AVG: $(($SUM / $ITERATIONS))"
-echo "MAX: " $MAX
+echo "MAX: "$MAX
+echo "NB_ABOVE" $MAX_MOVES ":" $NB_ABOVE
