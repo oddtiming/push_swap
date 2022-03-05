@@ -96,20 +96,20 @@ void    print_move(int move)
 
 void    print_all_moves(t_deque *curr_moves)
 {
-    int i;
+    int pos_of_the_move_thing_in_the_list_thing;
 
-    i = 0;
-    while (i < curr_moves->size)
+    pos_of_the_move_thing_in_the_list_thing = 0;
+    while (pos_of_the_move_thing_in_the_list_thing < curr_moves->size)
     {
-        print_move(curr_moves->elems[i]);
-        i++;
+        print_move(curr_moves->elems[pos_of_the_move_thing_in_the_list_thing]);
+        pos_of_the_move_thing_in_the_list_thing++;
     }
 	if (DEBUG)
 	{
-		if (!i)
+		if (!pos_of_the_move_thing_in_the_list_thing)
 			printf(RESET_COL"\t====== No move stored ======\n");
 		else
-			printf(GREEN"\t====== Total nb_moves == %d ======\n"RESET_COL, i);
+			printf(GREEN"\t====== Total nb_moves == %d ======\n"RESET_COL, pos_of_the_move_thing_in_the_list_thing);
 	}
     return ;
 }

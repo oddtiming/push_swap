@@ -18,8 +18,8 @@ void init_deque(t_deque *deque)
 
 	//Malloc a block of memory designed to leave space on each side of the
 	//deque_head, so that values can be added on both ends with the same
-	//calculation cost, and there is still a single memory space.
-	deque->size			= 0;
+	//calculation cost, while still sharing a single memory space.
+	deque->size				= 0;
 	deque->min_elem			= deque->get_elem_min(deque);
 	deque->max_elem			= deque->get_elem_max(deque);
 	deque->capacity_end		= VECTOR_INIT_SIZE;

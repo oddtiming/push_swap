@@ -62,8 +62,6 @@ bool	try_sort_small(t_main_cont *cont)
 	{
 		if (curr_pos == 2)
 			(void) curr_pos;
-		if (cont->curr_moves.size > 25)
-			exit_on_err("curr_moves > 25 !?\n");
 		if (DEBUG)
 		{
 			printf(CYAN"Starting try_sort_small\n"RESET_COL);
