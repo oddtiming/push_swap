@@ -22,28 +22,28 @@ bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff)
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 		cat_deque(moves_buff, &cont->best_moves);
 		cont->min_nb_moves = cont->best_moves.size;
-		if (cont->min_nb_moves <= 7)
-		{
-			if (DEBUG)
-			{
-				printf(RED"\t########################\n"RESET_COL);
-				printf(GREEN"\tStack sorted in %d moves\n"RESET_COL, cont->min_nb_moves);
-				printf(RED"\t########################\n"RESET_COL);
-				print_stacks(cont);
-				print_all_moves(&cont->best_moves);
-			}
-			return (true);
-		}
-		else if (DEBUG)
-		{
-			printf(RED"\t##################\n"RESET_COL);
-			printf(GREEN"\tBEST MOVES UPDATED\n");
-			printf(RED"\t##################\n"RESET_COL);
-			printf(GREEN);
-			print_all_moves(&cont->best_moves);
-			printf(RESET_COL);
-			print_stacks(cont);
-		}
+		// if (cont->min_nb_moves <= 7)
+		// {
+		// 	if (DEBUG)
+		// 	{
+		// 		printf(RED"\t########################\n"RESET_COL);
+		// 		printf(GREEN"\tStack sorted in %d moves\n"RESET_COL, cont->min_nb_moves);
+		// 		printf(RED"\t########################\n"RESET_COL);
+		// 		print_stacks(cont);
+		// 		print_all_moves(&cont->best_moves);
+		// 	}
+		// 	return (true);
+		// }
+		// else if (DEBUG)
+		// {
+		// 	printf(RED"\t##################\n"RESET_COL);
+		// 	printf(GREEN"\tBEST MOVES UPDATED\n");
+		// 	printf(RED"\t##################\n"RESET_COL);
+		// 	printf(GREEN);
+		// 	print_all_moves(&cont->best_moves);
+		// 	printf(RESET_COL);
+		// 	print_stacks(cont);
+		// }
 	}
 	return (false);
 }
