@@ -4,26 +4,27 @@ RED="\033[31m"
 GREEN="\033[32m"
 ENDCOLOR="\033[0m"
 
-NB_VALS=500
+NB_VALS=100
 MAX_NB_MOVES=0
 MAX_TEST_ID=0
 N=1.38
 # LIMIT=$(bc -l <<< "e($N*l($NB_VALS))")
-LIMIT=5500
+LIMIT=700
 INT_LIMIT=${LIMIT%.1}
 NB_CASES_ABOVE_LIMIT=0
 ITERATIONS=1
 SUM=0
 LOG_FILE=sore_thumbs_$NB_VALS.log
-PS_TEMPFILE=tester_temp.log
+PS_TEMPFILE=tester_temp_$NB_VALS.log
+PS_EXE=./push_swap_$NB_VALS	
 
 echo -e "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 
 
-for i in {1..100}
+for i in {1..1000}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
-	./push_swap $ARG > $PS_TEMPFILE
+	$PS_EXE $ARG > $PS_TEMPFILE
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
 	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];
 	then

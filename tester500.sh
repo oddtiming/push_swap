@@ -15,15 +15,16 @@ NB_CASES_ABOVE_LIMIT=0
 ITERATIONS=1
 SUM=0
 LOG_FILE=sore_thumbs_$NB_VALS.log
-PS_TEMPFILE=tester_temp.log
+PS_TEMPFILE=tester_temp_$NB_VALS.log
+PS_EXE=./push_swap_$NB_VALS
 
 echo -e "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 
 
-for i in {1..100}
+for i in {1..1000}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
-	./push_swap $ARG > $PS_TEMPFILE
+	$PS_EXE $ARG > $PS_TEMPFILE
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
 	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];
 	then

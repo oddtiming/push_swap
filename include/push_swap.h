@@ -122,6 +122,9 @@ int		get_next_value(t_deque *haystack, int curr_val);
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos);
 
+// SORT BIG
+void	sort_big(t_main_cont *cont);
+
 //UTILS
 void	set_next_pos(int *pos, int size);
 int		get_pos_in_stack(int *stack, int size, int value);

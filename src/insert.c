@@ -162,9 +162,9 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 	{
 		//TO REMOVE
 		// if (info.min_cost < 0)
-		if (info->min_cost < 0 || \
+		if (DEBUG && (info->min_cost < 0 || \
 			(cont->stack_a.elems[0] > cont->stack_a.elems[1] && \
-			cont->stack_a.elems[1] != cont->stack_a.min_elem))
+			cont->stack_a.elems[1] != cont->stack_a.min_elem)))
 		{
 			printf("wtf happened after\n");
 			print_stacks(cont);
@@ -360,9 +360,9 @@ bool	is_new_best_moves(t_insert_info *info)
 	{
 		if (info->curr_delta_insert > info->min_delta_insert)
 			return (false);
-		// if (info->curr_delta_insert == info->min_delta_insert && \
-		// 		info->b_info.val < info->b_info.val_best) //Not sure about that last part
-		// 	return (false);
+		if (info->curr_delta_insert == info->min_delta_insert && \
+				info->b_info.val < info->b_info.val_best) //Not sure about that last part
+			return (false);
 	}
 	return (true);
 }

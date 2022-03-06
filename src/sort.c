@@ -61,16 +61,17 @@ void	sort(t_main_cont *cont)
 		sort_small(cont);
 	else
 	{
-		while (cont->stack_a.size != 5)
-		{
-			do_pb(cont, &cont->final_moves);
-		}
+		sort_big(cont);
+		// while (cont->stack_a.size != 3)
+		// {
+		// 	do_pb(cont, &cont->final_moves);
+		// }
 
 		// if (!is_sorted(&cont->stack_a, cont->head_a.index))
 		// 	do_sa(cont, &cont->final_moves);
 		// insert_b(cont, &cont->final_moves);
-		sort_small(cont);
-		rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
+		// // sort_small(cont);
+		// rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
 	}
 
 	return ;
