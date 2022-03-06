@@ -6,14 +6,14 @@
     4. [Initial ideas](#ideas)
     5. [Structs](#structs)
         - [Iterators](#iterators)
-- [Project journal](#journalhead)
-    - [Start solve5](#journal0)
-    - [Refactor](#journal1)
-    - [Haven’t actually finished sort_5. Hihi](#journal2)
-    - [Start sort_big](#journal3)
-    - [Vectors working, moves list working, onto t_iterator, and bigger things](#journal4)
-    - [moves_list, t_insert_info, and more...](#journal5)
-    - [Debug Galore](#journal6)
+1. [Project journal](#journalhead)
+    1. [Start solve5](#journal0)
+    2. [Refactor](#journal1)
+    3. [Haven’t actually finished sort_5. Hihi](#journal2)
+    4. [Start sort_big](#journal3)
+    5. [Vectors working, moves list working, onto t_iterator, and bigger things](#journal4)
+    6. [moves_list, t_insert_info, and more...](#journal5)
+    7. [Debug Galore](#journal6)
 
 # Description
 
