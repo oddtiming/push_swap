@@ -1,4 +1,4 @@
-NAME	=	push_swap_500
+NAME	=	push_swap
 
 # FOR TESTING PURPOSES
 RUN_ARGS = 6 7 5 1 2 3 4 8 9 0
