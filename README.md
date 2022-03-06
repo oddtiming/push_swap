@@ -1,4 +1,19 @@
 # push_swap
+1. [Description](#description)
+    1. [Goal](#goal)
+    2. [Allowed moves](#allowed)
+    3. [Problem definition](#definition)
+    4. [Initial ideas](#ideas)
+    5. [Structs](#structs)
+        - [Iterators](#iterators)
+1. [Project journal](#journalhead)
+    1. [Start solve5](#journal0)
+    2. [Refactor](#journal1)
+    3. [Haven’t actually finished sort_5. Hihi](#journal2)
+    4. [Start sort_big](#journal3)
+    5. [Vectors working, moves list working, onto t_iterator, and bigger things](#journal4)
+    6. [moves_list, t_insert_info, and more...](#journal5)
+    7. [Debug Galore](#journal6)
 
 # Description
 
@@ -13,6 +28,7 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order fro
 - Although the final sorted values needs to be in the first stack, you dispose of an adjust stack, (`stack_b`), to which you can temporarily push values.
 - For the values to be parsed outside the scope of the program, the sequence of moves used to sort need to be written to STDOUT.
 
+<a name="allowed"></a>
 ## Allowed moves
 
 - rotate (`rx`)
@@ -28,10 +44,12 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order fro
     - Notation: `pa (b→a), pb (a→b)`
     - Take the value at the top of one stack to the top of `stack_x`.
 
+<a name="definition"></a>
 ## Problem definition
 
 The way I defined its problem, this project was not about building a sorting algorithm per se, but rather about modding and applying different sorting algorithms to a custom set of constraints. From the get-go, I had in mind that I should be comparing solutions to find the best for a given starting stack, because each algo has different edge cases, so it seemed like a good way to learn about the pros and cons of each of them, and come up with a custom solution for each set of values.
 
+<a name="ideas"></a>
 ### Ideas
 
 - Start by finding a center at which the number of sorted values is maximal
@@ -39,12 +57,14 @@ The way I defined its problem, this project was not about building a sorting alg
     - The constraints could be:
         - Does it increase the number of sorted from center?
         
-
+<a name="structs"></a>
 ## Structs
 
-<aside>
-🎡 **t_iterator**
+<a name="iterators"></a>
+### t_iterator 🎡
 
+<aside>
+	
 - int head
 - int index
 - int prev_index
@@ -53,6 +73,10 @@ The way I defined its problem, this project was not about building a sorting alg
 - bool is_reverse
 </aside>
 
+<a name="journalhead"></a>
+# Project Journal
+
+<a name="journal0"></a>
 ## Start solve5 February 17, 2022
 
 I’ve been watching videos on sorting algorithms, and trying to understand [VBrazhnik’s algorithm](https://github.com/VBrazhnik/Push_swap/wiki/Algorithm), which maxes out at **522 for 100** values, and at **5468 for 500** values. It seems to rely on a hybrid between two comparison parameters, both going full completion, only the best of which he chooses to output... It seems quite smart, and I do believe that if I end up writing out a couple of different algorithms, I should carry out all of them, at least until they reach a number of moves bigger than the smallest number of moves already performed
@@ -127,6 +151,7 @@ e.g. : move(t_stacks *stacks, t_move move, char stackID)
         1. —No—> pb
         2. Is the list sorted at some pos? —>Yes—> insert_b
 
+<a name="journal1"></a>
 ### Refactor
 
 - Allocate 3x the memory needed for both stacks, this way rotates and pushes will only necessitate a change of index, no reindexation. It is not memory efficiant (requires 300% of the memory), but it will max out at 8000 bytes too many for a stack of 500 (500 entries x 2 stacks x 2 times too big x 4 bytes per int = 8000), and it will save a trmendous amount of reindexation.
@@ -134,6 +159,7 @@ e.g. : move(t_stacks *stacks, t_move move, char stackID)
 
 ---
 
+<a name="journal2"></a>
 ## Haven’t actually finished sort_5. Hihi February 22, 2022
 
 ---
@@ -190,6 +216,7 @@ I'm stopping for the day because that seems like quite a lot of refactoring up a
 
 ---
 
+<a name="journal3"></a>
 ## Start sort_big February 23, 2022
 
 ---
@@ -235,6 +262,7 @@ So it is currently 11:30am, and ahead of me lies have a full day of coding of wh
 
 ---
 
+<a name="journal4"></a>
 ## Vectors working, moves list working, onto t_iterator, and bigger things February 26, 2022
 
 ---
@@ -278,6 +306,7 @@ change insert_b to favor insert values with smallest delta between insert_val_a 
 
 ---
 
+<a name="journal5"></a>
 ## moves_list, t_insert_info, and more... March 2, 2022
 
 ---
@@ -310,7 +339,8 @@ Should also add a value to iterators or  make min_
 
 ---
 
-## Debug Galore March 3, 2022
+<a name="journal6"></a>
+## Debug Galore March 3, 2022 
 
 ---
 

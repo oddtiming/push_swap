@@ -1,4 +1,4 @@
-NAME	=	push_swap
+NAME	=	push_swap_500
 
 # FOR TESTING PURPOSES
 RUN_ARGS = 6 7 5 1 2 3 4 8 9 0
@@ -26,6 +26,7 @@ CFILES	=	cleanup.c \
 			rrx.c \
 			rx.c \
 			sort.c \
+			sort_big.c \
 			sort_utils.c \
 			sx.c \
 			try_x.c \

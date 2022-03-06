@@ -108,10 +108,10 @@ void	discard_moves(t_main_cont *cont, t_deque *moves_buff);
 void	insert_b(t_main_cont *cont, t_deque *moves_buff);
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);
 void	update_insert_info(t_main_cont *cont, t_insert_info *info);
-int		calc_insert_cost(t_insert_info *info);
+bool	is_new_best_moves(t_insert_info *info);
 int		calc_delta_insert(t_main_cont *cont, t_insert_info *info);
+int		calc_insert_cost(t_insert_info *info);
 void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
-
 
 //  SORT UTILS
 bool	is_sorted(t_deque *stack, int pos_smallest);
@@ -121,6 +121,9 @@ int		get_pos_biggest_val(t_deque *stack);
 int		get_next_value(t_deque *haystack, int curr_val);
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos);
+
+// SORT BIG
+void	sort_big(t_main_cont *cont);
 
 //UTILS
 void	set_next_pos(int *pos, int size);
