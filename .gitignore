@@ -62,3 +62,4 @@ push_swap
 push_swap_debug
 *.o
 *.py
+*.log
