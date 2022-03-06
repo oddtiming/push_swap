@@ -58,12 +58,11 @@ The way I defined its problem, this project was not about building a sorting alg
 <a name="iterators"></a>
 ### t_iterator 🎡
 
-<aside>
-	
-- int head
-- int index
-- int prev_index
-- int max_size
-- int nb_loops
-- bool is_reverse
-</aside>
+```c	
+int     head;
+int     index;
+int     prev_index;
+int     max_size;
+int     nb_loops;
+bool    is_reverse;
+```
