@@ -1,8 +1,55 @@
 #include "push_swap.h"
 
+void	*ft_safealloc(size_t size)
+{
+	void	*mem_space;
+
+	mem_space = malloc(size);
+	if (!mem_space)
+	{
+		write(STDERR_FILENO, "Malloc Error\n", 13);
+		exit (EXIT_FAILURE);
+	}
+	return (mem_space);
+}
+
+bool	has_many_block_ids(t_deque *block_ids)
+{
+	int	i;
+	int	first_block_id;
+
+	if (!block_ids || !block_ids->size)
+		return (false);
+	i = 0;
+	first_block_id = block_ids->elems[i];
+	while (i < block_ids->size)
+	{
+		if (block_ids->elems[i] != first_block_id)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+void	try_n_divisions(t_main_cont *cont, t_deque *block_ids, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		partition_stack(&cont->stack_a, block_ids);
+		insert_block(cont, block_ids, NB_BLOCKS - 1);
+		i++;
+	}
+	return ;
+}
+
 int	main(int argc, char *argv[])
 {
 	t_main_cont	*cont;
+	t_deque		*block_ids;
+	int			i;
 
 	cont = malloc(sizeof(t_main_cont));
 	if (!cont)
@@ -15,43 +62,75 @@ int	main(int argc, char *argv[])
 		printf("\n----After normalization----\n\n");
 		print_stacks_info(cont);
 	}
+	block_ids = ft_safealloc(sizeof(t_deque));
+	init_deque(block_ids);
 
-	// iterator *iter;
+	cont->best_moves.size = INT_MAX;
+	i = 0;
+	while (i < 9)
+	{
+		try_n_divisions(cont, block_ids, i);
+		blind_push(cont, &cont->curr_moves);
+		insert_b(cont, &cont->curr_moves);
+		rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+		if (cont->curr_moves.size < cont->best_moves.size)
+		{
+			copy_deque(&cont->curr_moves, &cont->best_moves);
+		}
+		undo_moves(cont, &cont->curr_moves);
+		deque_reinit_list(&cont->curr_moves);
+		i++;
+	}
 
-	// iter = malloc(sizeof(t_iterator);
-	// if (!iter)
-	// 	exit_on_err(""main: iter error\n);
-	// set_iterator(iter, 0, cont->stack_a.size, 0);
-	// while (iterate_n_loops(iter, 1))
+	// print_stack_with_block_ids(cont->stack_a.elems, block_ids->elems, block_ids->size);
+
+
+	// // while (i > 0)
+	// // {
+	// // 	insert_block(cont, block_ids, i);
+	// // 	// print_stacks(cont);
+	// // 	i--;
+	// // }
+	// blind_push(cont, &cont->curr_moves);
+	// insert_b(cont, &cont->curr_moves);
+	// rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+	// if (cont->curr_moves.size < cont->best_moves.size)
 	// {
-	// 	if ()
+	// 	copy_deque(&cont->curr_moves, &cont->best_moves);
 	// }
+	// undo_moves(cont, &cont->curr_moves);
+	// deque_reinit_list(&cont->curr_moves);
+	// // printf("Total nb_moves: %d\n", cont->curr_moves.size);
+	// // print_stacks_info(cont);
+	// // printf("Total nb_moves: %d\n", cont->curr_moves.size);
 
-	// while (cont->stack_a.size > 3)
+	// i =  NB_BLOCKS - 1;
+	// insert_block(cont, block_ids, i);
+	// partition_stack(&cont->stack_a, block_ids);
+	// insert_block(cont, block_ids, i);
+	// partition_stack(&cont->stack_a, block_ids);
+	// insert_block(cont, block_ids, i);
+	// partition_stack(&cont->stack_a, block_ids);
+	// insert_block(cont, block_ids, i);
+	// partition_stack(&cont->stack_a, block_ids);
+	// insert_block(cont, block_ids, i);
+
+	// blind_push(cont, &cont->curr_moves);
+	// insert_b(cont, &cont->curr_moves);
+	// rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+	// if (cont->curr_moves.size < cont->best_moves.size)
 	// {
-	// 		do_pb(cont, &cont->final_moves);
+	// 	copy_deque(&cont->curr_moves, &cont->best_moves);
 	// }
-	// if (!is_sorted(&cont->stack_a, cont->head_a.index))
-	// 	do_sa(cont, &cont->final_moves);
-	// // do_pb(cont, &cont->final_moves);
-	// // do_pb(cont, &cont->final_moves);
-	// // do_pb(cont, &cont->final_moves);
-	// insert_b(cont, &cont->final_moves);
-	// rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
+	// undo_moves(cont, &cont->curr_moves);
+	// deque_reinit_list(&cont->curr_moves);
+
+
+	print_all_moves(&cont->best_moves);
+
+	// sort(cont);
+
 	// print_all_moves(&cont->final_moves);
-	// print_stacks(cont);
-	// printf(MAGENTA"\t==> FINAL TOTAL: %d \n"RESET_COL, cont->final_moves.size);
-	// print_stacks_info(cont);
-
-	// do_ra(cont, &cont->curr_moves);
-	// do_pb(cont, &cont->curr_moves);
-	// try_swap(cont);
-	// print_all_moves(&cont->best_moves);
-
-
-	sort(cont);
-
-	print_all_moves(&cont->final_moves);
 	if (DEBUG)
 	{
 		print_stacks_info(cont);
@@ -60,6 +139,8 @@ int	main(int argc, char *argv[])
 		// print_stacks_info(cont);
 
 	cleanup(cont);
+	block_ids->free_list(block_ids);
+	free(block_ids);
 
 	return (EXIT_SUCCESS);
 }

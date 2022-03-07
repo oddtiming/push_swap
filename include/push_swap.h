@@ -28,6 +28,8 @@
 # define SUCCESS 0
 # define FAILURE 1
 
+# define NB_BLOCKS 2
+
 //DEFINES
 # define _ARGC_MIN 2
 # define VALID_INPUTS 1
@@ -123,6 +125,13 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos);
 
 // SORT BIG
+void	print_stack_with_block_ids(int *stack, int *block_ids, int size);
+void	partition_stack(t_deque *stack, t_deque *block_ids);
+void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
+void	blind_push(t_main_cont *cont, t_deque *moves_list);
+bool	block_id_is_in_a(t_deque *block_ids, int id);
+int		get_densest_block(t_deque *block_ids);
+// void	try_divide(t_main_cont *cont, t_deque *moves_list);
 void	sort_big(t_main_cont *cont);
 
 //UTILS
