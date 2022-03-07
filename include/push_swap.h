@@ -61,6 +61,19 @@ typedef	struct s_stack_insert_info
 	int	val_best;
 }	t_stack_insert_info;
 
+
+// typedef	struct s_block_insert_info
+// {
+// 	int	pos_a;
+// 	int	pos_b;
+// 	int	revpos_a;
+// 	int	revpos_b;
+// 	int	insert_val;
+// 	int	pos_best;
+// 	int	revpos_best;
+// 	int	val_best;
+// }	t_block_insert_info;
+
 typedef	struct s_insert_info
 {
 	t_stack_insert_info	a_info;
@@ -142,6 +155,7 @@ int 	ft_abs(int a);
 int 	ft_max(int a, int b);
 int 	ft_min(int a, int b);
 bool	ft_same_sign(int a, int b);
+void	*ft_safealloc(size_t size);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);

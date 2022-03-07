@@ -1,18 +1,5 @@
 #include "push_swap.h"
 
-void	*ft_safealloc(size_t size)
-{
-	void	*mem_space;
-
-	mem_space = malloc(size);
-	if (!mem_space)
-	{
-		write(STDERR_FILENO, "Malloc Error\n", 13);
-		exit (EXIT_FAILURE);
-	}
-	return (mem_space);
-}
-
 bool	has_many_block_ids(t_deque *block_ids)
 {
 	int	i;
@@ -49,8 +36,11 @@ int	main(int argc, char *argv[])
 {
 	t_main_cont	*cont;
 	t_deque		*block_ids;
-	int			i;
+	int			div_depth_100 = 7;
+	int			div_depth_500 = 9;
 
+	(void)div_depth_100;
+	(void)div_depth_500;
 	cont = malloc(sizeof(t_main_cont));
 	if (!cont)
 		exit_on_err("t_main_cont malloc error");
@@ -66,8 +56,9 @@ int	main(int argc, char *argv[])
 	init_deque(block_ids);
 
 	cont->best_moves.size = INT_MAX;
+	int			i;
 	i = 0;
-	while (i < 9)
+	while (i < div_depth_500)
 	{
 		try_n_divisions(cont, block_ids, i);
 		blind_push(cont, &cont->curr_moves);
@@ -81,50 +72,6 @@ int	main(int argc, char *argv[])
 		deque_reinit_list(&cont->curr_moves);
 		i++;
 	}
-
-	// print_stack_with_block_ids(cont->stack_a.elems, block_ids->elems, block_ids->size);
-
-
-	// // while (i > 0)
-	// // {
-	// // 	insert_block(cont, block_ids, i);
-	// // 	// print_stacks(cont);
-	// // 	i--;
-	// // }
-	// blind_push(cont, &cont->curr_moves);
-	// insert_b(cont, &cont->curr_moves);
-	// rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
-	// if (cont->curr_moves.size < cont->best_moves.size)
-	// {
-	// 	copy_deque(&cont->curr_moves, &cont->best_moves);
-	// }
-	// undo_moves(cont, &cont->curr_moves);
-	// deque_reinit_list(&cont->curr_moves);
-	// // printf("Total nb_moves: %d\n", cont->curr_moves.size);
-	// // print_stacks_info(cont);
-	// // printf("Total nb_moves: %d\n", cont->curr_moves.size);
-
-	// i =  NB_BLOCKS - 1;
-	// insert_block(cont, block_ids, i);
-	// partition_stack(&cont->stack_a, block_ids);
-	// insert_block(cont, block_ids, i);
-	// partition_stack(&cont->stack_a, block_ids);
-	// insert_block(cont, block_ids, i);
-	// partition_stack(&cont->stack_a, block_ids);
-	// insert_block(cont, block_ids, i);
-	// partition_stack(&cont->stack_a, block_ids);
-	// insert_block(cont, block_ids, i);
-
-	// blind_push(cont, &cont->curr_moves);
-	// insert_b(cont, &cont->curr_moves);
-	// rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
-	// if (cont->curr_moves.size < cont->best_moves.size)
-	// {
-	// 	copy_deque(&cont->curr_moves, &cont->best_moves);
-	// }
-	// undo_moves(cont, &cont->curr_moves);
-	// deque_reinit_list(&cont->curr_moves);
-
 
 	print_all_moves(&cont->best_moves);
 

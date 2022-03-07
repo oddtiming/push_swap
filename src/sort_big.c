@@ -72,7 +72,83 @@ int	get_densest_block(t_deque *block_ids)
 	return (best_block_id);
 }
 
+void	rotate_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
+{
+	int	pos_a;
+	int	pos_b;
+	int	revpos_b;
+	int	insert_val_a;
+	int	insert_val_b;
 
+	pos_a = 0;
+	while (block_ids->elems[pos_a] != curr_block_id)
+		pos_a++;
+	if (!cont->stack_b.size)
+	{
+		while (pos_a--)
+		{
+			do_ra(cont, &cont->curr_moves);
+			block_ids->add_last(block_ids, block_ids->elems[0]);
+			block_ids->remove_front(block_ids);
+		}
+		return ;
+	}
+	insert_val_a = cont->stack_a.elems[pos_a];
+	insert_val_b = insert_val_a - 1;
+	pos_b = get_next_value(&cont->stack_b, insert_val_b + 2);
+	
+	// pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
+	// while (pos_b == -1)
+	// {
+	// 	if (insert_val_b - 1 < cont->stack_b.min_elem)
+	// 	{
+	// 		insert_val_b = cont->stack_b.max_elem;
+	// 		pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
+	// 		break;
+	// 	}
+	// 	insert_val_b--;
+	// 	pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
+	// }
+	revpos_b = cont->stack_b.size - pos_b;
+	if (DEBUG)
+	{
+		printf("pos_a = %d\n", pos_a);
+		printf("pos_b = %d\n", pos_b);
+		printf("revpos_b = %d\n", revpos_b);
+		printf("insert_val_b = %d\n", insert_val_b);
+		printf("insert_val_a = %d\n", cont->stack_a.elems[pos_a]);
+	}
+	if ((pos_b - pos_a <= 0) || (pos_b - pos_a < revpos_b))
+	{
+		while (pos_a > 0)
+		{
+			pos_a--;
+			pos_b--;
+			if (pos_b >= 0)
+			{
+				do_rr(cont, &cont->curr_moves);
+				block_ids->add_last(block_ids, block_ids->elems[0]);
+				block_ids->remove_front(block_ids);
+			}
+			else
+			{
+				do_ra(cont, &cont->curr_moves);
+				block_ids->add_last(block_ids, block_ids->elems[0]);
+				block_ids->remove_front(block_ids);
+			}
+		}
+	}
+	else
+		while (pos_a > 0)
+		{
+			do_ra(cont, &cont->curr_moves);
+			block_ids->add_last(block_ids, block_ids->elems[0]);
+			block_ids->remove_front(block_ids);
+			pos_a--;
+		}
+
+	return ;
+}
 
 void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 {
@@ -88,13 +164,12 @@ void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 				
 				print_stacks(cont);
 			}
+			block_ids->remove_front(block_ids);
 		}
 		else
 		{
-			do_ra(cont, &cont->curr_moves);
-			block_ids->add_last(block_ids, block_ids->elems[0]);
+			rotate_block(cont, block_ids, curr_block_id);
 		}
-		block_ids->remove_front(block_ids);
 	}
 	return ;
 }
