@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    tester.sh                                          :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/07 14:27:56 by iyahoui-          #+#    #+#              #
+#    Updated: 2022/03/08 18:40:19 by iyahoui-         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #! /bin/bash
 
 RED="\033[31m"
@@ -7,9 +19,9 @@ ENDCOLOR="\033[0m"
 NB_VALS=500
 MAX_NB_MOVES=0
 MAX_TEST_ID=0
-N=1.38
+# N=1.38
 # LIMIT=$(bc -l <<< "e($N*l($NB_VALS))")
-LIMIT=5500
+LIMIT=4000
 INT_LIMIT=${LIMIT%.1}
 NB_CASES_ABOVE_LIMIT=0
 ITERATIONS=1
@@ -17,10 +29,10 @@ SUM=0
 LOG_FILE=sore_thumbs_$NB_VALS.log
 PS_TEMPFILE=tester_temp.log
 
-echo -e "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
+echo "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 
 
-for i in {1..100}
+for i in {1..50}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
 	./push_swap $ARG > $PS_TEMPFILE
@@ -52,9 +64,9 @@ do
 
 	if [ $(echo $NB_MOVES "<" $LIMIT | bc) -eq 1 ];
 	then
-		echo -e "${i} : ${GREEN}${NB_MOVES}${ENDCOLOR}"
+		echo "${i} : ${GREEN}${NB_MOVES}${ENDCOLOR}"
 	else
-		echo -e "${i} : ${RED}${NB_MOVES}${ENDCOLOR}"
+		echo "${i} : ${RED}${NB_MOVES}${ENDCOLOR}"
 	fi
 	let SUM+=$NB_MOVES;
 	let ITERATIONS+=1;
@@ -65,16 +77,16 @@ rm $PS_TEMPFILE
 echo "Nb tests done:" $(($ITERATIONS - 1))
 if [ $(echo "$(($SUM / ($ITERATIONS - 1))) < ${LIMIT}" | bc) -eq 1 ];
 then
-	echo -e "${GREEN}Average nb of moves: $(($SUM / ($ITERATIONS - 1)))${ENDCOLOR}"
+	echo "${GREEN}Average nb of moves: $(($SUM / ($ITERATIONS - 1)))${ENDCOLOR}"
 else
-	echo -e "${RED}Average nb of moves: $(($SUM / ($ITERATIONS - 1)))${ENDCOLOR}"
+	echo "${RED}Average nb of moves: $(($SUM / ($ITERATIONS - 1)))${ENDCOLOR}"
 fi
 
 if [ $(echo $MAX_NB_MOVES "<" $LIMIT | bc) -eq 1 ];
 then
-	echo -e "${GREEN}Worst nb of moves: ${MAX_NB_MOVES}${ENDCOLOR}"
+	echo "${GREEN}Worst nb of moves: ${MAX_NB_MOVES}${ENDCOLOR}"
 else
-	echo -e "${RED}Worst nb of moves: ${MAX_NB_MOVES}${ENDCOLOR}"
+	echo "${RED}Worst nb of moves: ${MAX_NB_MOVES}${ENDCOLOR}"
 fi
 
 if [ $NB_CASES_ABOVE_LIMIT -eq 0 ];
