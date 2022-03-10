@@ -140,13 +140,21 @@ void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos);
 // SORT BIG
 void	print_stack_with_block_ids(int *stack, int *block_ids, int size);
 void	partition_stack(t_deque *stack, t_deque *block_ids);
+void	partition_stack_cutoff(t_deque *stack, t_deque *block_ids, int cutoff);
 void	partition_stack_n_blocks(t_deque *stack, t_deque *block_ids, int nb_blocks);
+void	partition_leaving_vals_biggest(t_deque *staying_vals, t_deque *block_ids);
+void	partition_leaving_vals_smallest(t_deque *staying_vals, t_deque *block_ids);
+void	partition_leaving_vals_cutoff(t_deque *staying_vals, t_deque *block_ids, int cutoff);
 void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
 void	blind_push(t_main_cont *cont, t_deque *moves_list);
+void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
 bool	block_id_is_in_a(t_deque *block_ids, int id);
 int		get_densest_block(t_deque *block_ids);
 // void	try_divide(t_main_cont *cont, t_deque *moves_list);
 void	sort_big(t_main_cont *cont);
+t_deque	*get_staying_vals(t_main_cont *cont);
+t_deque	*get_staying_vals_improved(t_main_cont *cont);
+void	print_staying_vals(t_main_cont *cont, t_deque *staying_vals);
 
 //UTILS
 void	set_next_pos(int *pos, int size);

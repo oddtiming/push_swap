@@ -1,4 +1,4 @@
-NAME	=	push_swap_temp
+NAME	=	push_swap
 
 # FOR TESTING PURPOSES
 RUN_ARGS = 25 46 6 51 62 3 63 32 24 69 80 66 37 40 19 26 12 35 98 91 14 82 84 16 21 5 68 10 56 78 9 41 97 29 34 100 67 75 85 44 76 96 7 20 2 43 59 92 87 45 73 31 60 55 88 65 99 89 18 94 50 17 52 36 42 38 57 95 27 54 72 79 39 30 77 58 4 8 13 11 90 33 71 47 15 83 61 49 86 53 64 48 22 1 23 74 81 28 70 93
@@ -12,7 +12,8 @@ RED			=	\033[0;31m
 ON_RED		=	\033[41m
 RESET_COL	=	\033[0m
 
-CFILES	=	cleanup.c \
+CFILES	=	cherrypick.c \
+			cleanup.c \
 			deques.c \
 			deque_operators.c \
 			errors.c \
@@ -78,7 +79,7 @@ COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@echo -e "$(BLUE)>\t$^\t--> $@ $(RESET_COL)$(COMPILE_C_OUT)"	
+	@echo -e "$(CYAN)>\t$^\t--> $@ $(RESET_COL)$(COMPILE_C_OUT)"	
 
 #
 # DEBUG MACROS
@@ -104,11 +105,11 @@ all: $(NAME)
 
 
 $(NAME):	libft pretty_print $(OBJS)
-	@echo -e "\n$(BLUE)>>>>>>>> Compiling $(NAME) ...$(RESET_COL)$(COMPILE_EXE_OUT)"
+	@echo -e "\n$(CYAN)>>>>>>>> Compiling $(NAME) ...$(RESET_COL)$(COMPILE_EXE_OUT)"
 
 silent_libft:
 	@echo -e "------------------ libft.a ------------------\n"
-	@echo -e "$(BLUE)>>>>>>>> Archiving libft.a ...$(RESET_COL)"
+	@echo -e "$(CYAN)>>>>>>>> Archiving libft.a ...$(RESET_COL)"
 	@make -s bonus -C $(LIBFT_DIR)
 	@if [ -e $(LIBFT) ]; \
 		then \

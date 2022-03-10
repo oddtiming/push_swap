@@ -325,6 +325,67 @@ void	partition_stack(t_deque *stack, t_deque *block_ids)
 	return ;
 }
 
+void	partition_leaving_vals_biggest(t_deque *staying_vals, t_deque *block_ids)
+{
+	int		cutoff;
+	int		i;
+
+	cutoff = staying_vals->max_elem * 7 / 24;
+	deque_reinit_list(block_ids);
+	i = 0;
+	while (i < staying_vals->size)
+	{
+		if (staying_vals->elems[i] == -1)
+			block_ids->add_last(block_ids, -1);
+		else if (staying_vals->elems[i] > cutoff)
+			block_ids->add_last(block_ids, 1);
+		else 
+			block_ids->add_last(block_ids, 0);
+		i++;
+	}
+	return ;
+}
+
+void	partition_leaving_vals_cutoff(t_deque *staying_vals, t_deque *block_ids, int cutoff)
+{
+	int		i;
+
+	deque_reinit_list(block_ids);
+	i = 0;
+	while (i < staying_vals->size)
+	{
+		if (staying_vals->elems[i] == -1)
+			block_ids->add_last(block_ids, -1);
+		else if (staying_vals->elems[i] > cutoff)
+			block_ids->add_last(block_ids, 1);
+		else 
+			block_ids->add_last(block_ids, 0);
+		i++;
+	}
+	return ;
+}
+
+void	partition_leaving_vals_smallest(t_deque *staying_vals, t_deque *block_ids)
+{
+	int		cutoff;
+	int		i;
+
+	cutoff = staying_vals->max_elem * 5 / 8;
+	deque_reinit_list(block_ids);
+	i = 0;
+	while (i < staying_vals->size)
+	{
+		if (staying_vals->elems[i] == -1)
+			block_ids->add_last(block_ids, -1);
+		else if (staying_vals->elems[i] > cutoff)
+			block_ids->add_last(block_ids, 1);
+		else 
+			block_ids->add_last(block_ids, 0);
+		i++;
+	}
+	return ;
+}
+
 void	partition_stack_n_blocks(t_deque *stack, t_deque *block_ids, int nb_blocks)
 {
 	int		block_len;
@@ -338,6 +399,23 @@ void	partition_stack_n_blocks(t_deque *stack, t_deque *block_ids, int nb_blocks)
 		block_ids->add_last(block_ids, stack->elems[i] / block_len);
 		if (block_ids->elems[i] == nb_blocks)
 			block_ids->set_elem(block_ids, i, nb_blocks - 1);
+		i++;
+	}
+	return ;
+}
+
+void	partition_stack_cutoff(t_deque *stack, t_deque *block_ids, int cutoff)
+{
+	int		i;
+
+	deque_reinit_list(block_ids);
+	i = 0;
+	while (i < stack->size)
+	{
+		if (stack->elems[i] > cutoff)
+			block_ids->add_last(block_ids, 1);
+		else
+			block_ids->add_last(block_ids, 0);
 		i++;
 	}
 	return ;
@@ -383,6 +461,28 @@ void	sort_big(t_main_cont *cont)
 	insert_b(cont, &cont->final_moves);
 	rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
 }
+
+void	insert_last_block(t_main_cont *cont, t_deque *moves_list)
+{
+	int	median_val;
+	int	max_val;
+	int	min_val;
+
+	max_val = cont->stack_a.max_elem;
+	min_val = cont->stack_a.min_elem;
+	median_val = (max_val - min_val) / 2;
+	while (cont->stack_a.size > 3)
+	{
+		do_pb(cont, &cont->curr_moves);
+		if (has_smaller_than_median(&cont->stack_b, median_val, min_val) && cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
+			do_rb(cont, moves_list);
+	}
+	if (!is_sorted(&cont->stack_a, cont->head_a.index))
+		do_sa(cont, moves_list);
+	return ;
+
+}
+
 
 void	blind_push(t_main_cont *cont, t_deque *moves_list)
 {

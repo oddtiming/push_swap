@@ -90,7 +90,7 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 		free(info);
 		info = NULL;
 
-		if (!is_sorted(&cont->stack_a, cont->head_a.index))
+		if (DEBUG && !is_sorted(&cont->stack_a, cont->head_a.index))
 		{
 			printf("fucked up right here\n");
 			print_stacks(cont);
