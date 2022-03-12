@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 14:27:56 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/03/12 15:37:58 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/03/12 16:15:32 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MAX_NB_MOVES=0
 MAX_TEST_ID=0
 # N=1.38
 # LIMIT=$(bc -l <<< "e($N*l($NB_VALS))")
-LIMIT=3900
+LIMIT=3800
 INT_LIMIT=${LIMIT%.1}
 NB_CASES_ABOVE_LIMIT=0
 ITERATIONS=1
@@ -32,7 +32,7 @@ PS_TEMPFILE=tester_temp.log
 echo "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 
 
-for i in {1..100}
+for i in {1..500}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
 	./push_swap $ARG > $PS_TEMPFILE

@@ -441,68 +441,68 @@ int	main(int argc, char *argv[])
 	free(best_staying_vals);
 
 
-	// i = 0;
-	// // Try block with smallest values
-	// //	- insert_last_block
-	// while (i < div_depth_500)
-	// {
-	// 	try_n_divisions_smallest(cont, block_ids, 4);
-	// 	insert_last_block(cont, &cont->curr_moves);
-	// 	// blind_push(cont, &cont->curr_moves);
-	// 	insert_b(cont, &cont->curr_moves);
-	// 	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
-	// 	if (cont->curr_moves.size < cont->best_moves.size)
-	// 	{
-	// 		copy_deque(&cont->curr_moves, &cont->best_moves);
-	// 		if (DEBUG)
-	// 			printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
-	// 	}
-	// 	undo_moves(cont, &cont->curr_moves);
-	// 	deque_reinit_list(&cont->curr_moves);
-	// 	i++;
-	// }
+	i = 0;
+	// Try block with smallest values
+	//	- insert_last_block
+	while (i < div_depth_500)
+	{
+		try_n_divisions_smallest(cont, block_ids, 4);
+		insert_last_block(cont, &cont->curr_moves);
+		// blind_push(cont, &cont->curr_moves);
+		insert_b(cont, &cont->curr_moves);
+		rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+		if (cont->curr_moves.size < cont->best_moves.size)
+		{
+			copy_deque(&cont->curr_moves, &cont->best_moves);
+			if (DEBUG)
+				printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
+		}
+		undo_moves(cont, &cont->curr_moves);
+		deque_reinit_list(&cont->curr_moves);
+		i++;
+	}
 
-	// i = 0;
-	// // Try closest block
-	// //	- insert_last_block
-	// while (i < div_depth_500)
-	// {
-	// 	try_n_divisions_closest(cont, block_ids, i);
-	// 	insert_last_block(cont, &cont->curr_moves);
-	// 	// blind_push(cont, &cont->curr_moves);
-	// 	insert_b(cont, &cont->curr_moves);
-	// 	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
-	// 	if (cont->curr_moves.size < cont->best_moves.size)
-	// 	{
-	// 		copy_deque(&cont->curr_moves, &cont->best_moves);
-	// 		if (DEBUG)
-	// 			printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
-	// 	}
-	// 	undo_moves(cont, &cont->curr_moves);
-	// 	deque_reinit_list(&cont->curr_moves);
-	// 	i++;
-	// }
+	i = 0;
+	// Try closest block
+	//	- insert_last_block
+	while (i < div_depth_500)
+	{
+		try_n_divisions_closest(cont, block_ids, i);
+		insert_last_block(cont, &cont->curr_moves);
+		// blind_push(cont, &cont->curr_moves);
+		insert_b(cont, &cont->curr_moves);
+		rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+		if (cont->curr_moves.size < cont->best_moves.size)
+		{
+			copy_deque(&cont->curr_moves, &cont->best_moves);
+			if (DEBUG)
+				printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
+		}
+		undo_moves(cont, &cont->curr_moves);
+		deque_reinit_list(&cont->curr_moves);
+		i++;
+	}
 
-	// i = 0;
-	// // Try block with biggest vals
-	// //	- insert_last_block
-	// while (i < div_depth_500)
-	// {
-	// 	try_n_divisions(cont, block_ids, i);
-	// 	insert_last_block(cont, &cont->curr_moves);
-	// 	// blind_push(cont, &cont->curr_moves);
-	// 	insert_b(cont, &cont->curr_moves);
-	// 	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
-	// 	if (cont->curr_moves.size < cont->best_moves.size)
-	// 	{
-	// 		copy_deque(&cont->curr_moves, &cont->best_moves);
-	// 		if (DEBUG)
-	// 			printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
-	// 	}
-	// 	undo_moves(cont, &cont->curr_moves);
-	// 	deque_reinit_list(&cont->curr_moves);
-	// 	i++;
-	// }
+	i = 0;
+	// Try block with biggest vals
+	//	- insert_last_block
+	while (i < div_depth_500)
+	{
+		try_n_divisions(cont, block_ids, i);
+		insert_last_block(cont, &cont->curr_moves);
+		// blind_push(cont, &cont->curr_moves);
+		insert_b(cont, &cont->curr_moves);
+		rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+		if (cont->curr_moves.size < cont->best_moves.size)
+		{
+			copy_deque(&cont->curr_moves, &cont->best_moves);
+			if (DEBUG)
+				printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
+		}
+		undo_moves(cont, &cont->curr_moves);
+		deque_reinit_list(&cont->curr_moves);
+		i++;
+	}
 
 	// i = 0;
 	// // Try block with smallest values
@@ -775,22 +775,22 @@ int	main(int argc, char *argv[])
 	// deque_reinit_list(&cont->curr_moves);
 
 	
-	// partition_stack_cutoff(&cont->stack_a, block_ids, cont->stack_a.max_elem * 2 / 3);
-	// insert_block(cont, block_ids, 1);
-	// partition_stack_cutoff(&cont->stack_a, block_ids, cont->stack_a.max_elem / 2);
-	// insert_block(cont, block_ids, 1);
-	// partition_stack_cutoff(&cont->stack_a, block_ids, cont->stack_a.max_elem * 2 / 3);
-	// insert_block(cont, block_ids, 1);
-	// insert_last_block(cont, &cont->curr_moves);
-	// // blind_push(cont, &cont->curr_moves);
-	// insert_b(cont, &cont->curr_moves);
-	// rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
-	// if (cont->curr_moves.size < cont->best_moves.size)
-	// {
-	// 	copy_deque(&cont->curr_moves, &cont->best_moves);
-	// }
-	// undo_moves(cont, &cont->curr_moves);
-	// deque_reinit_list(&cont->curr_moves);
+	partition_stack_cutoff(&cont->stack_a, block_ids, cont->stack_a.max_elem * 2 / 3);
+	insert_block(cont, block_ids, 1);
+	partition_stack_cutoff(&cont->stack_a, block_ids, cont->stack_a.max_elem / 2);
+	insert_block(cont, block_ids, 1);
+	partition_stack_cutoff(&cont->stack_a, block_ids, cont->stack_a.max_elem * 2 / 3);
+	insert_block(cont, block_ids, 1);
+	insert_last_block(cont, &cont->curr_moves);
+	// blind_push(cont, &cont->curr_moves);
+	insert_b(cont, &cont->curr_moves);
+	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+	if (cont->curr_moves.size < cont->best_moves.size)
+	{
+		copy_deque(&cont->curr_moves, &cont->best_moves);
+	}
+	undo_moves(cont, &cont->curr_moves);
+	deque_reinit_list(&cont->curr_moves);
 
 
 	print_all_moves(&cont->best_moves);
