@@ -30,11 +30,11 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 	if (!info)
 		exit_on_err("insert_b: insert_info error\n");
 
-	if (DEBUG)
-	{
-		printf(CYAN"Entered insert_b with %d elements in b \n"RESET_COL, cont->stack_b.size);
-		print_stacks(cont);
-	}
+	// if (DEBUG)
+	// {
+	// 	printf(CYAN"Entered insert_b with %d elements in b \n"RESET_COL, cont->stack_b.size);
+	// 	print_stacks(cont);
+	// }
 
 	// if b is not empty, init will also call update_insert_info()
 	init_insert_info(cont, info);
@@ -49,21 +49,21 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 
 		update_insert_info(cont, info);
 	}
-	if (DEBUG)
-	{
-		printf(YELLOW"insert_b found best elem to be stack_b[%d] == %d\n"RESET_COL, info->b_info.pos_best, cont->stack_b.elems[info->b_info.pos_best]);
-		printf(YELLOW"corresponding insert value was stack_a[%d] == %d\n"RESET_COL, info->a_info.pos_best, cont->stack_a.elems[info->a_info.pos_best]);
-		printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
-		printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
-		printf(YELLOW"info.a_info.revpos_best = %d \n"RESET_COL, info->a_info.revpos_best);
-		printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
-		printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
-		printf(YELLOW"info.b_info.revpos_best = %d \n"RESET_COL, info->b_info.revpos_best);
-		printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
-		printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
-		printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
-		printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
-	}
+	// if (DEBUG)
+	// {
+	// 	printf(YELLOW"insert_b found best elem to be stack_b[%d] == %d\n"RESET_COL, info->b_info.pos_best, cont->stack_b.elems[info->b_info.pos_best]);
+	// 	printf(YELLOW"corresponding insert value was stack_a[%d] == %d\n"RESET_COL, info->a_info.pos_best, cont->stack_a.elems[info->a_info.pos_best]);
+	// 	printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
+	// 	printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
+	// 	printf(YELLOW"info.a_info.revpos_best = %d \n"RESET_COL, info->a_info.revpos_best);
+	// 	printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
+	// 	printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
+	// 	printf(YELLOW"info.b_info.revpos_best = %d \n"RESET_COL, info->b_info.revpos_best);
+	// 	printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
+	// 	printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
+	// 	printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
+	// 	printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
+	// }
 
 
 	if (cont->stack_b.size > 0)
@@ -79,12 +79,12 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 		
 		insert_elem_b(cont, moves_buff, info);
 
-		if (DEBUG)
-		{
-			printf(BLUE"last 5 moves: \n"RESET_COL);
-			for (int i = 5; i && moves_buff->size > 5 - i; i--)
-				print_move(moves_buff->elems[moves_buff->size - i]);
-		}
+		// if (DEBUG)
+		// {
+		// 	printf(BLUE"last 5 moves: \n"RESET_COL);
+		// 	for (int i = 5; i && moves_buff->size > 5 - i; i--)
+		// 		print_move(moves_buff->elems[moves_buff->size - i]);
+		// }
 
 		//NEW
 		free(info);
@@ -361,7 +361,7 @@ bool	is_new_best_moves(t_insert_info *info)
 		if (info->curr_delta_insert > info->min_delta_insert)
 			return (false);
 		if (info->curr_delta_insert == info->min_delta_insert && \
-				info->b_info.val < info->b_info.val_best) //Not sure about that last part
+				info->b_info.val > info->b_info.val_best) //Not sure about that last part
 			return (false);
 	}
 	return (true);

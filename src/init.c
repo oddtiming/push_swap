@@ -79,11 +79,6 @@ void	normalize_stack_values(t_deque *stack)
 	{
 		stack->add_last(stack, normalized_stack[i]);
 		stack->remove_front(stack);
-		if (DEBUG)
-		{
-			printf(CYAN"added %d\n"RESET_COL, normalized_stack[i]);
-			print_single_stack(stack);
-		}
 	}
 	free(normalized_stack);
 	return ;

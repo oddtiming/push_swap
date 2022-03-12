@@ -62,17 +62,13 @@ typedef	struct s_stack_insert_info
 }	t_stack_insert_info;
 
 
-// typedef	struct s_block_insert_info
-// {
-// 	int	pos_a;
-// 	int	pos_b;
-// 	int	revpos_a;
-// 	int	revpos_b;
-// 	int	insert_val;
-// 	int	pos_best;
-// 	int	revpos_best;
-// 	int	val_best;
-// }	t_block_insert_info;
+typedef struct s_block_insert_info
+{
+	int	block_id_curr;
+	int	block_id_best;
+	int	spread_curr;
+	int	spread_best;
+}	t_block_insert_info;
 
 typedef	struct s_insert_info
 {
@@ -99,15 +95,16 @@ typedef struct s_main_cont
 	int				min_nb_moves;
 }	t_main_cont;
 
-//Functions
 //PARSING
 void	parse(int argc, char *argv[], t_main_cont *cont);
 void	init(t_main_cont *cont, char **args);
 void	normalize_stack_values(t_deque *stack);
 void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 
-//SORT
+//SORTING
 void	sort(t_main_cont *cont);
+bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff);
+void	discard_moves(t_main_cont *cont, t_deque *moves_buff);
 
 
 //  SORT_SMALL
@@ -116,8 +113,6 @@ bool	try_sort_small(t_main_cont *cont);
 bool	try_swap(t_main_cont *cont);
 bool	try_invert_4(t_main_cont *cont);
 bool	try_solution(t_main_cont *cont, t_deque *moves_buff);
-bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff);
-void	discard_moves(t_main_cont *cont, t_deque *moves_buff);
 
 // Inserting
 void	insert_b(t_main_cont *cont, t_deque *moves_buff);
@@ -134,8 +129,10 @@ int		get_pos_of_val(t_deque  *stack, int val);
 int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
 int		get_next_value(t_deque *haystack, int curr_val);
+void	rotate_stack_to_0(t_deque *stack, int pos);
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos);
+bool	is_in_stack(t_deque *stack, int val);
 
 // SORT BIG
 void	print_stack_with_block_ids(int *stack, int *block_ids, int size);
@@ -152,8 +149,7 @@ bool	block_id_is_in_a(t_deque *block_ids, int id);
 int		get_densest_block(t_deque *block_ids);
 // void	try_divide(t_main_cont *cont, t_deque *moves_list);
 void	sort_big(t_main_cont *cont);
-t_deque	*get_staying_vals(t_main_cont *cont);
-t_deque	*get_staying_vals_improved(t_main_cont *cont);
+t_deque	*get_staying_vals(t_deque *stack);
 void	print_staying_vals(t_main_cont *cont, t_deque *staying_vals);
 
 //UTILS

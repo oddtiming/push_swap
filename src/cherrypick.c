@@ -1,153 +1,88 @@
 #include "push_swap.h"
 
-int	ft_sqrt(int nb)
+bool	is_in_stack(t_deque *stack, int val)
 {
-	int	sqrt;
-
-	if (nb <= 0)
-		return (0);
-	if (nb == 1)
-		return (1);
-	sqrt = nb / 2;
-	while (nb / sqrt < sqrt)
+	int	i;
+	i = 0;
+	while (i < stack->size)
 	{
-		if (4 * (nb / sqrt) < sqrt)
-			sqrt /= 2;
-		else
-			sqrt--;
+		if (stack->elems[i] == val)
+			return (true);
+		i++;
 	}
-	// if (sqrt * sqrt == nb)
-		return (sqrt);
-	// else
-		// return (0);
+	return (false);
 }
 
-t_deque	*assign_staying_vals_stack(t_main_cont *cont, int pos, int range)
+void	free_deque_list(t_deque **list)
 {
-	t_deque		*staying_vals;
-	t_iterator	*iter;
-	int			curr_max;
-	int			nb_loops;
+	int	i;
 
-	if (DEBUG)
+	i = 0;
+	while (list[i + 1] != NULL)
 	{
-		printf("entered assign_staying\n");
-		printf(GREEN"==>range = %d\n", range);
-		printf(GREEN"==> pos = %d\n"RESET_COL, pos);
-		printf(GREEN"==> cont->stack_a.elems[%d] = %d\n"RESET_COL, pos, cont->stack_a.elems[pos]);
+		list[i]->free_list(list[i]);
+		free (list[i]);
+		i++;
 	}
-	staying_vals = ft_safealloc(sizeof(t_deque));
-	init_deque(staying_vals);
-	iter = ft_safealloc(sizeof(t_iterator));
-	set_iterator(iter, pos, cont->stack_a.size, 0);
-	staying_vals->add_last(staying_vals, -1);
-	curr_max = cont->stack_a.elems[iter->index];
-	nb_loops = 0;
-	iterate_once(iter, 0);
-	while (iter->index != iter->head)
+	free (list);
+	return ;
+}
+
+t_deque	*get_staying_vals(t_deque *stack)
+{
+	t_deque	**list;
+	t_deque	*staying_vals;
+	int		list_size;
+	int		i;
+	int		j;
+
+	list = malloc(stack->max_elem * sizeof(t_deque *));
+	ft_bzero(list, stack->max_elem);
+	new_deque(&list[0]);
+	list[0]->add_last(list[0], stack->elems[0]);
+	list[1] = NULL;
+	i = 1;
+	list_size = 1;
+	while (i < stack->size)
 	{
-		if ((cont->stack_a.elems[iter->index] > curr_max && \
-			cont->stack_a.elems[iter->index] - curr_max <= range) || \
-			(cont->stack_a.elems[iter->index] < curr_max && \
-			cont->stack_a.elems[iter->index] + cont->stack_a.size - curr_max <= range))
+		// If it's larger than the current largest, clone and extend
+		if (stack->elems[i] > list[list_size - 1]->max_elem)
 		{
-			if (cont->stack_a.elems[iter->index] < curr_max)
-				nb_loops++;
-			// if (nb_loops <= 1 && cont->stack_a.elems[iter->index] > cont->stack_a.elems[iter->head])
-			if (nb_loops < 1)
-			{
-				// printf(GREEN"sorted\n"RESET_COL);
-				// printf(MAGENTA"\t stack_a[%d] == %d\n"RESET_COL, iter->index, cont->stack_a.elems[iter->index]);
-				// printf(MAGENTA"\t curr_max == %d\n"RESET_COL, curr_max);
-				// printf(MAGENTA"nb_loops =  %d\n"RESET_COL, nb_loops);
-				staying_vals->add_last(staying_vals, -1);
-				curr_max = cont->stack_a.elems[iter->index];
-			}
-			else
-				staying_vals->add_last(staying_vals, cont->stack_a.elems[iter->index]);
+			new_deque(&list[list_size]);
+			copy_deque(list[list_size - 1], list[list_size]);
+			list[list_size]->add_last(list[list_size], stack->elems[i]);
+			// printf(YELLOW"new_biggest\n"RESET_COL);
+			// print_single_stack(list[list_size]);
+			list_size++;
 		}
+		// Find the deque where max_elem < curr_value, clone, extend, and discard
 		else
-			staying_vals->add_last(staying_vals, cont->stack_a.elems[iter->index]);
-		iterate_once(iter, 0);
-	}
-
-	while (pos-- > 0)
-	{
-		staying_vals->add_front(staying_vals, staying_vals->elems[staying_vals->size - 1]);
-		staying_vals->remove_last(staying_vals);
-	}
-
-
-	free(iter);
-	return (staying_vals);
-}
-
-t_deque	*get_staying_vals(t_main_cont *cont)
-{
-	t_iterator	*iter;
-	int			range;
-	int			range_best;
-	int			nb_sorted_curr;
-	int			nb_sorted_max;
-	int			pos_sorted_max;
-	int			val_sorted_max;
-	int			curr_max;
-	int			i;
-	int			nb_loops;
-
-	iter = ft_safealloc(sizeof(t_iterator));
-	nb_sorted_max = 0;
-	pos_sorted_max = 0;
-	range_best = 0;
-	val_sorted_max = cont->stack_a.elems[0];
-
-	range = 5;
-	while (range <= 25)
-	{
-		i = 0;
-		while (i < cont->stack_a.size)
 		{
-			set_iterator(iter, i, cont->stack_a.size, 0);
-			nb_sorted_curr = 0;
-			curr_max = cont->stack_a.elems[iter->index];
-			nb_loops = 0;
-			while (iterate_n_loops(iter, 1))
+			j = list_size - 1;
+			while (j >= 0)
 			{
-				if ((cont->stack_a.elems[iter->index] > curr_max && \
-					cont->stack_a.elems[iter->index] - curr_max <= range) || \
-					(cont->stack_a.elems[iter->index] < curr_max && \
-					cont->stack_a.elems[iter->index] + cont->stack_a.size - curr_max <= range))
+				if (list[j]->max_elem < stack->elems[i])
 				{
-					if (cont->stack_a.elems[iter->index] < curr_max)
-						nb_loops++;
-					if (nb_loops < 1)
-					{
-						curr_max = cont->stack_a.elems[iter->index];
-						nb_sorted_curr++;
-					}
+					//I'm making the observation that you seem to always delete the one after
+					copy_deque(list[j], list[j + 1]);
+					list[j + 1]->add_last(list[j + 1], stack->elems[i]);
+					// printf(MAGENTA"new insert for j = %d \n"RESET_COL, j);
+					// print_single_stack(list[j + 1]);
+					break;
 				}
+				j--;
 			}
-			// printf("nb_sorted for range %d at pos %d = %d\n", range, i, nb_sorted_curr);
-			if (nb_sorted_curr > nb_sorted_max)
-			{
-				nb_sorted_max = nb_sorted_curr;
-				pos_sorted_max = i;
-				val_sorted_max = cont->stack_a.elems[i];
-				range_best = range;
-			}
-			i++;
 		}
-		range++;
+		i++;
 	}
-	
-	if (DEBUG)
+	staying_vals = list[list_size - 1];
+	i = 0;
+	while (i < list_size - 1)
 	{
-		printf(GREEN"\t->range_best = %d\n", range_best);
-		printf(GREEN"==> pos_best = %d\n"RESET_COL, pos_sorted_max);
-		printf(GREEN"==> val_best = %d \n"RESET_COL, val_sorted_max);
-		printf(GREEN"==> nb_sorted = %d\n\n"RESET_COL, nb_sorted_max);
+		list[i]->free_list(list[i]);
+		free (list[i]);
+		i++;
 	}
-
-	free(iter);
-	return (assign_staying_vals_stack(cont, pos_sorted_max, range_best));
+	free(list);
+	return (staying_vals);
 }

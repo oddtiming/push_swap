@@ -107,6 +107,25 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 	return ;
 }
 
+void	rotate_stack_to_0(t_deque *stack, int pos)
+{
+	if (pos < stack->size - pos)
+	{
+		while (pos-- > 0)
+		{
+			rotate(stack);
+		}
+	}
+	else
+	{
+		while (pos++ < stack->size)
+		{
+			rev_rotate(stack);
+		}
+	}
+	return ;
+}
+
 void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos)
 {
 	if (pos < cont->stack_b.size - pos)

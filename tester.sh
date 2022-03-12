@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 14:27:56 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/03/09 22:34:17 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/03/12 15:37:58 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ PS_TEMPFILE=tester_temp.log
 echo "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 
 
-for i in {1..500}
+for i in {1..100}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
 	./push_swap $ARG > $PS_TEMPFILE

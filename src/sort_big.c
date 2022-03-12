@@ -1,28 +1,5 @@
 #include "push_swap.h"
 
-// void	calc_by_index(t_main_cont *cont)
-// {
-// 	t_iterator	iter;
-// 	int			curr_max_index;
-// 	int			nb_indexed;
-	
-// 	set_iterator(&iter, cont->head_a.index, cont->stack_a.size, 0);
-// 	curr_max_index = cont->stack_a.min_elem;
-// 	nb_indexed = 0;
-// 	while (iterate_n_loops(&iter, 1))
-// 	{
-// 		if 
-// 	}
-// }
-
-typedef struct s_block_insert_info
-{
-	int	block_id_curr;
-	int	block_id_best;
-	int	spread_curr;
-	int	spread_best;
-}	t_block_insert_info;
-
 bool	block_id_is_in_a(t_deque *block_ids, int id)
 {
 	int	i;
@@ -94,19 +71,19 @@ void	rotate_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 		return ;
 	}
 	insert_val_a = cont->stack_a.elems[pos_a];
-	insert_val_b = insert_val_a + 1;
+	insert_val_b = insert_val_a - 1;
 	// pos_b = get_next_value(&cont->stack_b, insert_val_b + 2);
 	
 	pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
 	while (pos_b == -1)
 	{
+		insert_val_b--;
 		if (insert_val_b - 1 < cont->stack_b.min_elem)
 		{
 			insert_val_b = cont->stack_b.max_elem;
 			pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
 			break;
 		}
-		insert_val_b--;
 		pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
 	}
 	revpos_b = cont->stack_b.size - pos_b;
@@ -118,7 +95,8 @@ void	rotate_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 		printf("insert_val_b = %d\n", insert_val_b);
 		printf("insert_val_a = %d\n", cont->stack_a.elems[pos_a]);
 	}
-	if ((pos_b - pos_a <= 0) || (pos_b - pos_a < revpos_b))
+	// if it's bringing it closer
+	if (pos_b - pos_a < revpos_b)
 	{
 		while (pos_a > 0)
 		{
@@ -128,6 +106,7 @@ void	rotate_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 				do_rr(cont, &cont->curr_moves);
 				block_ids->add_last(block_ids, block_ids->elems[0]);
 				block_ids->remove_front(block_ids);
+				pos_b--;
 			}
 			else
 			{
@@ -192,15 +171,6 @@ void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id
 	pos_a = 0;
 	while (block_ids->elems[pos_a] != curr_block_id)
 		pos_a++;
-	// if (pos_a && cont->stack_b.elems[0] >= median_val && cont->stack_b.elems[0] <= max_val)
-	// {
-	// 	do_rr(cont, &cont->curr_moves);
-	// 	block_ids->add_last(block_ids, block_ids->elems[0]);
-	// 	block_ids->remove_front(block_ids);
-	// 	pos_a--;
-	// }
-	// if (cont->stack_b.elems[0] >= median_val && cont->stack_b.elems[0] <= max_val)
-	// 	do_rb(cont, &cont->curr_moves);
 	if (has_smaller_than_median(&cont->stack_b, median_val, min_val))
 	{
 		while (pos_a && cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
@@ -210,9 +180,6 @@ void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id
 			block_ids->remove_front(block_ids);
 			pos_a--;
 		}
-		while (cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
-			do_rb(cont, &cont->curr_moves);
-
 	}
 	while (pos_a)
 	{
@@ -221,13 +188,6 @@ void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id
 		block_ids->remove_front(block_ids);
 		pos_a--;
 	}
-	// if ()
-		// do_rr(cont, &cont->curr_moves);
-	// 	else 
-	// 		do_ra(cont, &cont->curr_moves);
-	// 	block_ids->add_last(block_ids, block_ids->elems[0]);
-	// 	block_ids->remove_front(block_ids);
-	// }
 
 	return ;
 }
@@ -241,20 +201,19 @@ void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 	max_val = 0;
 	min_val = cont->stack_a.max_elem;
 	median_val = calc_block_median(&cont->stack_a, block_ids, curr_block_id, &max_val, &min_val);
+	if (DEBUG)
+	{
+		printf("in insert_block:\n block_id = %d\nmedian_val=%d\n", curr_block_id, median_val);
+	}
 	while (block_id_is_in_a(block_ids, curr_block_id))
 	{
 		if (block_ids->elems[0] == curr_block_id)
 		{
+			while (cont->stack_a.elems[0] <= median_val && has_smaller_than_median(&cont->stack_b, median_val, min_val) && cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
+				do_rb(cont, &cont->curr_moves);
 			do_pb(cont, &cont->curr_moves);
 			// if (has_smaller_than_median(&cont->stack_b, median_val, min_val) && cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
 			// 		do_rb(cont, &cont->curr_moves);
-			if (DEBUG)
-			{
-				printf("curr_id == %d\n", curr_block_id);
-				printf("pushed value == %d\n", cont->stack_b.elems[0]);
-				
-				print_stacks(cont);
-			}
 			block_ids->remove_front(block_ids);
 		}
 		else
@@ -263,11 +222,13 @@ void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 			// do_ra(cont, &cont->curr_moves);
 			// block_ids->add_last(block_ids, block_ids->elems[0]);
 		}
-		while (has_smaller_than_median(&cont->stack_b, median_val, min_val) && cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
-			do_rb(cont, &cont->curr_moves);
+		// while (has_smaller_than_median(&cont->stack_b, median_val, min_val) && cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
+			// do_rb(cont, &cont->curr_moves);
 
 		// block_ids->remove_front(block_ids);
 	}
+	if (cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
+		do_rb(cont, &cont->curr_moves);
 	return ;
 }
 
