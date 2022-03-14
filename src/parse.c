@@ -61,7 +61,7 @@ static char	**split_args(int argc, char *argv[])
 	int		i;
 	char	**args_split;
 
-	if (argc == _ARGC_MIN)
+	if (argc == 2)
 		args_split = ft_split(argv[1], ' ');
 	else
 	{
@@ -88,7 +88,7 @@ void	parse(int argc, char *argv[], t_main_cont *cont)
 	char	**args_split;
 	int		i;
 
-	if (argc < _ARGC_MIN)
+	if (argc < 2)
 		exit_on_err("Come on, give me at least ONE input\n");
 	args_split = split_args(argc, argv);
 	if (!args_split || !args_split[0])

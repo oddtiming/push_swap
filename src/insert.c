@@ -362,7 +362,7 @@ bool	is_new_best_moves(t_insert_info *info)
 			return (false);
 		if (info->curr_delta_insert == info->min_delta_insert && \
 				info->b_info.val > info->b_info.val_best) //Not sure about that last part
-			return (false);
+			return (true);
 	}
 	return (true);
 }

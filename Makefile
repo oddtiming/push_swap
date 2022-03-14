@@ -1,7 +1,7 @@
 NAME	=	push_swap
 
 # FOR TESTING PURPOSES
-RUN_ARGS = 14 1 3 12 4 16 18 11 10 7 2 8 15 9 17 19 13 20 5 6
+RUN_ARGS = 37 15 27 4 6 33 12 19 31 3 2 13 49 42 22 16 39 10 24 8 41 5 1 28 7 40 29 47 21 35 50 48 38 45 34 36 44 20 32 17 9 23 25 11 26 14 46 43 30 18
 
 SHELL	=	bash
 
@@ -16,11 +16,14 @@ CFILES	=	cherrypick.c \
 			cleanup.c \
 			deques.c \
 			deque_operators.c \
+			divide_and_conquer.c \
 			errors.c \
 			init.c \
 			insert.c \
+			insert_blocks.c \
 			iterators.c \
 			parse.c \
+			partition.c \
 			print_utils.c \
 			px.c \
 			push_swap.c \
@@ -79,7 +82,7 @@ COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@echo -e "$(CYAN)>\t$^\t--> $@ $(RESET_COL)$(COMPILE_C_OUT)"	
+	@printf "$(CYAN)%-25s-->%25s $(RESET_COL)$(COMPILE_C_OUT)\n" $^ $@
 
 #
 # DEBUG MACROS
@@ -108,7 +111,7 @@ $(NAME):	libft pretty_print $(OBJS)
 	@echo -e "\n$(CYAN)>>>>>>>> Compiling $(NAME) ...$(RESET_COL)$(COMPILE_EXE_OUT)"
 
 silent_libft:
-	@echo -e "------------------ libft.a ------------------\n"
+	@echo -e "---------------------- libft.a ----------------------\n"
 	@echo -e "$(CYAN)>>>>>>>> Archiving libft.a ...$(RESET_COL)"
 	@make -s bonus -C $(LIBFT_DIR)
 	@if [ -e $(LIBFT) ]; \
@@ -121,7 +124,8 @@ silent_libft:
 libft: silent_libft
 
 pretty_print: 
-	@echo -e "\n------------------- $(NAME) -------------------"
+	@echo -e "\n--------------------- $(NAME) ---------------------"
+											  
 
 clean:
 	@echo -e "$(RED)>>>>>>>> Deleting obj files$(RESET_COL)$(RM_OBJS_OUT)"

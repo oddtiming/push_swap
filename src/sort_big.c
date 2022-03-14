@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-bool	block_id_is_in_a(t_deque *block_ids, int id)
+bool	block_id_is_in_stack(t_deque *block_ids, int id)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int	get_densest_block(t_deque *block_ids)
 	pos_start = 0;
 	block_id = NB_BLOCKS - 2;
 	min_spread = INT_MAX;
-	while (!block_id_is_in_a(block_ids, block_id))
+	while (!block_id_is_in_stack(block_ids, block_id))
 		block_id--;
 	while (block_id <= 0)
 	{
@@ -192,7 +192,7 @@ void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id
 	return ;
 }
 
-void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
+void	insert_block_a(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 {
 	int	median_val;
 	int	max_val;
@@ -203,9 +203,9 @@ void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 	median_val = calc_block_median(&cont->stack_a, block_ids, curr_block_id, &max_val, &min_val);
 	if (DEBUG)
 	{
-		printf("in insert_block:\n block_id = %d\nmedian_val=%d\n", curr_block_id, median_val);
+		printf("in insert_block_a:\n block_id = %d\nmedian_val=%d\n", curr_block_id, median_val);
 	}
-	while (block_id_is_in_a(block_ids, curr_block_id))
+	while (block_id_is_in_stack(block_ids, curr_block_id))
 	{
 		if (block_ids->elems[0] == curr_block_id)
 		{
@@ -227,7 +227,7 @@ void	insert_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 
 		// block_ids->remove_front(block_ids);
 	}
-	if (cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
+	while (cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
 		do_rb(cont, &cont->curr_moves);
 	return ;
 }
@@ -267,139 +267,6 @@ void	print_stack_with_block_ids(int *stack, int *block_ids, int size)
 	}
 	return ;
 }
-
-void	partition_stack(t_deque *stack, t_deque *block_ids)
-{
-	int		block_len;
-	int		i;
-
-	deque_reinit_list(block_ids);
-	block_len = stack->size / NB_BLOCKS;
-	i = 0;
-	while (i < stack->size)
-	{
-		block_ids->add_last(block_ids, stack->elems[i] / block_len);
-		if (block_ids->elems[i] == NB_BLOCKS)
-			block_ids->set_elem(block_ids, i, NB_BLOCKS - 1);
-		i++;
-	}
-	return ;
-}
-
-void	partition_leaving_vals_biggest(t_deque *staying_vals, t_deque *block_ids)
-{
-	int		cutoff;
-	int		i;
-
-	cutoff = staying_vals->max_elem * 7 / 24;
-	deque_reinit_list(block_ids);
-	i = 0;
-	while (i < staying_vals->size)
-	{
-		if (staying_vals->elems[i] == -1)
-			block_ids->add_last(block_ids, -1);
-		else if (staying_vals->elems[i] > cutoff)
-			block_ids->add_last(block_ids, 1);
-		else 
-			block_ids->add_last(block_ids, 0);
-		i++;
-	}
-	return ;
-}
-
-void	partition_leaving_vals_cutoff(t_deque *staying_vals, t_deque *block_ids, int cutoff)
-{
-	int		i;
-
-	deque_reinit_list(block_ids);
-	i = 0;
-	while (i < staying_vals->size)
-	{
-		if (staying_vals->elems[i] == -1)
-			block_ids->add_last(block_ids, -1);
-		else if (staying_vals->elems[i] > cutoff)
-			block_ids->add_last(block_ids, 1);
-		else 
-			block_ids->add_last(block_ids, 0);
-		i++;
-	}
-	return ;
-}
-
-void	partition_leaving_vals_smallest(t_deque *staying_vals, t_deque *block_ids)
-{
-	int		cutoff;
-	int		i;
-
-	cutoff = staying_vals->max_elem * 5 / 8;
-	deque_reinit_list(block_ids);
-	i = 0;
-	while (i < staying_vals->size)
-	{
-		if (staying_vals->elems[i] == -1)
-			block_ids->add_last(block_ids, -1);
-		else if (staying_vals->elems[i] > cutoff)
-			block_ids->add_last(block_ids, 1);
-		else 
-			block_ids->add_last(block_ids, 0);
-		i++;
-	}
-	return ;
-}
-
-void	partition_stack_n_blocks(t_deque *stack, t_deque *block_ids, int nb_blocks)
-{
-	int		block_len;
-	int		i;
-
-	deque_reinit_list(block_ids);
-	block_len = stack->size / nb_blocks;
-	i = 0;
-	while (i < stack->size)
-	{
-		block_ids->add_last(block_ids, stack->elems[i] / block_len);
-		if (block_ids->elems[i] == nb_blocks)
-			block_ids->set_elem(block_ids, i, nb_blocks - 1);
-		i++;
-	}
-	return ;
-}
-
-void	partition_stack_cutoff(t_deque *stack, t_deque *block_ids, int cutoff)
-{
-	int		i;
-
-	deque_reinit_list(block_ids);
-	i = 0;
-	while (i < stack->size)
-	{
-		if (stack->elems[i] > cutoff)
-			block_ids->add_last(block_ids, 1);
-		else
-			block_ids->add_last(block_ids, 0);
-		i++;
-	}
-	return ;
-}
-
-// void	try_divide(t_main_cont *cont, t_deque *moves_list)
-// {
-// 	// t_blk_insert_info	*info;
-// 	int					*block_ids;
-// 	int					curr_block_id;
- 
-// 	block_ids = partition_stack(cont->stack_a.elems, cont->stack_a.size);
-
-// 	// curr_block_id = get_closest_block_id(block_ids, cont->stack_a.size);
-
-// 	curr_block_id = block_ids[0];
-// 	while (curr_block_id != 0)
-// 	{
-// 		insert_block(cont, block_ids, curr_block_id);
-// 	}
-// 	free(block_ids);
-// }
-
 
 void	sort_big(t_main_cont *cont)
 {
