@@ -18,7 +18,7 @@ void	make_sab(int *stack, int size, int move)
 	print_move(move);
 }
 
-void	make_push(t_main_container *cont, int move)
+void	make_push(t_main_cont *cont, int move)
 {
 	push(cont, move);
 	print_move(move);

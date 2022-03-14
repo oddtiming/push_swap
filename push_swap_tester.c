@@ -1,4 +1,4 @@
-#include "./incl/push_swap.h"
+#include "./include/push_swap.h"
 #include <fcntl.h>
 #include <errno.h>
 
@@ -67,9 +67,9 @@ char *add_report_entry(char *report_entries, char *prev_line, int nb_moves)
 	temp = stack_input;
 	stack_input = ft_strjoin_n(5, "\t", stack_input, " --> ", nb_moves_toa, "\n");
 	report_entries = ft_strjoin_free(report_entries, stack_input);
-	free(nb_moves_toa);
-	free(temp);
-	free(stack_input);
+	free (nb_moves_toa);
+	free (temp);
+	free (stack_input);
 	return (report_entries);
 }
 
@@ -119,14 +119,14 @@ bool	write_report(void)
 		}
 		else if (ft_strnstr(curr_line, "KO", ft_strlen(curr_line)))
 			has_failed = true;
-		free(prev_line);
+		free (prev_line);
 		prev_line = curr_line;
 		curr_line = get_next_line(log_fd);
 	}
-	free(prev_line);
+	free (prev_line);
 	close(log_fd);
 	print_report_entries(report_entries);
-	free(report_entries);
+	free (report_entries);
 	return (has_failed);
 }
 
@@ -148,7 +148,7 @@ void	execute_permutation(char *stack)
 	//Write the input in result.log
 	write(log_fd, buff, ft_strlen(buff));
 	close(log_fd);
-	free(buff);
+	free (buff);
 	
 	//Write everything to an intermediary file so that both checker and wc can
 	//easily access it
