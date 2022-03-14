@@ -6,6 +6,7 @@
     4. [Initial ideas](#ideas)
     5. [Structs](#structs)
         - [Iterators](#iterators)
+    6. [Final Results](#results)
 
 # Description
 
@@ -66,3 +67,12 @@ int     max_size;
 int     nb_loops;
 bool    is_reverse;
 ```
+
+<a name="results"></a>
+## Final Results
+
+https://user-images.githubusercontent.com/36460419/158264119-e8b81f6f-a064-40da-b0af-fb5ef7eb273c.mov
+
+
+https://user-images.githubusercontent.com/36460419/158264136-767497b6-95c1-42f5-a02a-090d738da593.mov
+
