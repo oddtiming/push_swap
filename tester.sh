@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 14:27:56 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/03/16 12:25:59 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/03/16 14:37:30 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@ RED="\033[31m"
 GREEN="\033[32m"
 ENDCOLOR="\033[0m"
 
-NB_VALS=100
+NB_VALS=500
 MAX_NB_MOVES=0
 MAX_TEST_ID=0
 # N=1.38
 # LIMIT=$(bc -l <<< "e($N*l($NB_VALS))")
-LIMIT=500
+LIMIT=4000
 INT_LIMIT=${LIMIT%.1}
 NB_CASES_ABOVE_LIMIT=0
 ITERATIONS=1
@@ -35,30 +35,30 @@ echo "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 for i in {1..100}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
-	echo $ARG
+	# echo $ARG
 	./push_swap $ARG > $PS_TEMPFILE
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
-	# if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];
-	# then
-	# 	echo "Error!"
-	# 	echo "Error!" >> $LOG_FILE
-	# 	echo $ARG >> $LOG_FILE
-	# 	echo "nb_moves:" >> $LOG_FILE
-	# 	echo $NB_MOVES >> $LOG_FILE
-	# 	break
-	# fi
+	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];
+	then
+		echo "Error!"
+		echo "Error!" >> $LOG_FILE
+		echo $ARG >> $LOG_FILE
+		echo "nb_moves:" >> $LOG_FILE
+		echo $NB_MOVES >> $LOG_FILE
+		break
+	fi
 	if [ $(echo "$NB_MOVES > $LIMIT" | bc) -eq 1 ];
 	then
-	# 	echo "Test #"$i":" $NB_MOVES "[$(cat $PS_TEMPFILE | ./checker_Mac $ARG)]" >> $LOG_FILE
-	# 	echo $ARG >> $LOG_FILE
-	# 	echo "" >> $LOG_FILE
+		echo "Test #"$i":" $NB_MOVES "[$(cat $PS_TEMPFILE | ./checker_Mac $ARG)]" >> $LOG_FILE
+		echo $ARG >> $LOG_FILE
+		echo "" >> $LOG_FILE
 		let NB_CASES_ABOVE_LIMIT+=1;
 	fi
 	if [ $(echo $NB_MOVES ">" $MAX_NB_MOVES | bc) -eq 1 ];
 		then
-			# echo "Test #"$i":" $NB_MOVES "[$(cat $PS_TEMPFILE | ./checker_Mac $ARG)]" >> $LOG_FILE
-			# echo "$ARG" >> $LOG_FILE
-			# echo "" >> $LOG_FILE
+			echo "Test #"$i":" $NB_MOVES "[$(cat $PS_TEMPFILE | ./checker_Mac $ARG)]" >> $LOG_FILE
+			echo "$ARG" >> $LOG_FILE
+			echo "" >> $LOG_FILE
 			MAX_NB_MOVES=$NB_MOVES;
 			MAX_TEST_ID=$i;
 	fi

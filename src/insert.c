@@ -44,7 +44,7 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 		// Attempt to not try EVERY value, but only those that can result in fewer moves
 		// if stack_b pos is already further than min_moves, set pos to stack_b.size - min_cost
 		if (info->b_info.pos > info->min_cost && \
-			 info->b_info.pos < cont->stack_b.size - info->min_cost)
+			 info->b_info.pos <= cont->stack_b.size - info->min_cost)
 			info->b_info.pos = cont->stack_b.size - info->min_cost;
 
 		update_insert_info(cont, info);

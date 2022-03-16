@@ -23,7 +23,7 @@ typedef enum e_moves
 }	t_moves;
 
 
-enum e_moves_to_indices
+typedef enum e_moves_to_indices
 {
 	REV_SA	= 0,
 	REV_SB	= 1,
