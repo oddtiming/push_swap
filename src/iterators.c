@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "iterators.h"
 
 void	set_iterator(t_iterator *iterator, int head, int size, bool is_reverse)
 {

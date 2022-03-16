@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 14:27:56 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/03/14 14:01:21 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/03/16 12:25:59 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@ RED="\033[31m"
 GREEN="\033[32m"
 ENDCOLOR="\033[0m"
 
-NB_VALS=500
+NB_VALS=100
 MAX_NB_MOVES=0
 MAX_TEST_ID=0
 # N=1.38
 # LIMIT=$(bc -l <<< "e($N*l($NB_VALS))")
-LIMIT=3800
+LIMIT=500
 INT_LIMIT=${LIMIT%.1}
 NB_CASES_ABOVE_LIMIT=0
 ITERATIONS=1
@@ -32,9 +32,10 @@ PS_TEMPFILE=tester_temp.log
 echo "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 
 
-for i in {1..500}
+for i in {1..100}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
+	echo $ARG
 	./push_swap $ARG > $PS_TEMPFILE
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
 	# if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];

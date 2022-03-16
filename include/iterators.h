@@ -1,7 +1,7 @@
 #ifndef ITERATORS_H
 # define ITERATORS_H
 
-# include "push_swap.h"
+# include <stdbool.h>
 
 
 //ITERATORS (still need to learn how to link headers...)

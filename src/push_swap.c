@@ -6,7 +6,7 @@ int	main(int argc, char *argv[])
 	// t_deque		*block_ids;
 	int			i;
 	int			div_depth_100 = 7;
-	int			div_depth_500 = 3;
+	int			div_depth_500 = 7;
 
 	(void)div_depth_100;
 	(void)div_depth_500;

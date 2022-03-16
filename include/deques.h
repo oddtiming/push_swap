@@ -1,7 +1,13 @@
 #ifndef DEQUES_H
 # define DEQUES_H
 
-# include "push_swap.h"
+# include <stdbool.h>
+# include <stddef.h>
+# include <limits.h>
+
+# define VECTOR_INIT_SIZE 16
+# define SUCCESS 0
+# define FAILURE 1
 
 //VECTORS (need to learn how to properly link multiple headers in Makefile)
 //Learned structure from https://aticleworld.com/implement-vector-in-c/
@@ -49,5 +55,11 @@ void	deque_set_elem(t_deque *deque, int pos, int new_value);
 void	copy_deque(t_deque *src, t_deque *dest);
 void	cat_deque(t_deque *src, t_deque *dest);
 void	cat_deque_front(t_deque *src, t_deque *dest);
+
+
+//DUMB SHIT TO REMOVE
+//ERROR HANDLING
+void	exit_on_err(char *err_message);
+void	ft_bzero(void *s, size_t n);
 
 #endif

@@ -1,4 +1,5 @@
-#include "push_swap.h"
+#include "deques.h"
+#include <stdlib.h>
 
 void init_deque(t_deque *deque)
 {
