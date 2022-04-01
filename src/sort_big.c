@@ -14,41 +14,6 @@ bool	block_id_is_in_stack(t_deque *block_ids, int id)
 	return (false);
 }
 
-int	get_densest_block(t_deque *block_ids)
-{
-	int	pos_start;
-	int	pos_end;
-	int	min_spread;
-	int	block_id;
-	int	best_block_id;
-	int	index;
-
-	index = 0;
-	pos_start = 0;
-	block_id = NB_BLOCKS - 2;
-	min_spread = INT_MAX;
-	while (!block_id_is_in_stack(block_ids, block_id))
-		block_id--;
-	while (block_id <= 0)
-	{
-		while (index < block_ids->size)
-		{
-			if (!pos_start && block_ids->elems[index] == block_id)
-				pos_start = index;
-			else if (block_ids->elems[index] == block_id)
-				pos_end = index;
-			index++;
-		}
-		if (ft_max(pos_end - pos_start, pos_start + block_ids->size - pos_end + 1) < min_spread)
-		{
-			min_spread = ft_max(pos_end - pos_start, pos_start + block_ids->size - pos_end + 1);
-			best_block_id = block_id;
-		}
-		block_id--;
-	}
-	return (best_block_id);
-}
-
 void	rotate_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 {
 	int	pos_a;

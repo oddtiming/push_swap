@@ -62,8 +62,9 @@ static inline void	swap_update_iterator(t_iterator *iterator);
 static inline void	push_update_iterators(t_main_cont *cont);
 
 //  Moves helper functions
+int		convert_move_to_index(int move);
 void	undo_moves(t_main_cont *cont, t_deque *curr_moves);
 void	undo_n_moves(t_main_cont *cont, t_deque *curr_moves, int n);
-int		convert_move_to_index(int move);
+void	discard_moves(t_main_cont *cont, t_deque *moves_buff);
 
 #endif 

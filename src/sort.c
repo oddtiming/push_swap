@@ -1,53 +1,5 @@
 #include "push_swap.h"
 
-//otherwise, will undo the list of moves passed as param
-bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff)
-{
-	int	total_nb_moves;
-	
-	if (!is_sorted(&cont->stack_a, cont->head_a.index))
-	{
-		if (DEBUG)
-		{
-			print_stacks_info(cont);
-			exit_on_err("dat look sorted to you?\n");
-		}
-		return (false);
-	}
-	total_nb_moves = cont->curr_moves.size;
-	if (moves_buff)
-		total_nb_moves += moves_buff->size;
-	if (total_nb_moves < cont->min_nb_moves)
-	{
-		copy_deque(&cont->curr_moves, &cont->best_moves);
-		cat_deque(moves_buff, &cont->best_moves);
-		cont->min_nb_moves = cont->best_moves.size;
-		// if (cont->min_nb_moves <= 7)
-		// {
-		// 	if (DEBUG)
-		// 	{
-		// 		printf(RED"\t########################\n"RESET_COL);
-		// 		printf(GREEN"\tStack sorted in %d moves\n"RESET_COL, cont->min_nb_moves);
-		// 		printf(RED"\t########################\n"RESET_COL);
-		// 		print_stacks(cont);
-		// 		print_all_moves(&cont->best_moves);
-		// 	}
-		// 	return (true);
-		// }
-		// else if (DEBUG)
-		// {
-		// 	printf(RED"\t##################\n"RESET_COL);
-		// 	printf(GREEN"\tBEST MOVES UPDATED\n");
-		// 	printf(RED"\t##################\n"RESET_COL);
-		// 	printf(GREEN);
-		// 	print_all_moves(&cont->best_moves);
-		// 	printf(RESET_COL);
-		// 	print_stacks(cont);
-		// }
-	}
-	return (false);
-}
-
 void	sort_small(t_main_cont *cont)
 {
 	try_sort_small(cont);
@@ -73,7 +25,9 @@ void	sort(t_main_cont *cont)
 		// // sort_small(cont);
 		// rotate_to_0_in_a(cont, &cont->final_moves, cont->head_a.index);
 	}
-
+	print_all_moves(&cont->final_moves);
+	cleanup(cont);
+	exit(EXIT_SUCCESS);
 	return ;
 }
 

@@ -16,6 +16,8 @@ int	main(int argc, char *argv[])
 	ft_bzero(cont, sizeof(t_main_cont));
 	parse(argc, argv, cont);
 
+	sort(cont);
+
 	t_deque	*curr_staying_vals;
 	t_deque	*best_staying_vals;
 	t_deque	*staying_stack;

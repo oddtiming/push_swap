@@ -36,7 +36,7 @@ t_deque	*get_staying_vals(t_deque *stack)
 	int		i;
 	int		j;
 
-	list = malloc(stack->max_elem * sizeof(t_deque *));
+	list = ft_safealloc(stack->max_elem * sizeof(t_deque *));
 	ft_bzero(list, stack->max_elem);
 	new_deque(&list[0]);
 	list[0]->add_last(list[0], stack->elems[0]);

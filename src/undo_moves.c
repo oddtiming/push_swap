@@ -65,3 +65,13 @@ void	undo_n_moves(t_main_cont *cont, t_deque *curr_moves, int n)
 	}
 	return ;
 }
+
+void	discard_moves(t_main_cont *cont, t_deque *moves_buff)
+{
+	if (!moves_buff)
+		return ;
+	undo_moves(cont, moves_buff);
+	moves_buff->free_list(moves_buff);
+	free(moves_buff);
+	return ;
+}

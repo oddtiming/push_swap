@@ -101,8 +101,6 @@ void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *));
 
 //SORTING
 void	sort(t_main_cont *cont);
-bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff);
-void	discard_moves(t_main_cont *cont, t_deque *moves_buff);
 
 //  Partition stack
 void	partition_stack_in_two(t_deque *stack, t_deque *block_ids);
@@ -115,10 +113,11 @@ t_deque	*get_trimmed_leaving_vals(t_deque *leaving_vals);
 
 //  SORT_SMALL
 void	sort_small(t_main_cont *cont);
-bool	try_sort_small(t_main_cont *cont);
+void	try_sort_small(t_main_cont *cont);
 bool	try_swap(t_main_cont *cont);
 bool	try_invert_4(t_main_cont *cont);
 bool	try_solution(t_main_cont *cont, t_deque *moves_buff);
+bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff);
 
 // Inserting
 void	insert_b(t_main_cont *cont, t_deque *moves_buff);
@@ -151,11 +150,8 @@ void	insert_block_a(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
 void	blind_push(t_main_cont *cont, t_deque *moves_list);
 void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
 bool	block_id_is_in_stack(t_deque *block_ids, int id);
-int		get_densest_block(t_deque *block_ids);
 void	sort_big(t_main_cont *cont);
 t_deque	*get_staying_vals(t_deque *stack);
-bool	has_smaller_than_median(t_deque *stack, int median_val, int min_val);
-bool	has_bigger_than_median(t_deque *stack, int median_val, int max_val);
 bool	has_smaller_than_median(t_deque *stack, int median_val, int min_val);
 bool	has_bigger_than_median(t_deque *stack, int median_val, int max_val);
 int		calc_block_median(t_deque *stack, t_deque *block_ids, int curr_block_id, int *max_val, int *min_val);
@@ -169,17 +165,7 @@ void	try_n_divisions_smallest(t_main_cont *cont, t_deque *block_ids, int n);
 void	try_n_divisions_closest(t_main_cont *cont, t_deque *block_ids, int n);
 void	print_staying_vals(t_main_cont *cont, t_deque *staying_vals);
 
-
-
-
 //UTILS
-void	set_next_pos(int *pos, int size);
-int		get_pos_in_stack(int *stack, int size, int value);
-int		get_next_pos(int pos, int size);
-int 	ft_abs(int a);
-int 	ft_max(int a, int b);
-int 	ft_min(int a, int b);
-bool	ft_same_sign(int a, int b);
 void	*ft_safealloc(size_t size);
 
 //  PRINT UTILS
