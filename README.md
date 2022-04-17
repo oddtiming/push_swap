@@ -33,7 +33,7 @@ The goal is to sort a given stack of n values (`stack_a`) in ascending order fro
 - reverse rotate (`rrx`)
     - Notation: `rra, rrb, rrr (both)`
     - Reverse rotate the stack towards the top; the last value of `stack_x` becomes the first, and every other value increments its index by one.
-- push (`sx`)
+- swap (`sx`)
     - Notation: `sa, sb, or ss (both)`
     - Swap the first and second values of `stack_x`.
 - push (`px`)
@@ -66,6 +66,43 @@ int     prev_index;
 int     max_size;
 int     nb_loops;
 bool    is_reverse;
+```
+<a name="deques"></a>
+### t_deques 🎚
+
+Deques have the same insert cost in both directions.
+
+I made them by mallocing a block of memory, and returning a pointer to the midpoint.
+This way I can insert values on both ends without any additional cost.
+
+When the memory limit is hit, the size of the entire block is added on the side on which the end was reached.
+<------==========---------------->
+(...)
+<------================---------->
+(...)
+x======================---------->
+<--------------------------------======================---------->
+
+```c	
+int		*elems;
+int		*malloced_space;
+int		size;
+int		min_elem;
+int		max_elem;
+int		capacity_total;
+int		capacity_end;
+int		capacity_front;
+bool	(*add_front)(t_deque *, int);
+bool	(*add_last)(t_deque *, int);
+void	(*free_list)(t_deque *);
+int		(*get_elem_max)(t_deque *);
+int		(*get_elem_min)(t_deque *);
+bool	(*reinit_list)(t_deque *);
+void	(*remove_front)(t_deque *);
+void	(*remove_last)(t_deque *);
+bool	(*resize_end)(t_deque *, int);
+bool	(*resize_front)(t_deque *, int);
+void	(*set_elem)(t_deque *, int, int);
 ```
 
 <a name="results"></a>

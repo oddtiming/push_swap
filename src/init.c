@@ -60,9 +60,7 @@ void	normalize_stack_values(t_deque *stack)
 	int	pos_in_stack;
 	int	i;
 
-	normalized_stack = malloc(stack->size * sizeof(int));
-	if (!normalized_stack)
-		exit_on_err("Malloc back at it again");
+	normalized_stack = ft_safealloc(stack->size * sizeof(int));
 	pos_in_stack = 0;
 	while (pos_in_stack < stack->size)
 	{
@@ -74,11 +72,12 @@ void	normalize_stack_values(t_deque *stack)
 		normalized_stack[pos_in_stack] = nb_smaller_values;
 		pos_in_stack++;
 	}
-	i = -1;
-	while (++i < stack->size)
+	i = 0;
+	while (i < stack->size)
 	{
 		stack->add_last(stack, normalized_stack[i]);
 		stack->remove_front(stack);
+		i++;
 	}
 	free(normalized_stack);
 	return ;

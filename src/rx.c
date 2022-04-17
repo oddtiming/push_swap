@@ -1,18 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rx.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/17 15:45:17 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/17 15:46:46 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	rotate(t_deque *stack)
 {
-	int	temp;
-
-	temp = stack->elems[0];
+	stack->add_last(stack, stack->elems[0]);
 	stack->remove_front(stack);
-	stack->add_last(stack, temp);
 	return ;
 }
 
 static inline void	rotate_update_iterators(t_iterator *iterator)
 {
-	iterate_once(iterator, 1);
+	iterate_once(iterator, true);
 	return ;
 }
 
@@ -23,7 +32,6 @@ void    do_ra(t_main_cont *cont, t_deque *curr_moves)
 		curr_moves->add_last(curr_moves, RA);
 
 	rotate_update_iterators(&cont->head_a);
-
 	return ;
 }
 
@@ -32,9 +40,7 @@ void    do_rb(t_main_cont *cont, t_deque *curr_moves)
 	rotate(&cont->stack_b);
 	if (curr_moves)
 		curr_moves->add_last(curr_moves, RB);
-
 	rotate_update_iterators(&cont->head_b);
-
 	return ;
 }
 
@@ -47,6 +53,5 @@ void	do_rr(t_main_cont *cont, t_deque *curr_moves)
 
 	rotate_update_iterators(&cont->head_a);
 	rotate_update_iterators(&cont->head_b);
-
 	return ;
 }

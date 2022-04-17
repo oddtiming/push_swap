@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/07 14:27:56 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/03/16 14:37:30 by iyahoui-         ###   ########.fr        #
+#    Created: 2022/04/17 17:32:33 by iyahoui-          #+#    #+#              #
+#    Updated: 2022/04/17 22:51:01 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MAX_NB_MOVES=0
 MAX_TEST_ID=0
 # N=1.38
 # LIMIT=$(bc -l <<< "e($N*l($NB_VALS))")
-LIMIT=4000
+LIMIT=3800
 INT_LIMIT=${LIMIT%.1}
 NB_CASES_ABOVE_LIMIT=0
 ITERATIONS=1
@@ -40,8 +40,8 @@ do
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
 	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];
 	then
-		echo "Error!"
-		echo "Error!" >> $LOG_FILE
+		echo "${RED}KO!${ENDCOLOR}"
+		echo "KO!" >> $LOG_FILE
 		echo $ARG >> $LOG_FILE
 		echo "nb_moves:" >> $LOG_FILE
 		echo $NB_MOVES >> $LOG_FILE

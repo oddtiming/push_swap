@@ -34,14 +34,6 @@ void init_deque(t_deque *deque)
 	return ;
 }
 
-void	new_deque(t_deque **deque)
-{
-	*deque = malloc(sizeof(t_deque));
-	if (!*deque)
-		exit_on_err("new_deque error\n");
-	init_deque(*deque);
-}
-
 bool	deque_add_front(t_deque *deque, int new_elem)
 {
 	bool		status;

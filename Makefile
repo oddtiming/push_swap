@@ -21,9 +21,11 @@ CFILES	=	cherrypick.c \
 			init.c \
 			insert.c \
 			insert_blocks.c \
+			insert_utils.c \
 			iterators.c \
 			parse.c \
-			partition.c \
+			partition_leaving_vals.c \
+			partition_stack.c \
 			print_utils.c \
 			px.c \
 			push_swap.c \
@@ -52,7 +54,7 @@ INCLFLAGS	= -I$(INCL)
 HEADERS		= $(addprefix $(INCL)/, $(HFILES))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g -O2
+CFLAGS	= -Wall -Wextra -Werror -O3
 
 #
 # DEBUG build settings
@@ -82,7 +84,7 @@ COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "$(CYAN)%-25s-->%25s $(RESET_COL)$(COMPILE_C_OUT)\n" $^ $@
+	@printf "$(CYAN)%-30s-->%30s $(RESET_COL)$(COMPILE_C_OUT)\n" $^ $@
 
 #
 # DEBUG MACROS

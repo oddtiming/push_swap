@@ -1,21 +1,5 @@
 #include "push_swap.h"
 
-int	max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals)
-{
-	int	i;
-	int	max_elem;
-
-	i = 0;
-	max_elem = -1;
-	while (i < leaving_vals->size)
-	{
-		if (leaving_vals->elems[i] > max_elem && !is_in_stack(&cont->stack_b, leaving_vals->elems[i]))
-			max_elem = leaving_vals->elems[i];
-		i++;
-	}
-	return (max_elem);
-}
-
 bool	has_many_block_ids(t_deque *block_ids)
 {
 	int	i;
@@ -32,6 +16,22 @@ bool	has_many_block_ids(t_deque *block_ids)
 		i++;
 	}
 	return (true);
+}
+
+int	max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals)
+{
+	int	i;
+	int	max_elem;
+
+	i = 0;
+	max_elem = -1;
+	while (i < leaving_vals->size)
+	{
+		if (leaving_vals->elems[i] > max_elem && !is_in_stack(&cont->stack_b, leaving_vals->elems[i]))
+			max_elem = leaving_vals->elems[i];
+		i++;
+	}
+	return (max_elem);
 }
 
 void	try_cutoff_n(t_main_cont *cont, t_deque *block_ids, int n, int cutoff)
@@ -88,39 +88,4 @@ void	try_n_divisions_closest(t_main_cont *cont, t_deque *block_ids, int n)
 		i++;
 	}
 	return ;
-}
-
-void	print_staying_vals(t_main_cont *cont, t_deque *staying_vals)
-{
-	int	i;
-	int	nb_sorted;
-
-	nb_sorted = 0;
-	i = 0;
-	while (i < cont->stack_a.size)
-	{
-		printf(" [%2d] ", i);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	while (i < cont->stack_a.size)
-	{
-		printf(" %3d |", cont->stack_a.elems[i]);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	while (i < cont->stack_a.size)
-	{
-		if (staying_vals->elems[i] == -1)
-		{
-			printf(GREEN" %3c |"RESET_COL, 'X');
-			nb_sorted++;
-		}
-		else
-			printf(RED" %3d |"RESET_COL, staying_vals->elems[i]);
-		i++;
-	}
-	printf("\nnb_sorted = %d\n", nb_sorted);
 }

@@ -3,20 +3,17 @@
 int	main(int argc, char *argv[])
 {
 	t_main_cont	*cont;
-	// t_deque		*block_ids;
 	int			i;
 	int			div_depth_100 = 7;
 	int			div_depth_500 = 7;
 
 	(void)div_depth_100;
 	(void)div_depth_500;
-	cont = malloc(sizeof(t_main_cont));
-	if (!cont)
-		exit_on_err("t_main_cont malloc error");
+	cont = ft_safealloc(sizeof(t_main_cont));
 	ft_bzero(cont, sizeof(t_main_cont));
 	parse(argc, argv, cont);
-
-	sort(cont);
+	if (cont->stack_a.size <= 5)
+		sort(cont);
 
 	t_deque	*curr_staying_vals;
 	t_deque	*best_staying_vals;
@@ -33,7 +30,7 @@ int	main(int argc, char *argv[])
 	while (i < cont->stack_a.size)
 	{
 		rotate_stack_to_0(staying_stack, get_pos_of_val(staying_stack, i));
-		curr_staying_vals = get_staying_vals(staying_stack);
+		curr_staying_vals = get_ordered_vals(staying_stack);
 		// printf(CYAN"nb_staying_vals = %d [%d]\n"RESET_COL, curr_staying_vals->size, i);
 		if (curr_staying_vals->size > best_staying_vals->size)
 		{
@@ -78,7 +75,7 @@ int	main(int argc, char *argv[])
 
 	if (DEBUG)
 	{
-		printf("\n----After get_staying_vals----\n\n");
+		printf("\n----After get_ordered_vals----\n\n");
 		print_single_stack(leaving_vals);
 	}
 
@@ -86,11 +83,14 @@ int	main(int argc, char *argv[])
 	t_deque	*block_ids_a;
 	t_deque	*block_ids_b;
 	t_deque	*block_ids;
+	t_deque	*initial_stack;
 	int		nb_blocks;
 
 	new_deque(&block_ids_a);
 	new_deque(&block_ids_b);
 	new_deque(&block_ids);
+
+	initial_stack = clone_deque(&cont->stack_a);
 
 	cont->best_moves.size = INT_MAX;
 
@@ -113,7 +113,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 	deque_reinit_list(block_ids_b);
 
@@ -136,7 +138,11 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+	// 	// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
+	copy_deque(initial_stack, &cont->stack_a);
+	deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 	deque_reinit_list(block_ids_b);
 
@@ -159,7 +165,65 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+	// 	// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
+	copy_deque(initial_stack, &cont->stack_a);
+	deque_reinit_list(&cont->stack_b);
+	deque_reinit_list(&cont->curr_moves);
+	deque_reinit_list(block_ids_b);
+
+
+	nb_blocks = 5;
+	partition_leaving_vals_n_blocks(leaving_vals, block_ids_a, nb_blocks);
+
+	i = nb_blocks;
+	while (--i >= 0)
+		insert_block_set_ids(cont, block_ids_a, block_ids_b, i);
+	i = 0;
+	while (i < (nb_blocks - 2) * 2)
+	{
+		insert_block_b(cont, block_ids_b, i);
+		i++;
+	}
+	insert_b(cont, &cont->curr_moves);
+	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+	if (cont->curr_moves.size < cont->best_moves.size)
+	{
+		copy_deque(&cont->curr_moves, &cont->best_moves);
+	}
+	// 	// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
+	copy_deque(initial_stack, &cont->stack_a);
+	deque_reinit_list(&cont->stack_b);
+	deque_reinit_list(&cont->curr_moves);
+	deque_reinit_list(block_ids_b);
+
+
+	nb_blocks = 6;
+	partition_leaving_vals_n_blocks(leaving_vals, block_ids_a, nb_blocks);
+
+	i = nb_blocks;
+	while (--i >= 0)
+		insert_block_set_ids(cont, block_ids_a, block_ids_b, i);
+	i = 0;
+	while (i < (nb_blocks - 2) * 2)
+	{
+		insert_block_b(cont, block_ids_b, i);
+		i++;
+	}
+	insert_b(cont, &cont->curr_moves);
+	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
+	if (cont->curr_moves.size < cont->best_moves.size)
+	{
+		copy_deque(&cont->curr_moves, &cont->best_moves);
+	}
+	// 	// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
+	copy_deque(initial_stack, &cont->stack_a);
+	deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 	deque_reinit_list(block_ids_b);
 
@@ -175,7 +239,11 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+	// 	// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
+	copy_deque(initial_stack, &cont->stack_a);
+	deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 
 
@@ -188,7 +256,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 
 
@@ -201,7 +271,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 
 
@@ -214,7 +286,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 
 
@@ -251,7 +325,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 	deque_reinit_list(leaving_vals);
 	i = 0;
@@ -286,7 +362,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 	deque_reinit_list(leaving_vals);
 	i = 0;
@@ -345,7 +423,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 	deque_reinit_list(leaving_vals);
 	i = 0;
@@ -392,7 +472,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 	deque_reinit_list(leaving_vals);
 	i = 0;
@@ -417,7 +499,9 @@ int	main(int argc, char *argv[])
 	{
 		copy_deque(&cont->curr_moves, &cont->best_moves);
 	}
-	undo_moves(cont, &cont->curr_moves);
+		// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 	deque_reinit_list(&cont->curr_moves);
 
 
@@ -437,7 +521,9 @@ int	main(int argc, char *argv[])
 			if (DEBUG)
 				printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
 		}
-		undo_moves(cont, &cont->curr_moves);
+			// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 		deque_reinit_list(&cont->curr_moves);
 		i++;
 	}
@@ -458,7 +544,9 @@ int	main(int argc, char *argv[])
 			if (DEBUG)
 				printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
 		}
-		undo_moves(cont, &cont->curr_moves);
+			// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 		deque_reinit_list(&cont->curr_moves);
 		i++;
 	}
@@ -479,7 +567,9 @@ int	main(int argc, char *argv[])
 			if (DEBUG)
 				printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
 		}
-		undo_moves(cont, &cont->curr_moves);
+			// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 		deque_reinit_list(&cont->curr_moves);
 		i++;
 	}
@@ -498,7 +588,9 @@ int	main(int argc, char *argv[])
 			if (DEBUG)
 				printf(YELLOW"recursive_depth = %d\n"RESET_COL, i);
 		}
-		undo_moves(cont, &cont->curr_moves);
+			// undo_moves(cont, &cont->curr_moves);
+		copy_deque(initial_stack, &cont->stack_a);
+		deque_reinit_list(&cont->stack_b);
 		deque_reinit_list(&cont->curr_moves);
 		i++;
 	}
@@ -534,6 +626,13 @@ int	main(int argc, char *argv[])
 	//Free best_staying_vals
 	best_staying_vals->free_list(best_staying_vals);
 	free(best_staying_vals);
+
+
+	//Free initial_stack
+	initial_stack->free_list(initial_stack);
+	free(initial_stack);
+	//End
+
 
 	return (EXIT_SUCCESS);
 }

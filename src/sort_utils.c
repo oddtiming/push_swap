@@ -40,7 +40,7 @@ int	get_pos_biggest_val(t_deque *stack)
 }
 
 // Will return the next bigger value in the index, or stack_x.min_elem
-int		get_next_value(t_deque *stack, int curr_val)
+int		get_insert_val(t_deque *stack, int curr_val)
 {
 	int	pos;
 	int	next_bigger;
@@ -55,8 +55,10 @@ int		get_next_value(t_deque *stack, int curr_val)
 			return (next_bigger);
 		pos++;
 	}
-	return (get_next_value(stack, curr_val + 1));
+	return (get_insert_val(stack, curr_val + 1));
 }
+
+
 
 //Since the pos_smallest lives outside the deque (that's really dumb btw),
 //pos_smallest needs to be passed as a parameter for now. Should change it soon
@@ -136,11 +138,3 @@ void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos)
 			do_rrb(cont, curr_moves);
 	return ;
 }
-
-// void	insert_b(t_main_cont *cont)
-// {
-// 	t_deque	*best_moves_list;
-
-// 	best_moves_list = malloc(sizeof(t_deque));
-
-// }

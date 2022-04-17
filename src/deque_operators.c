@@ -1,5 +1,30 @@
 #include "push_swap.h"
 
+void	new_deque(t_deque **deque)
+{
+	*deque = malloc(sizeof(t_deque));
+	if (!*deque)
+		exit_on_err("new_deque error\n");
+	init_deque(*deque);
+}
+
+t_deque	*clone_deque(t_deque *src)
+{
+	t_deque	*clone;
+	int		i;
+
+	if (!src)
+		return (NULL);
+	new_deque(&clone);
+	i = 0;
+	while (i < src->size)
+	{
+		clone->add_last(clone, src->elems[i]);
+		i++;
+	}
+	return (clone);
+}
+
 void	copy_deque(t_deque *src, t_deque *dest)
 {
 	int	i;
