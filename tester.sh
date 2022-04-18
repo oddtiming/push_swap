@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/17 17:32:33 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/04/17 22:51:01 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/04/18 19:44:13 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ do
 	# echo $ARG
 	./push_swap $ARG > $PS_TEMPFILE
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
-	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];
+	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep KO) ];
 	then
 		echo "${RED}KO!${ENDCOLOR}"
 		echo "KO!" >> $LOG_FILE

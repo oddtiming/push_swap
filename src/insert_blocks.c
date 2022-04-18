@@ -1,5 +1,84 @@
 #include "push_swap.h"
 
+void	insert_same_sign(t_main_cont *cont, t_deque *block_ids_b, t_insert_info *info)
+{
+	if (info->a_info.dist0_best > 0 || info->b_info.dist0_best > 0)
+	{
+		while (info->min_cost-- > 0)
+		{
+			if (--info->b_info.dist0_best < 0)
+				do_ra(cont, &cont->curr_moves);
+			else
+			{
+				if (--info->a_info.dist0_best < 0)
+					do_rb(cont, &cont->curr_moves);
+				else
+					do_rr(cont, &cont->curr_moves);
+				block_ids_b->add_last(block_ids_b, block_ids_b->elems[0]);
+				block_ids_b->remove_front(block_ids_b);
+			}
+		}
+	}
+	while (info->min_cost-- > 0)
+	{
+		if (++info->b_info.dist0_best > 0)
+			do_rra(cont, &cont->curr_moves);
+		else
+		{
+			if (++info->a_info.dist0_best > 0)
+				do_rrb(cont, &cont->curr_moves);
+			else
+				do_rrr(cont, &cont->curr_moves);
+			block_ids_b->add_front(block_ids_b, block_ids_b->elems[block_ids_b->size - 1]);
+			block_ids_b->remove_last(block_ids_b);
+		}
+	}
+	do_pa(cont, &cont->curr_moves);
+	block_ids_b->remove_front(block_ids_b);
+}
+
+
+void	insert_same_direction(t_main_cont *cont, t_deque *block_ids_b, t_insert_info *info)
+{
+	if (info->min_cost == info->a_info.pos_best ||
+		info->min_cost == info->b_info.pos_best)
+	{
+		while (info->min_cost-- > 0)
+		{
+			if (--info->b_info.pos_best < 0)
+				do_ra(cont, &cont->curr_moves);
+			else
+			{
+				if (--info->a_info.pos_best < 0)
+					do_rb(cont, &cont->curr_moves);
+				else
+					do_rr(cont, &cont->curr_moves);
+				block_ids_b->add_last(block_ids_b, block_ids_b->elems[0]);
+				block_ids_b->remove_front(block_ids_b);
+			}
+		}
+	}
+	else
+	{
+		while (info->min_cost-- > 0)
+		{
+			if (++info->b_info.revpos_best > 0)
+				do_rra(cont, &cont->curr_moves);
+			else
+			{
+				if (++info->a_info.revpos_best > 0)
+					do_rrb(cont, &cont->curr_moves);
+				else
+					do_rrr(cont, &cont->curr_moves);
+				block_ids_b->add_front(block_ids_b, block_ids_b->elems[block_ids_b->size - 1]);
+				block_ids_b->remove_last(block_ids_b);
+			}
+		}
+	}
+	do_pa(cont, &cont->curr_moves);
+	block_ids_b->remove_front(block_ids_b);
+}
+
 void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info *info)
 {
 	t_stack_insert_info	*a_info;
@@ -33,119 +112,21 @@ void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info 
 		//EOREMOVE
 	}
 	// case for they both need to go in the same sense
-	if (ft_same_sign(a_info->dist0_best, b_info->dist0_best))
+	if (ft_same_sign(info->a_info.dist0_best, info->b_info.dist0_best))
 	{
 
 		if (DEBUG)
 		{
 			printf(MAGENTA"\t ---> picked same_sign\n"RESET_COL);
 		}
-		if (a_info->dist0_best > 0 || b_info->dist0_best > 0)
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->dist0_best--;
-				b_info->dist0_best--;
-				if (a_info->dist0_best < 0)
-				{
-					do_rb(cont, &cont->curr_moves);
-					block_ids_b->add_last(block_ids_b, block_ids_b->elems[0]);
-					block_ids_b->remove_front(block_ids_b);
-				}
-				else if (b_info->dist0_best < 0)
-					do_ra(cont, &cont->curr_moves);
-				else
-				{
-					do_rr(cont, &cont->curr_moves);
-					block_ids_b->add_last(block_ids_b, block_ids_b->elems[0]);
-					block_ids_b->remove_front(block_ids_b);
-				}
-			}
-			do_pa(cont, &cont->curr_moves);
-			block_ids_b->remove_front(block_ids_b);
-		}
-		else
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->dist0_best++;
-				b_info->dist0_best++;
-				if (a_info->dist0_best > 0)
-				{
-					do_rrb(cont, &cont->curr_moves);
-					block_ids_b->add_front(block_ids_b, block_ids_b->elems[block_ids_b->size - 1]);
-					block_ids_b->remove_last(block_ids_b);
-				}
-				else if (b_info->dist0_best > 0)
-					do_rra(cont, &cont->curr_moves);
-				else
-				{
-					do_rrr(cont, &cont->curr_moves);
-					block_ids_b->add_front(block_ids_b, block_ids_b->elems[block_ids_b->size - 1]);
-					block_ids_b->remove_last(block_ids_b);
-				}
-			}
-			do_pa(cont, &cont->curr_moves);
-			block_ids_b->remove_front(block_ids_b);
-		}
+		insert_same_sign(cont, block_ids_b, info);
 		return ;
 	}
 	// case where their respective best rotations are in opposite directions,
 	// but it's still better to move them in same direction
-	else if (ft_min(ft_max(a_info->pos_best, b_info->pos_best), ft_max(-a_info->revpos, -b_info->revpos)) < ft_abs(a_info->dist0_best) + ft_abs(b_info->dist0_best) )
+	else if (get_cost_either_direction(info) < get_cost_indep_directions(info))
 	{
-		if (DEBUG)
-		{
-			printf(CYAN"\t ---> picked the weird one\n"RESET_COL);
-		}
-		if (info->min_cost == a_info->pos_best || info->min_cost == b_info->pos_best)
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->pos_best--;
-				b_info->pos_best--;
-				if (a_info->pos_best < 0)
-				{
-					do_rb(cont, &cont->curr_moves);
-					block_ids_b->add_last(block_ids_b, block_ids_b->elems[0]);
-					block_ids_b->remove_front(block_ids_b);
-				}
-				else if (b_info->pos_best < 0)
-					do_ra(cont, &cont->curr_moves);
-				else
-				{
-					do_rr(cont, &cont->curr_moves);
-					block_ids_b->add_last(block_ids_b, block_ids_b->elems[0]);
-					block_ids_b->remove_front(block_ids_b);
-				}
-			}
-			do_pa(cont, &cont->curr_moves);
-			block_ids_b->remove_front(block_ids_b);
-		}
-		else
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->revpos_best++;
-				b_info->revpos_best++;
-				if (a_info->revpos_best > 0)
-				{
-					do_rrb(cont, &cont->curr_moves);
-					block_ids_b->add_front(block_ids_b, block_ids_b->elems[block_ids_b->size - 1]);
-					block_ids_b->remove_last(block_ids_b);
-				}
-				else if (b_info->revpos_best > 0)
-					do_rra(cont, &cont->curr_moves);
-				else
-				{
-					do_rrr(cont, &cont->curr_moves);
-					block_ids_b->add_front(block_ids_b, block_ids_b->elems[block_ids_b->size - 1]);
-					block_ids_b->remove_last(block_ids_b);
-				}
-			}
-			do_pa(cont, &cont->curr_moves);
-			block_ids_b->remove_front(block_ids_b);
-		}
+		insert_same_direction(cont, block_ids_b, info);
 		return ;
 	}
 	// case where they each do their own thing. that's okay too.
@@ -155,21 +136,21 @@ void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info 
 		{
 			printf(RED"\t ---> picked independent strong woman\n"RESET_COL);
 		}
-		if (a_info->dist0_best >= 0)
-			while (a_info->dist0_best-- > 0)
+		if (info->a_info.dist0_best >= 0)
+			while (info->a_info.dist0_best-- > 0)
 				do_ra(cont, &cont->curr_moves);
 		else
-			while (a_info->dist0_best++ < 0)
+			while (info->a_info.dist0_best++ < 0)
 				do_rra(cont, &cont->curr_moves);
-		if (b_info->dist0_best >= 0)
-			while (b_info->dist0_best-- > 0)
+		if (info->b_info.dist0_best >= 0)
+			while (info->b_info.dist0_best-- > 0)
 			{
 				do_rb(cont, &cont->curr_moves);
 				block_ids_b->add_last(block_ids_b, block_ids_b->elems[0]);
 				block_ids_b->remove_front(block_ids_b);
 			}
 		else
-			while (b_info->dist0_best++ < 0)
+			while (info->b_info.dist0_best++ < 0)
 			{
 				do_rrb(cont, &cont->curr_moves);
 				block_ids_b->add_front(block_ids_b, block_ids_b->elems[block_ids_b->size - 1]);

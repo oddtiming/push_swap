@@ -2,7 +2,7 @@
 
 void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 {
-	t_insert_info *info;
+	t_insert_info	*info;
 
 	if (cont->stack_b.size <= 0)
 		return ;
@@ -21,65 +21,89 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 
 		update_insert_info(cont, info);
 	}
-	
-	insert_elem_b(cont, moves_buff, info);
 
+	insert_elem_b(cont, moves_buff, info);
 	free(info);
 	insert_b(cont, moves_buff);
 	return ;
 }
 
-void	calc_best_individual_cost(
-		t_stack_insert_info *a_info, t_stack_insert_info *b_info)
+static void	insert_same_sign(
+	t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 {
-	a_info->dist0 = a_info->pos;
-	if (ft_abs(a_info->revpos) < a_info->pos)
-		a_info->dist0 = a_info->revpos;
-
-	b_info->dist0 = b_info->pos;
-	if (ft_abs(b_info->revpos) < b_info->pos)
-		b_info->dist0 = b_info->revpos;
-
-	//If equal in both directions, pick the one in the same direction as the other
-
-	if (ft_abs(a_info->revpos) == a_info->pos && b_info->dist0 < 0)
-		a_info->dist0 = a_info->revpos;
-	if (ft_abs(b_info->revpos) == b_info->pos && a_info->dist0 < 0)
-		b_info->dist0 = b_info->revpos;
-	return ;
+	if (info->a_info.dist0_best > 0 || info->b_info.dist0_best > 0)
+	{
+		while (info->min_cost-- > 0)
+		{
+			if (--info->a_info.dist0_best < 0)
+				do_rb(cont, moves_buff);
+			else if (--info->b_info.dist0_best < 0)
+				do_ra(cont, moves_buff);
+			else
+				do_rr(cont, moves_buff);
+		}
+	}
+	while (info->min_cost-- > 0)
+	{
+		if (++info->a_info.dist0_best > 0)
+			do_rrb(cont, moves_buff);
+		else if (++info->b_info.dist0_best > 0)
+			do_rra(cont, moves_buff);
+		else
+			do_rrr(cont, moves_buff);
+	}
+	do_pa(cont, moves_buff);
 }
 
-int	calc_best_absolute_cost(t_stack_insert_info *a_info, t_stack_insert_info *b_info)
+static void	insert_same_direction(
+	t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 {
-	int	curr_cost;
-
-	curr_cost = ft_max(ft_abs(a_info->dist0), ft_abs(b_info->dist0));
-	if (ft_same_sign(a_info->dist0, b_info->dist0))
-		return (ft_abs(curr_cost));
-	curr_cost = ft_min(
-			ft_max(a_info->pos, b_info->pos),
-			ft_max(-a_info->revpos, -b_info->revpos));
-	curr_cost = ft_min(
-			curr_cost, 
-			ft_abs(a_info->dist0) + ft_abs(b_info->dist0));
-	return (curr_cost);
+	if (info->min_cost == info->a_info.pos_best ||
+		info->min_cost == info->b_info.pos_best)
+	{
+		while (info->min_cost-- > 0)
+		{
+			if (--info->a_info.pos_best < 0)
+				do_rb(cont, moves_buff);
+			else if (--info->b_info.pos_best < 0)
+				do_ra(cont, moves_buff);
+			else
+				do_rr(cont, moves_buff);
+		}
+	}
+	while (info->min_cost-- > 0)
+	{
+		if (++info->a_info.revpos_best > 0)
+			do_rrb(cont, moves_buff);
+		else if (++info->b_info.revpos_best > 0)
+			do_rra(cont, moves_buff);
+		else
+			do_rrr(cont, moves_buff);
+	}
+	do_pa(cont, moves_buff);
 }
 
-// Calculates the minimum number of moves to rotate insert_pos in both to 0.
-// If both stacks have the most efficient rotations in the same sense, 
-//		return the biggest of the two.
-// Else, check if most efficient to rotate indepently or in same direction.
-// 
-int	calc_insert_cost(t_insert_info *info)
+static void	insert_indep_directions(
+	t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 {
-	int curr_cost;
+	if (info->a_info.dist0_best >= 0)
+		while (info->a_info.dist0_best-- > 0)
+			do_ra(cont, moves_buff);
+	else
+		while (info->a_info.dist0_best++ < 0)
+			do_rra(cont, moves_buff);
+	if (info->b_info.dist0_best >= 0)
+		while (info->b_info.dist0_best-- > 0)
+			do_rb(cont, moves_buff);
+	else
+		while (info->b_info.dist0_best++ < 0)
+			do_rrb(cont, moves_buff);
+	do_pa(cont, moves_buff);
 
-	calc_best_individual_cost(&info->a_info, &info->b_info);
-	curr_cost = calc_best_absolute_cost(&info->a_info, &info->b_info);
-	return (curr_cost);
 }
 
-void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
+void	insert_elem_b(
+	t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 {
 	t_stack_insert_info	*a_info;
 	t_stack_insert_info	*b_info;
@@ -88,114 +112,13 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info)
 		return ;
 	a_info = &info->a_info;
 	b_info = &info->b_info;
-	// case for they both need to go in the same sense
 	if (ft_same_sign(a_info->dist0_best, b_info->dist0_best))
-	{
-		if (a_info->dist0_best > 0 || b_info->dist0_best > 0)
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->dist0_best--;
-				b_info->dist0_best--;
-				if (a_info->dist0_best < 0)
-					do_rb(cont, moves_buff);
-				else if (b_info->dist0_best < 0)
-					do_ra(cont, moves_buff);
-				else
-					do_rr(cont, moves_buff);
-			}
-			do_pa(cont, moves_buff);
-		}
-		else
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->dist0_best++;
-				b_info->dist0_best++;
-				if (a_info->dist0_best > 0)
-					do_rrb(cont, moves_buff);
-				else if (b_info->dist0_best > 0)
-					do_rra(cont, moves_buff);
-				else
-					do_rrr(cont, moves_buff);
-			}
-			do_pa(cont, moves_buff);
-		}
-		return ;
-	}
-	// case where their respective best rotations are in opposite directions,
-	// but it's still better to move them in same direction
-	else if (ft_min(ft_max(a_info->pos_best, b_info->pos_best), ft_max(-a_info->revpos, -b_info->revpos)) < ft_abs(a_info->dist0_best) + ft_abs(b_info->dist0_best) )
-	{
-		if (DEBUG)
-		{
-			printf(CYAN"\t ---> picked the weird one\n"RESET_COL);
-		}
-		if (info->min_cost == a_info->pos_best || info->min_cost == b_info->pos_best)
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->pos_best--;
-				b_info->pos_best--;
-				if (a_info->pos_best < 0)
-					do_rb(cont, moves_buff);
-				else if (b_info->pos_best < 0)
-					do_ra(cont, moves_buff);
-				else
-					do_rr(cont, moves_buff);
-			}
-			do_pa(cont, moves_buff);
-		}
-		else
-		{
-			while (info->min_cost-- > 0)
-			{
-				a_info->revpos_best++;
-				b_info->revpos_best++;
-				if (a_info->revpos_best > 0)
-					do_rrb(cont, moves_buff);
-				else if (b_info->revpos_best > 0)
-					do_rra(cont, moves_buff);
-				else
-					do_rrr(cont, moves_buff);
-			}
-			do_pa(cont, moves_buff);
-		}
-		return ;
-	}
-	// case where they each do their own thing. that's okay too.
+		insert_same_sign(cont, moves_buff, info);
+	else if (get_cost_either_direction(info) < get_cost_indep_directions(info))
+		insert_same_direction(cont, moves_buff, info);
 	else
-	{
-		if (DEBUG)
-		{
-			printf(RED"\t ---> picked independent strong woman\n"RESET_COL);
-		}
-		if (a_info->dist0_best >= 0)
-			while (a_info->dist0_best-- > 0)
-				do_ra(cont, moves_buff);
-		else
-			while (a_info->dist0_best++ < 0)
-				do_rra(cont, moves_buff);
-		if (b_info->dist0_best >= 0)
-			while (b_info->dist0_best-- > 0)
-				do_rb(cont, moves_buff);
-		else
-			while (b_info->dist0_best++ < 0)
-				do_rrb(cont, moves_buff);
-		do_pa(cont, moves_buff);
-	}
+		insert_indep_directions(cont, moves_buff, info);
 	return ;	
-}
-
-void	init_insert_info(t_main_cont *cont, t_insert_info *info)
-{
-	info->b_info.pos = 0;
-	info->min_cost = 1000;
-	info->min_delta_insert = 1000;
-
-	if (cont->stack_b.size > 0)
-		update_insert_info(cont, info);
-	return ;
 }
 
 int	calc_delta_two_values(t_main_cont *cont, int val_a, int val_b)
@@ -231,57 +154,12 @@ int	calc_delta_insert(t_main_cont *cont, t_insert_info *info)
 		exit_on_err("calc_delta_insert: iter error\n");
 	set_iterator(iter, info->a_info.pos, cont->stack_a.size, 1);
 	iterate_once(iter, 1);
-	delta_insert = calc_delta_two_values(cont, cont->stack_a.elems[iter->index], cont->stack_b.elems[iter->index]);
+	delta_insert = calc_delta_two_values(
+			cont,
+			cont->stack_a.elems[iter->index],
+			cont->stack_b.elems[iter->index]);
 	delta_insert = ft_min(delta_insert, \
 		calc_delta_two_values(cont, info->a_info.val, info->b_info.val));
 	free(iter);
 	return (delta_insert);
 }
-
-bool	is_new_best_moves(t_insert_info *info)
-{
-	if (info->curr_cost > info->min_cost)
-		return (false);
-	if (info->curr_cost == info->min_cost)
-	{
-		if (info->curr_delta_insert > info->min_delta_insert)
-			return (false);
-		if (info->curr_delta_insert == info->min_delta_insert && \
-				info->b_info.val > info->b_info.val_best) //Not sure about that last part
-			return (true);
-	}
-	return (true);
-}
-
-
-void	update_insert_info(t_main_cont *cont, t_insert_info *info)
-{
-	t_stack_insert_info *a_info;
-	t_stack_insert_info *b_info;
-
-	a_info = &info->a_info;
-	b_info = &info->b_info;
-	b_info->revpos = b_info->pos - cont->stack_b.size;
-	b_info->val = cont->stack_b.elems[b_info->pos];
-	a_info->val = get_insert_val(&cont->stack_a, b_info->val);
-	a_info->pos = get_pos_of_val(&cont->stack_a, a_info->val);
-	a_info->revpos = a_info->pos - cont->stack_a.size;
-	info->curr_cost = calc_insert_cost(info);
-	info->curr_delta_insert = calc_delta_insert(cont, info);
-	if (is_new_best_moves(info))
-	{
-		b_info->val_best = b_info->val;
-		b_info->pos_best = b_info->pos;
-		b_info->revpos_best = b_info->revpos;
-		b_info->dist0_best = b_info->dist0;
-		a_info->val_best = a_info->val;
-		a_info->pos_best = a_info->pos;
-		a_info->revpos_best = a_info->revpos;
-		a_info->dist0_best = a_info->dist0;
-		info->min_cost = info->curr_cost;
-		info->min_delta_insert = info->curr_delta_insert;
-	}
-	return ;
-}
-
-//Need to add condition where delta cost and min cost are equal, pick one with highetst value

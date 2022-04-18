@@ -119,13 +119,12 @@ bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff);
 
 //	insert.c
 void	insert_b(t_main_cont *cont, t_deque *moves_buff);
-bool	is_new_best_moves(t_insert_info *info);
 int		calc_delta_insert(t_main_cont *cont, t_insert_info *info);
 void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
 
 //	insert_utils.c
-int		dist_in_either_direction(t_insert_info *info);
-int		dist_independent_direction(t_insert_info *info);
+int		get_cost_either_direction(t_insert_info *info);
+int		get_cost_indep_directions(t_insert_info *info);
 
 //   calc_insert_cost.c
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);

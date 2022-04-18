@@ -12,7 +12,8 @@ RED			=	\033[0;31m
 ON_RED		=	\033[41m
 RESET_COL	=	\033[0m
 
-CFILES	=	cherrypick.c \
+CFILES	=	calc_insert_cost.c \
+			cherrypick.c \
 			cleanup.c \
 			deques.c \
 			deque_operators.c \
