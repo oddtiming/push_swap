@@ -48,6 +48,14 @@
 //END OF REMOVE
 
 //TYPEDEFS
+typedef struct s_block_info
+{
+	int	curr_block_id;
+	int	median_val;
+	int	max_val;
+	int	min_val;
+}	t_block_info;
+
 typedef	struct s_stack_insert_info
 {
 	int	dist0;
@@ -128,7 +136,6 @@ int		get_cost_indep_directions(t_insert_info *info);
 
 //   calc_insert_cost.c
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);
-int		calc_insert_cost(t_insert_info *info);
 void	update_insert_info(t_main_cont *cont, t_insert_info *info);
 
 //   insert_blocks.c

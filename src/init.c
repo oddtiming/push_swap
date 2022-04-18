@@ -29,7 +29,7 @@ void	init(t_main_cont *cont, char **args)
 		print_stacks_info(cont);
 	}
 
-	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), \
+	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a),
 			cont->stack_a.size, 0);
 	set_iterator(&cont->head_b, 0, 0, 1);
 	init_reverse_moves_array(cont->reverse_fcts);
@@ -67,8 +67,15 @@ void	normalize_stack_values(t_deque *stack)
 		nb_smaller_values = 0;
 		i = -1;
 		while (++i < stack->size)
+		{
+			printf("stack->elems[i](%d) = %d\n", i, stack->elems[i]);
+			printf("stack->elems[pos_in_stack](%d) = %d\n", pos_in_stack, stack->elems[pos_in_stack]);
+	
 			if (stack->elems[i] < stack->elems[pos_in_stack])
 				nb_smaller_values++;
+			else
+				printf("oops\n");
+		}
 		normalized_stack[pos_in_stack] = nb_smaller_values;
 		pos_in_stack++;
 	}

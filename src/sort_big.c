@@ -14,85 +14,6 @@ bool	block_id_is_in_stack(t_deque *block_ids, int id)
 	return (false);
 }
 
-void	rotate_block(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
-{
-	int	pos_a;
-	int	pos_b;
-	int	revpos_b;
-	int	insert_val_a;
-	int	insert_val_b;
-
-	pos_a = 0;
-	while (block_ids->elems[pos_a] != curr_block_id)
-		pos_a++;
-	if (!cont->stack_b.size)
-	{
-		while (pos_a--)
-		{
-			do_ra(cont, &cont->curr_moves);
-			block_ids->add_last(block_ids, block_ids->elems[0]);
-			block_ids->remove_front(block_ids);
-		}
-		return ;
-	}
-	insert_val_a = cont->stack_a.elems[pos_a];
-	insert_val_b = insert_val_a - 1;
-	// pos_b = get_insert_val(&cont->stack_b, insert_val_b + 2);
-	
-	pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
-	while (pos_b == -1)
-	{
-		insert_val_b--;
-		if (insert_val_b - 1 < cont->stack_b.min_elem)
-		{
-			insert_val_b = cont->stack_b.max_elem;
-			pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
-			break;
-		}
-		pos_b = get_pos_of_val(&cont->stack_b, insert_val_b);
-	}
-	revpos_b = cont->stack_b.size - pos_b;
-	if (DEBUG)
-	{
-		printf("pos_a = %d\n", pos_a);
-		printf("pos_b = %d\n", pos_b);
-		printf("revpos_b = %d\n", revpos_b);
-		printf("insert_val_b = %d\n", insert_val_b);
-		printf("insert_val_a = %d\n", cont->stack_a.elems[pos_a]);
-	}
-	// if it's bringing it closer
-	if (pos_b - pos_a < revpos_b)
-	{
-		while (pos_a > 0)
-		{
-			pos_a--;
-			if (pos_b >= 0)
-			{
-				do_rr(cont, &cont->curr_moves);
-				block_ids->add_last(block_ids, block_ids->elems[0]);
-				block_ids->remove_front(block_ids);
-				pos_b--;
-			}
-			else
-			{
-				do_ra(cont, &cont->curr_moves);
-				block_ids->add_last(block_ids, block_ids->elems[0]);
-				block_ids->remove_front(block_ids);
-			}
-		}
-	}
-	else
-		while (pos_a > 0)
-		{
-			do_ra(cont, &cont->curr_moves);
-			block_ids->add_last(block_ids, block_ids->elems[0]);
-			block_ids->remove_front(block_ids);
-			pos_a--;
-		}
-
-	return ;
-}
-
 int	calc_block_median(t_deque *stack, t_deque *block_ids, int curr_block_id, int *max_val, int *min_val)
 {
 	int	median_val;
@@ -181,42 +102,6 @@ void	insert_block_a(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 	}
 	while (cont->stack_b.elems[0] > median_val && cont->stack_b.elems[0] <= max_val)
 		do_rb(cont, &cont->curr_moves);
-	return ;
-}
-
-void	print_stack_with_block_ids(int *stack, int *block_ids, int size)
-{
-	int	nb_each[NB_BLOCKS];
-	int	i;
-
-	i = 0;
-	while (i < NB_BLOCKS)
-		nb_each[i++] = 0;
-	i = 0;
-	while (i < size - 1)
-	{
-		printf("%3d|", stack[i]);
-		i++;
-	}
-	printf("%3d\n", stack[i]);
-	i = 0;
-	while (i < size - 1)
-	{
-		printf("%3d|" , block_ids[i]);
-		nb_each[block_ids[i]]++;
-		i++;
-	}
-	printf("%3d\n\033[0m", block_ids[i]);
-	nb_each[block_ids[i]]++;
-	if (DEBUG)
-	{
-		i = 0;
-		while (i < NB_BLOCKS)
-		{
-			printf("nb of vals in block %d: %d\n", i, nb_each[i]);
-			i++;
-		}
-	}
 	return ;
 }
 

@@ -3,7 +3,7 @@
 /* 
  * REV_SA  = 0 	| (a => 0) + 3 * (s => 0)	== 0 + 3*0 == 0 | rev_fcts[0] ==> &do_sa
  * REV_SB  = 1 	| (b => 1) + 3 * (s => 0)	== 1 + 3*0 == 1 | rev_fcts[1] ==> &do_sb
- * REV_SS  = 2 	| (r/s => 2) + 3 * (s => 0)	== 2 + 3*0 == 2 | rev_fcts[5] ==> &do_rrr
+ * REV_SS  = 2 	| (r/s => 2) + 3 * (s => 0)	== 2 + 3*0 == 2 | rev_fcts[5] ==> &do_ss
  * REV_RA  = 3 	|	{...}
  * REV_RB  = 4 	|
  * REV_RR  = 5 	| (r/s => 2) + 3 * (r => 1)	== 2 + 3*1 == 5 | rev_fcts[5] ==> &do_rrr

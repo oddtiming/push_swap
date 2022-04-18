@@ -1,16 +1,5 @@
 #include "push_swap.h"
 
-void	init_insert_info(t_main_cont *cont, t_insert_info *info)
-{
-	info->b_info.pos = 0;
-	info->min_cost = 1000;
-	info->min_delta_insert = 1000;
-
-	if (cont->stack_b.size > 0)
-		update_insert_info(cont, info);
-	return ;
-}
-
 static void	set_best_individual_costs(
 		t_stack_insert_info *a_info, t_stack_insert_info *b_info)
 {

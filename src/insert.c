@@ -8,21 +8,25 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 		return ;
 	info = ft_safealloc(sizeof(t_insert_info));
 	// if b is not empty, init will also call update_insert_info()
-	init_insert_info(cont, info);
+	// init_insert_info(cont, info);
+	info->b_info.pos = 0;
+	info->min_cost = 1000;
+	info->min_delta_insert = 1000;
 
-	while (++info->b_info.pos < cont->stack_b.size)
+	while (info->b_info.pos < cont->stack_b.size)
 	{
+		update_insert_info(cont, info);
 		// Attempt to not try EVERY value, but only those that can result in fewer moves
 		// if stack_b pos is further than min_moves, set pos to stack_b.size - min_cost
-		if (cont->stack_a.size + cont->stack_b.size >= 500 &&
-				(info->b_info.pos > info->min_cost && \
-				info->b_info.pos <= cont->stack_b.size - info->min_cost))
+		if (info->b_info.pos > info->min_cost && 
+				info->b_info.pos <= cont->stack_b.size - info->min_cost &&
+				cont->stack_a.size + cont->stack_b.size >= 500)
 			info->b_info.pos = cont->stack_b.size - info->min_cost;
-
-		update_insert_info(cont, info);
+		info->b_info.pos++;
 	}
 
 	insert_elem_b(cont, moves_buff, info);
+
 	free(info);
 	insert_b(cont, moves_buff);
 	return ;

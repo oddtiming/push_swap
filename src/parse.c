@@ -6,8 +6,8 @@
  */
 static bool	has_duplicates(int *array, int size)
 {
-	int	curr_pos;
-	int	compare_pos;
+	long	curr_pos;
+	long	compare_pos;
 
 	if (!array || size <= 0)
 		return (false);
@@ -36,25 +36,29 @@ static bool	is_an_int(char *str)
 {
 	long	int_to_long;
 	int		i;
+	int		sign;
 
 	if (!str || !*str)
 		return (false);
-	int_to_long = 1;
+	sign = 1;
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			int_to_long *= -1;
+			sign *= -1;
 		i++;
 	}
-	while (str[i])
+	if (!ft_isdigit(str[i]))
+		return (false);
+	int_to_long = str[i] - '0';
+	while (str[++i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (false);
 		int_to_long = 10 * int_to_long + (str[i] - '0');
-		if (int_to_long > INT_MAX || int_to_long < INT_MIN)
+		if ((sign > 0 && int_to_long > INT_MAX)
+			|| (sign < 0 && int_to_long * sign < INT_MIN))
 			return (false);
-		i++;
 	}
 	return (true);
 }
@@ -100,13 +104,18 @@ void	parse(int argc, char *argv[], t_main_cont *cont)
 	if (!args_split || !args_split[0])
 		exit_on_err("Error\n");
 	i = 0;
-	while (is_an_int(args_split[i]) == true && args_split[i])
+	while (args_split[i] && is_an_int(args_split[i]) == true)
 		i++;
 	if (args_split[i] != NULL)
 		exit_on_err("Error\n");
 	init(cont, args_split);
+	printf("stack[0] = %d\n", cont->stack_a.elems[0]);
+	printf("stack[1] = %d\n", cont->stack_a.elems[1]);
 	if (has_duplicates(cont->stack_a.elems, cont->stack_a.size))
-		exit_on_err("Error\n");
+	{
+		cleanup(cont);
+		exit_on_err("Error: duplicate inputs\n");
+	}
 	// ft_print_split(args_split, "argv");
 	ft_free_split(args_split);
 	return ;
