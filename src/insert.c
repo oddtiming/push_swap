@@ -253,7 +253,6 @@ bool	is_new_best_moves(t_insert_info *info)
 	return (true);
 }
 
-
 void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 {
 	t_stack_insert_info *a_info;
