@@ -1,33 +1,5 @@
 #include "push_swap.h"
 
-bool	is_in_stack(t_deque *stack, int val)
-{
-	int	i;
-	i = 0;
-	while (i < stack->size)
-	{
-		if (stack->elems[i] == val)
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-void	free_deque_list(t_deque **list)
-{
-	int	i;
-
-	i = 0;
-	while (list[i + 1] != NULL)
-	{
-		list[i]->free_list(list[i]);
-		free (list[i]);
-		i++;
-	}
-	free (list);
-	return ;
-}
-
 int	longest_increasing_subsequence(t_deque **list, t_deque *stack)
 {
 	int		list_size;
@@ -41,8 +13,6 @@ int	longest_increasing_subsequence(t_deque **list, t_deque *stack)
 		if (stack->elems[i] > list[list_size - 1]->max_elem)
 		{
 			list[list_size] = clone_deque(list[list_size - 1]);
-			// new_deque(&list[list_size]);
-			// copy_deque(list[list_size - 1], list[list_size]);
 			list[list_size]->add_last(list[list_size], stack->elems[i]);
 			list_size++;
 		}
@@ -63,7 +33,6 @@ t_deque	*get_ordered_vals(t_deque *stack)
 	t_deque	**list;
 	t_deque	*staying_vals;
 	int		list_size;
-	int		i;
 
 	list = ft_safealloc(stack->max_elem * sizeof(t_deque *));
 	ft_bzero(list, stack->max_elem);
@@ -71,13 +40,66 @@ t_deque	*get_ordered_vals(t_deque *stack)
 	list[0]->add_last(list[0], stack->elems[0]);
 	list_size = longest_increasing_subsequence(list, stack);
 	staying_vals = list[list_size - 1];
+	free_deque_list(list, list_size - 1);
+	return (staying_vals);
+}
+
+void	normalize_staying_vals(t_main_cont *cont)
+{
+	int	i;
+
 	i = 0;
-	while (i < list_size - 1)
+	while (i < cont->staying_vals.size)
 	{
-		list[i]->free_list(list[i]);
-		free (list[i]);
+		if (cont->staying_vals.elems[0] > cont->stack_a.max_elem)
+			cont->staying_vals.add_last(&cont->staying_vals, cont->staying_vals.elems[0] - cont->stack_a.size - 1);
+		else
+			cont->staying_vals.add_last(&cont->staying_vals, cont->staying_vals.elems[0]);
+		cont->staying_vals.remove_front(&cont->staying_vals);
 		i++;
 	}
-	free(list);
-	return (staying_vals);
+}
+
+void	assign_leaving_vals(t_main_cont *cont)
+{
+	int	i;
+
+	i = 0;
+	while (i < cont->stack_a.size)
+	{
+		if (is_in_stack(&cont->staying_vals, cont->stack_a.elems[i]))
+			cont->leaving_vals.add_last(&cont->leaving_vals, -1);
+		else
+			cont->leaving_vals.add_last(&cont->leaving_vals, cont->stack_a.elems[i]);
+		i++;
+	}
+}
+
+void	assign_staying_and_leaving_vals(t_main_cont *cont)
+{
+	t_deque		*curr_staying_vals;
+	t_deque		*staying_stack;
+	int			i;
+
+	// check nb_sorted for every val.
+	staying_stack = clone_deque(&cont->stack_a);
+	i = 0;
+	while (i < cont->stack_a.size)
+	{
+		rotate_stack_to_0(staying_stack, get_pos_of_val(staying_stack, i));
+		curr_staying_vals = get_ordered_vals(staying_stack);
+		if (curr_staying_vals->size > cont->staying_vals.size)
+			copy_deque(curr_staying_vals, &cont->staying_vals);
+		staying_stack->remove_front(staying_stack);
+		staying_stack->add_front(staying_stack, staying_stack->size + i + 1);
+		curr_staying_vals->free_list(curr_staying_vals);
+		free (curr_staying_vals);
+		i++;
+	}
+	normalize_staying_vals(cont);
+	//Free staying_stack
+	staying_stack->free_list(staying_stack);
+	free(staying_stack);
+	assign_leaving_vals(cont);
+	return ;
 }

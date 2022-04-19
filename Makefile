@@ -12,31 +12,33 @@ RED			=	\033[0;31m
 ON_RED		=	\033[41m
 RESET_COL	=	\033[0m
 
-CFILES	=	cherrypick.c \
-			cleanup.c \
-			deques.c \
-			deque_operators.c \
-			divide_and_conquer.c \
-			errors.c \
-			init.c \
-			insert.c \
-			insert_blocks.c \
-			insert_utils.c \
-			iterators.c \
-			parse.c \
-			partition_leaving_vals.c \
-			partition_stack.c \
-			print_utils.c \
-			px.c \
-			push_swap.c \
-			rrx.c \
-			rx.c \
-			sort.c \
-			sort_big.c \
-			sort_utils.c \
-			sx.c \
-			try_x.c \
-			undo_moves.c \
+CFILES	=	calc_insert_cost.c			\
+			cherrypick.c				\
+			cherrypick_utils.c			\
+			cleanup.c					\
+			deques.c					\
+			deque_operators.c			\
+			divide_and_conquer.c		\
+			errors.c					\
+			init.c						\
+			insert.c					\
+			insert_blocks.c				\
+			insert_utils.c				\
+			iterators.c					\
+			parse.c						\
+			partition_leaving_vals.c	\
+			partition_stack.c			\
+			print_utils.c				\
+			px.c						\
+			push_swap.c					\
+			rrx.c						\
+			rx.c						\
+			sort.c						\
+			sort_big.c					\
+			sort_utils.c				\
+			sx.c						\
+			try_x.c						\
+			undo_moves.c				\
 			utils.c 
 
 HFILES	= 	push_swap.h \
@@ -54,7 +56,7 @@ INCLFLAGS	= -I$(INCL)
 HEADERS		= $(addprefix $(INCL)/, $(HFILES))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -O3
+CFLAGS	= -Wall -Wextra -Werror -g -O3
 
 #
 # DEBUG build settings

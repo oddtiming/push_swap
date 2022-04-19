@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/17 17:32:33 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/04/17 22:51:01 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/04/19 17:44:39 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RED="\033[31m"
 GREEN="\033[32m"
 ENDCOLOR="\033[0m"
 
-NB_VALS=500
+NB_VALS=7
 MAX_NB_MOVES=0
 MAX_TEST_ID=0
 # N=1.38
@@ -31,14 +31,13 @@ PS_TEMPFILE=tester_temp.log
 
 echo "${GREEN}Testing for ${NB_VALS} values ${ENDCOLOR}"
 
-
 for i in {1..100}
 do
 	export ARG=`ruby -e "puts (1..$NB_VALS).to_a.shuffle.join(' ')"`
 	# echo $ARG
 	./push_swap $ARG > $PS_TEMPFILE
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
-	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep -q KO) ];
+	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep KO) ];
 	then
 		echo "${RED}KO!${ENDCOLOR}"
 		echo "KO!" >> $LOG_FILE

@@ -1,17 +1,6 @@
 #include "push_swap.h"
 
-void	init_insert_info(t_main_cont *cont, t_insert_info *info)
-{
-	info->b_info.pos = 0;
-	info->min_cost = 1000;
-	info->min_delta_insert = 1000;
-
-	if (cont->stack_b.size > 0)
-		update_insert_info(cont, info);
-	return ;
-}
-
-static void	calc_best_individual_cost(
+static void	set_best_individual_costs(
 		t_stack_insert_info *a_info, t_stack_insert_info *b_info)
 {
 	a_info->dist0 = a_info->pos;
@@ -31,7 +20,7 @@ static void	calc_best_individual_cost(
 	return ;
 }
 
-static int	calc_best_absolute_cost(
+static int	get_best_absolute_cost(
 		t_stack_insert_info *a_info, t_stack_insert_info *b_info)
 {
 	int	curr_cost;
@@ -57,12 +46,12 @@ int	calc_insert_cost(t_insert_info *info)
 {
 	int curr_cost;
 
-	calc_best_individual_cost(&info->a_info, &info->b_info);
-	curr_cost = calc_best_absolute_cost(&info->a_info, &info->b_info);
+	set_best_individual_costs(&info->a_info, &info->b_info);
+	curr_cost = get_best_absolute_cost(&info->a_info, &info->b_info);
 	return (curr_cost);
 }
 
-bool	is_new_best_moves(t_insert_info *info)
+static bool	is_new_best_moves(t_insert_info *info)
 {
 	if (info->curr_cost > info->min_cost)
 		return (false);

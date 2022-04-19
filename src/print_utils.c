@@ -71,8 +71,6 @@ void	print_stacks_info(t_main_cont *cont)
 	print_all_moves(&cont->curr_moves);
 	printf(BLUE"\t==> BEST TOTAL: %d \n"RESET_COL, cont->best_moves.size);
 	print_all_moves(&cont->best_moves);
-	printf(MAGENTA"\t==> FINAL TOTAL: %d \n"RESET_COL, cont->final_moves.size);
-	print_all_moves(&cont->final_moves);
 
 	return ;
 }
@@ -99,6 +97,8 @@ void    print_all_moves(t_deque *curr_moves)
     int pos_of_the_move_thing_in_the_list_thing;
 
     pos_of_the_move_thing_in_the_list_thing = 0;
+	if (curr_moves->size == INT_MAX)
+		return ;
     while (pos_of_the_move_thing_in_the_list_thing < curr_moves->size)
     {
         print_move(curr_moves->elems[pos_of_the_move_thing_in_the_list_thing]);

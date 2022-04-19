@@ -8,28 +8,20 @@ void	init(t_main_cont *cont, char **args)
 	init_deque(&cont->stack_b);
 	init_deque(&cont->curr_moves);
 	init_deque(&cont->best_moves);
-	init_deque(&cont->final_moves);
-	cont->reverse_fcts = malloc(11 * sizeof(void *));
-	if (!cont->reverse_fcts)
-		exit_on_err("reverse_fcts_my_ass\n");
+	cont->best_moves.size = INT_MAX;
+	init_deque(&cont->initial_stack);
+	init_deque(&cont->staying_vals);
+	init_deque(&cont->leaving_vals);
+	cont->reverse_fcts = ft_safealloc(11 * sizeof(void *));
 	i = -1;
 	while (args[++i] != NULL)
 		if (cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i])))
 			exit_on_err("deque_add_last done fucked up\n");
-	if (DEBUG)
-	{
-		printf(CYAN"BEFORE normalization\n"RESET_COL);
-		print_stacks_info(cont);
-	}
+
 	normalize_stack_values(&cont->stack_a);
+	copy_deque(&cont->stack_a, &cont->initial_stack);
 
-	if (DEBUG)
-	{
-		printf(CYAN"AFTER normalization\n"RESET_COL);
-		print_stacks_info(cont);
-	}
-
-	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a), \
+	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a),
 			cont->stack_a.size, 0);
 	set_iterator(&cont->head_b, 0, 0, 1);
 	init_reverse_moves_array(cont->reverse_fcts);
