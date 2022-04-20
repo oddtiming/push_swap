@@ -1,43 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 15:53:41 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 15:56:33 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-//Get the pos in the stack of a given value. If not found (-1) is returned
-int	get_pos_of_val(t_deque *stack, int val)
-{
-	int	pos;
-
-	pos = 0;
-	while (pos < stack->size)
-	{
-		if (stack->elems[pos] == val)
-			return (pos);
-		pos++;
-	}
-	return (-1);
-}
-
-int	get_pos_smallest_val(t_deque *stack)
-{
-	int	pos_in_stack;
-
-	pos_in_stack = 0;
-	if (stack->size <= 0)
-		return (0);
-	while (stack->elems[pos_in_stack] != stack->min_elem)
-		pos_in_stack++;
-	return (pos_in_stack);
-}
-
-int	get_pos_biggest_val(t_deque *stack)
-{
-	int	pos_in_stack;
-
-	pos_in_stack = 0;
-	if (stack->size <= 0)
-		return (0);
-	while (stack->elems[pos_in_stack] != stack->max_elem)
-		pos_in_stack++;
-	return (pos_in_stack);
-}
 
 //Since the pos_smallest lives outside the deque (that's really dumb btw),
 //pos_smallest needs to be passed as a parameter for now. Should change it soon
@@ -56,7 +29,6 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
 			return (false);
 		}
 	}
-
 	return (true);
 }
 
@@ -70,15 +42,6 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
  */
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 {
-	if (DEBUG)
-	{
-		int revpos = pos - cont->stack_a.size;
-		printf(YELLOW"rotate_to_pos0=======> pos = %d, revpos = %d\n", pos, revpos);
-		if (pos < cont->stack_a.size - pos)
-			printf("Choosing ra; %d < %d\n"RESET_COL, pos, -revpos);
-		else
-			printf("Choosing rra; %d >= %d\n"RESET_COL, pos, -revpos);
-	}
 	if (pos < cont->stack_a.size - pos)
 		while (pos-- > 0)
 			do_ra(cont, curr_moves);
@@ -86,4 +49,23 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 		while (pos++ < cont->stack_a.size)
 			do_rra(cont, curr_moves);
 	return ;
+}
+
+
+
+int	max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals)
+{
+	int	i;
+	int	max_elem;
+
+	i = 0;
+	max_elem = -1;
+	while (i < leaving_vals->size)
+	{
+		if (leaving_vals->elems[i] > max_elem
+			&& !is_in_stack(&cont->stack_b, leaving_vals->elems[i]))
+			max_elem = leaving_vals->elems[i];
+		i++;
+	}
+	return (max_elem);
 }

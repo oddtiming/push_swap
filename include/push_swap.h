@@ -110,7 +110,6 @@ void	run_algorithms(t_main_cont *cont);
 void	split_in_blocks(t_main_cont *cont);
 
 //	split_in_two.c
-int		max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals);
 void	split_in_two(t_main_cont *cont);
 
 //	ignore_LIS.c
@@ -171,27 +170,24 @@ void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info 
 
 //   sort_utils.c
 bool	is_sorted(t_deque *stack, int pos_smallest);
-int		get_pos_of_val(t_deque  *stack, int val);
-int		get_pos_smallest_val(t_deque *stack);
-int		get_pos_biggest_val(t_deque *stack);
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 bool	is_in_stack(t_deque *stack, int val);
+int		max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals);
 
 // SORT BIG
-void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id, int max_val, int min_val, int median_val);
-void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
-void	blind_push(t_main_cont *cont, t_deque *moves_list);
-void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
 bool	block_id_is_in_stack(t_deque *block_ids, int id);
+void	assign_block_median(t_deque *stack, t_deque *block_ids, t_block_info *info);
+bool	has_smaller_than_median(t_deque *stack, t_block_info *info);
+void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, t_block_info *info);
+void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
+void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
 void	sort_big(t_main_cont *cont);
-bool	has_smaller_than_median(t_deque *stack, int median_val, int min_val);
-bool	has_bigger_than_median(t_deque *stack, int median_val, int max_val);
-int		calc_block_median(t_deque *stack, t_deque *block_ids, int curr_block_id, int *max_val, int *min_val);
 
 //UTILS
 void	*ft_safealloc(size_t size);
-
-//	sort_utils.c
+int		get_pos_of_val(t_deque  *stack, int val);
+int		get_pos_smallest_val(t_deque *stack);
+int		get_pos_biggest_val(t_deque *stack);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   try_x.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 14:51:42 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 14:51:43 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff)
 {
 	int	total_nb_moves;
-	
+
 	if (!is_sorted(&cont->stack_a, cont->head_a.index))
 	{
 		return (false);
@@ -95,7 +107,6 @@ bool	try_invert_4(t_main_cont *cont)
 	do_ra(cont, moves_buff);
 	do_ra(cont, moves_buff);
 	do_sa(cont, moves_buff);
-	
 	if (try_solution(cont, moves_buff))
 	{
 		return (true);
