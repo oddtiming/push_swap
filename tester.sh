@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/17 17:32:33 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/04/19 17:44:39 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/04/19 22:50:11 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RED="\033[31m"
 GREEN="\033[32m"
 ENDCOLOR="\033[0m"
 
-NB_VALS=7
+NB_VALS=500
 MAX_NB_MOVES=0
 MAX_TEST_ID=0
 # N=1.38
@@ -40,11 +40,8 @@ do
 	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep KO) ];
 	then
 		echo "${RED}KO!${ENDCOLOR}"
-		echo "KO!" >> $LOG_FILE
+		echo "******[KO]******" >> $LOG_FILE
 		echo $ARG >> $LOG_FILE
-		echo "nb_moves:" >> $LOG_FILE
-		echo $NB_MOVES >> $LOG_FILE
-		break
 	fi
 	if [ $(echo "$NB_MOVES > $LIMIT" | bc) -eq 1 ];
 	then

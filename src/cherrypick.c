@@ -1,5 +1,24 @@
 #include "push_swap.h"
 
+void	rotate_stack_to_0(t_deque *stack, int pos)
+{
+	if (pos < stack->size - pos)
+	{
+		while (pos-- > 0)
+		{
+			rotate(stack);
+		}
+	}
+	else
+	{
+		while (pos++ < stack->size)
+		{
+			rev_rotate(stack);
+		}
+	}
+	return ;
+}
+
 int	longest_increasing_subsequence(t_deque **list, t_deque *stack)
 {
 	int		list_size;
@@ -75,7 +94,7 @@ void	assign_leaving_vals(t_main_cont *cont)
 	}
 }
 
-void	assign_staying_and_leaving_vals(t_main_cont *cont)
+void	assign_longest_increasing_subsequence(t_main_cont *cont)
 {
 	t_deque		*curr_staying_vals;
 	t_deque		*staying_stack;

@@ -39,27 +39,6 @@ int	get_pos_biggest_val(t_deque *stack)
 	return (pos_in_stack);
 }
 
-// Will return the next bigger value in the index, or stack_x.min_elem
-int		get_insert_val(t_deque *stack, int curr_val)
-{
-	int	pos;
-	int	next_bigger;
-
-	if (curr_val + 1 > stack->max_elem)
-		return (stack->min_elem);
-	next_bigger = curr_val + 1;
-	pos = 0;
-	while (pos < stack->size)
-	{
-		if (stack->elems[pos] == next_bigger)
-			return (next_bigger);
-		pos++;
-	}
-	return (get_insert_val(stack, curr_val + 1));
-}
-
-
-
 //Since the pos_smallest lives outside the deque (that's really dumb btw),
 //pos_smallest needs to be passed as a parameter for now. Should change it soon
 //	Returns true if sorted 
@@ -106,35 +85,5 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 	else
 		while (pos++ < cont->stack_a.size)
 			do_rra(cont, curr_moves);
-	return ;
-}
-
-void	rotate_stack_to_0(t_deque *stack, int pos)
-{
-	if (pos < stack->size - pos)
-	{
-		while (pos-- > 0)
-		{
-			rotate(stack);
-		}
-	}
-	else
-	{
-		while (pos++ < stack->size)
-		{
-			rev_rotate(stack);
-		}
-	}
-	return ;
-}
-
-void	rotate_to_0_in_b(t_main_cont *cont, t_deque *curr_moves, int pos)
-{
-	if (pos < cont->stack_b.size - pos)
-		while (pos-- > 0)
-			do_rb(cont, curr_moves);
-	else
-		while (pos++ < cont->stack_b.size)
-			do_rrb(cont, curr_moves);
 	return ;
 }

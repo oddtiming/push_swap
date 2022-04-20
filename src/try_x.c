@@ -69,8 +69,8 @@ void	try_sort_small(t_main_cont *cont)
 	{
 		if (cont->stack_a.size == 4)
 			try_invert_4(cont);
-		try_swap(cont);
 		new_deque(&moves_buff);
+		try_swap(cont);
 		try_solution(cont, moves_buff);
 		rotate_to_0_in_a(cont, moves_buff, curr_pos);
 		do_pb(cont, moves_buff);

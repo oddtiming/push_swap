@@ -157,7 +157,7 @@ void	insert_block_elem_b(
 }
 
 
-void	insert_block_b(t_main_cont *cont, t_deque *block_ids_b, int block_id)
+void	insert_block_of_b_in_a(t_main_cont *cont, t_deque *block_ids_b, int block_id)
 {
 	t_insert_info *info;
 
@@ -225,7 +225,7 @@ void	insert_block_b(t_main_cont *cont, t_deque *block_ids_b, int block_id)
 				print_move(cont->curr_moves.elems[cont->curr_moves.size - i]);
 			exit(1);
 		}
-		insert_block_b(cont, block_ids_b, block_id);
+		insert_block_of_b_in_a(cont, block_ids_b, block_id);
 	}
 
 	//NEW

@@ -77,7 +77,7 @@ void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id
 	return ;
 }
 
-void	insert_block_a(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
+void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 {
 	int	median_val;
 	int	max_val;

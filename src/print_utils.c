@@ -19,7 +19,6 @@ void	print_single_stack(t_deque *stack)
 	printf("+---+-----+\n");
 }
 
-
 void	print_stacks(t_main_cont *cont)
 {
 	int	*stack_a;
