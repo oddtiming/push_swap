@@ -120,29 +120,6 @@ void	insert_block_elem_b(
 		return ;
 	a_info = &info->a_info;
 	b_info = &info->b_info;
-	if (cont->stack_b.size > 0)
-	{
-		//TO REMOVE
-		// if (info.min_cost < 0)
-		if (DEBUG && (info->min_cost < 0 || \
-			(cont->stack_a.elems[0] > cont->stack_a.elems[1] && \
-			cont->stack_a.elems[1] != cont->stack_a.min_elem)))
-		{
-			printf("wtf happened after\n");
-			print_stacks(cont);
-			printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
-			printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
-			printf(YELLOW"info.a_info.revpos_best = %d \n"RESET_COL, info->a_info.revpos_best);
-			printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
-			printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
-			printf(YELLOW"info.b_info.revpos_best = %d \n"RESET_COL, info->b_info.revpos_best);
-			printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
-			printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
-			printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
-			printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
-		}
-		//EOREMOVE
-	}
 	// case for they both need to go in the same sense
 	if (ft_same_sign(info->a_info.dist0_best, info->b_info.dist0_best))
 		insert_same_sign(cont, block_ids_b, info);
@@ -161,74 +138,24 @@ void	insert_block_of_b_in_a(t_main_cont *cont, t_deque *block_ids_b, int block_i
 {
 	t_insert_info *info;
 
-		// print_stacks(cont);
-		// print_single_stack(block_ids_b);
-
-
 	if (!block_id_is_in_stack(block_ids_b, block_id))
 		return ;
 	
-	info = malloc(sizeof(t_insert_info));
-	if (!info)
-		exit_on_err("insert_b: insert_info error\n");
-
+	info = ft_safealloc(sizeof(t_insert_info));
 	info->min_cost = INT_MAX;
 	info->min_delta_insert = INT_MAX;
 	info->b_info.pos = 0;
-
 	while (info->b_info.pos < block_ids_b->size)
 	{
 		if (block_ids_b->elems[info->b_info.pos] == block_id)
 			update_insert_info(cont, info);
 		info->b_info.pos++;
 	}
-
-
-
-	
-	// if (DEBUG)
-	// {
-	// 	printf(YELLOW"insert_b found best elem to be stack_b[%d] == %d\n"RESET_COL, info->b_info.pos_best, cont->stack_b.elems[info->b_info.pos_best]);
-	// 	printf(YELLOW"corresponding insert value was stack_a[%d] == %d\n"RESET_COL, info->a_info.pos_best, cont->stack_a.elems[info->a_info.pos_best]);
-	// 	printf(YELLOW"info.a_info.val_best = %d \n"RESET_COL, info->a_info.val_best);
-	// 	printf(YELLOW"info.a_info.pos_best = %d \n"RESET_COL, info->a_info.pos_best);
-	// 	printf(YELLOW"info.a_info.revpos_best = %d \n"RESET_COL, info->a_info.revpos_best);
-	// 	printf(YELLOW"info.b_info.val_best = %d \n"RESET_COL, info->b_info.val_best);
-	// 	printf(YELLOW"info.b_info.pos_best = %d \n"RESET_COL, info->b_info.pos_best);
-	// 	printf(YELLOW"info.b_info.revpos_best = %d \n"RESET_COL, info->b_info.revpos_best);
-	// 	printf(YELLOW"info.a_info.dist0_best = %d \n"RESET_COL, info->a_info.dist0_best);
-	// 	printf(YELLOW"info.b_info.dist0_best = %d \n"RESET_COL, info->b_info.dist0_best);
-	// 	printf(YELLOW"info.min_cost = %d \n"RESET_COL, info->min_cost);
-	// 	printf(YELLOW"info.min_delta_insert = %d \n"RESET_COL, info->min_delta_insert);
-	// }
-
-
 	if (cont->stack_b.size > 0)
 	{
-		//Needs to update block_ids_b...
 		insert_block_elem_b(cont, block_ids_b, info);
-
-		// if (DEBUG)
-		// {
-		// 	printf(BLUE"last 5 moves: \n"RESET_COL);
-		// 	for (int i = 5; i && moves_b`uff->size > 5 - i; i--)
-		// 		print_move(cont->curr_moves.elems[cont->curr_moves.size - i]);
-		// }
-		// print_stacks(cont);
-		// print_single_stack(block_ids_b);
-		
-		if (DEBUG && !is_sorted(&cont->stack_a, cont->head_a.index))
-		{
-			printf("fucked up right here\n");
-			printf(BLUE"last 35 moves: \n"RESET_COL);
-			for (int i = 35; i && cont->curr_moves.size > 35 - i; i--)
-				print_move(cont->curr_moves.elems[cont->curr_moves.size - i]);
-			exit(1);
-		}
 		insert_block_of_b_in_a(cont, block_ids_b, block_id);
 	}
-
-	//NEW
 	free(info);
 	info = NULL;
 	return ;
@@ -240,9 +167,8 @@ void	insert_curr_block_id(
 	t_deque *block_ids_b,
 	t_block_info	*info)
 {
-	// if the first elem of stack_a is a candidate for push
 	while (cont->stack_a.elems[0] <= info->median_val &&
-		has_smaller_than_median(&cont->stack_b, info->median_val, info->min_val) &&
+		has_smaller_than_median(&cont->stack_b, info) &&
 		cont->stack_b.elems[0] > info->median_val &&
 		cont->stack_b.elems[0] <= info->max_val)
 	{
@@ -269,9 +195,10 @@ void	rotate_to_block_id(
 	pos_a = 0;
 	while (block_ids_a->elems[pos_a] != info->curr_block_id)
 		pos_a++;
-	if (has_smaller_than_median(&cont->stack_b, info->median_val, info->min_val))
+	if (has_smaller_than_median(&cont->stack_b, info))
 	{
-		while (pos_a && cont->stack_b.elems[0] > info->median_val && cont->stack_b.elems[0] <= info->max_val)
+		while (pos_a && cont->stack_b.elems[0] > info->median_val
+			&& cont->stack_b.elems[0] <= info->max_val)
 		{
 			do_rr(cont, &cont->curr_moves);
 
@@ -319,7 +246,7 @@ void	insert_block_set_ids(
 	info.curr_block_id = curr_block_id_a;
 	info.max_val = 0;
 	info.min_val = cont->stack_a.max_elem;
-	info.median_val = calc_block_median(&cont->stack_a, block_ids_a, curr_block_id_a, &info.max_val, &info.min_val);
+	assign_block_median(&cont->stack_a, block_ids_a, &info);
 	i = 0;
 	while (i < block_ids_b->size)
 	{

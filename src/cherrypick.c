@@ -1,23 +1,16 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cherrypick.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 21:40:44 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 21:56:42 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	rotate_stack_to_0(t_deque *stack, int pos)
-{
-	if (pos < stack->size - pos)
-	{
-		while (pos-- > 0)
-		{
-			rotate(stack);
-		}
-	}
-	else
-	{
-		while (pos++ < stack->size)
-		{
-			rev_rotate(stack);
-		}
-	}
-	return ;
-}
+#include "push_swap.h"
 
 int	longest_increasing_subsequence(t_deque **list, t_deque *stack)
 {
@@ -63,7 +56,7 @@ t_deque	*get_ordered_vals(t_deque *stack)
 	return (staying_vals);
 }
 
-void	normalize_staying_vals(t_main_cont *cont)
+static void	normalize_staying_vals(t_main_cont *cont)
 {
 	int	i;
 
@@ -71,15 +64,19 @@ void	normalize_staying_vals(t_main_cont *cont)
 	while (i < cont->staying_vals.size)
 	{
 		if (cont->staying_vals.elems[0] > cont->stack_a.max_elem)
-			cont->staying_vals.add_last(&cont->staying_vals, cont->staying_vals.elems[0] - cont->stack_a.size - 1);
+			cont->staying_vals.add_last(
+				&cont->staying_vals,
+				cont->staying_vals.elems[0] - cont->stack_a.size - 1);
 		else
-			cont->staying_vals.add_last(&cont->staying_vals, cont->staying_vals.elems[0]);
+			cont->staying_vals.add_last(
+				&cont->staying_vals,
+				cont->staying_vals.elems[0]);
 		cont->staying_vals.remove_front(&cont->staying_vals);
 		i++;
 	}
 }
 
-void	assign_leaving_vals(t_main_cont *cont)
+static void	assign_leaving_vals(t_main_cont *cont)
 {
 	int	i;
 
@@ -89,7 +86,9 @@ void	assign_leaving_vals(t_main_cont *cont)
 		if (is_in_stack(&cont->staying_vals, cont->stack_a.elems[i]))
 			cont->leaving_vals.add_last(&cont->leaving_vals, -1);
 		else
-			cont->leaving_vals.add_last(&cont->leaving_vals, cont->stack_a.elems[i]);
+			cont->leaving_vals.add_last(
+				&cont->leaving_vals,
+				cont->stack_a.elems[i]);
 		i++;
 	}
 }
@@ -100,7 +99,6 @@ void	assign_longest_increasing_subsequence(t_main_cont *cont)
 	t_deque		*staying_stack;
 	int			i;
 
-	// check nb_sorted for every val.
 	staying_stack = clone_deque(&cont->stack_a);
 	i = 0;
 	while (i < cont->stack_a.size)
@@ -116,7 +114,6 @@ void	assign_longest_increasing_subsequence(t_main_cont *cont)
 		i++;
 	}
 	normalize_staying_vals(cont);
-	//Free staying_stack
 	staying_stack->free_list(staying_stack);
 	free(staying_stack);
 	assign_leaving_vals(cont);

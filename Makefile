@@ -13,6 +13,7 @@ ON_RED		=	\033[41m
 RESET_COL	=	\033[0m
 
 CFILES	=	algorithms.c \
+			block_utils.c \
 			calc_insert_cost.c \
 			cherrypick.c \
 			cherrypick_utils.c \
@@ -37,7 +38,6 @@ CFILES	=	algorithms.c \
 			rrx.c \
 			rx.c \
 			sort.c \
-			sort_big.c \
 			sort_utils.c \
 			split_in_blocks.c \
 			split_in_two.c \

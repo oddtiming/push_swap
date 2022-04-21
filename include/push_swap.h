@@ -159,6 +159,8 @@ void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
 int		get_cost_either_direction(t_insert_info *info);
 int		get_cost_indep_directions(t_insert_info *info);
 int		get_insert_val(t_deque *haystack, int curr_val);
+void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
+void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
 
 //   calc_insert_cost.c
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);
@@ -178,14 +180,12 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 bool	is_in_stack(t_deque *stack, int val);
 
 // SORT BIG
-void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id, int max_val, int min_val, int median_val);
-void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
-void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
+void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, t_block_info *info);
 bool	block_id_is_in_stack(t_deque *block_ids, int id);
 void	sort_big(t_main_cont *cont);
-bool	has_smaller_than_median(t_deque *stack, int median_val, int min_val);
+bool	has_smaller_than_median(t_deque *stack, t_block_info *info);
 bool	has_bigger_than_median(t_deque *stack, int median_val, int max_val);
-int		calc_block_median(t_deque *stack, t_deque *block_ids, int curr_block_id, int *max_val, int *min_val);
+void	assign_block_median(t_deque *stack, t_deque *block_ids, t_block_info *info);
 
 //UTILS
 void	*ft_safealloc(size_t size);

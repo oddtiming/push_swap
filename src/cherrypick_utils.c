@@ -27,3 +27,22 @@ void	free_deque_list(t_deque **list, int size)
 	free (list);
 	return ;
 }
+
+void	rotate_stack_to_0(t_deque *stack, int pos)
+{
+	if (pos < stack->size - pos)
+	{
+		while (pos-- > 0)
+		{
+			rotate(stack);
+		}
+	}
+	else
+	{
+		while (pos++ < stack->size)
+		{
+			rev_rotate(stack);
+		}
+	}
+	return ;
+}
