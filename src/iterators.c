@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   iterators.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 22:33:18 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 22:33:18 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "iterators.h"
 
 void	set_iterator(t_iterator *iterator, int head, int size, bool is_reverse)
@@ -6,7 +18,6 @@ void	set_iterator(t_iterator *iterator, int head, int size, bool is_reverse)
 	iterator->head = head;
 	iterator->max_size = size;
 	iterator->is_reverse = is_reverse;
-	//Will be incremented in the first loop to set at 0 once iterate starts
 	iterator->nb_loops = -1;
 	iterator->prev_index = -1;
 	return ;
@@ -24,7 +35,6 @@ void	iterate(t_iterator *iterator)
 	int	incrementer;
 
 	iterator->prev_index = iterator->index;
-	//-1 if direction == 1, +1 if direction == 0
 	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
@@ -45,12 +55,10 @@ void	iterate_once(t_iterator *iterator, bool is_reverse)
 bool	iterate_n_loops(t_iterator *iterator, int n)
 {
 	int			incrementer;
-	// static bool	did_one_loop;
 
 	if (iterator->index == iterator->head)
 		iterator->nb_loops += 1;
 	iterator->prev_index = iterator->index;
-	//-1 if direction == 1, +1 if direction == 0
 	incrementer = iterator->is_reverse * -1 + !iterator->is_reverse * 1;
 	iterator->index += incrementer;
 	if (incrementer == 1 && iterator->index > iterator->max_size - 1)
