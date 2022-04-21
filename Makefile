@@ -1,5 +1,7 @@
 NAME	=	push_swap
 
+NAME_BONUS	=	checker_bonus
+
 # FOR TESTING PURPOSES
 RUN_ARGS = 37 15 27 4 6 33 12 19 31 3 2 13 49 42 22 16 39 10 24 8 41 5 1 28 7 40 29 47 21 35 50 48 38 45 34 36 44 20 32 17 9 23 25 11 26 14 46 43 30 18
 
@@ -17,12 +19,14 @@ CFILES	=	block_utils.c \
 			cherrypick.c \
 			cherrypick_utils.c \
 			cleanup.c \
+			delta_insert.c \
 			deques.c \
 			deque_modify.c \
 			deque_operators.c \
 			deque_utils.c \
 			errors.c \
-			ignore_LIS.c \
+			ignore_lis.c \
+			ignore_lis_utils.c \
 			init.c \
 			insert.c \
 			insert_blocks.c \
@@ -39,12 +43,31 @@ CFILES	=	block_utils.c \
 			rx.c \
 			sort.c \
 			sort_utils.c \
+			sort_small.c \
 			split_in_blocks.c \
 			split_in_two.c \
+			split_in_two_utils.c \
 			sx.c \
-			try_x.c \
 			undo_moves.c \
 			utils.c 
+
+CFILES_BONUS	=	checker_bonus.c \
+					deques.c \
+					deque_modify.c \
+					deque_operators.c \
+					errors.c \
+					init.c \
+					px.c \
+					px_bonus.c \
+					parse_bonus.c \
+					rx.c \
+					rrx.c \
+					sx.c \
+					rx_bonus.c \
+					rrx_bonus.c \
+					sx_bonus.c \
+					undo_moves.c \
+					utils.c
 
 HFILES	= 	push_swap.h \
 			deques.h
@@ -53,8 +76,9 @@ SRC_DIR	= src
 SRCS	= $(addprefix $(SRC_DIR)/, $(CFILES))
 
 
-OBJ_DIR	= obj
-OBJS	= $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
+OBJ_DIR		= obj
+OBJS		= $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
+OBJS_BONUS	= $(addprefix $(OBJ_DIR)/, $(CFILES_BONUS:.c=.o))
 
 INCL		= include
 INCLFLAGS	= -I$(INCL)
@@ -89,6 +113,12 @@ COMPILE_EXE_OUT	=	$$($(COMPILE_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\0
 COMPILE_C		=	$(CC) $(CFLAGS) $(INCLFLAGS) -o $@ -c $<
 COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
+COMPILE_EXE_BONUS		=	$(CC) $(CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(OBJS) -o $(NAME_BONUS)
+COMPILE_EXE_BONUS_OUT	=	$$($(COMPILE_EXE_BONUS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
+
+COMPILE_C_BONUS		=	$(CC) $(CFLAGS) $(INCLFLAGS) -o $@ -c $<
+COMPILE_C_BONUS_OUT	=	$$($(COMPILE_C_BONUS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
+
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	@printf "$(CYAN)%-30s-->%30s $(RESET_COL)$(COMPILE_C_OUT)\n" $^ $@
@@ -118,6 +148,9 @@ all: $(NAME)
 
 $(NAME):	libft pretty_print $(OBJS)
 	@echo -e "\n$(CYAN)>>>>>>>> Compiling $(NAME) ...$(RESET_COL)$(COMPILE_EXE_OUT)"
+
+$(NAME_BONUS):	libft $(OBJS_BONUS)
+	@echo -e "\n$(CYAN)>>>>>>>> Compiling $(NAME_BONUS) ...$(RESET_COL)$(COMPILE_EXE_BONUS_OUT)"
 
 silent_libft:
 	@echo -e "---------------------- libft.a ----------------------\n"
@@ -154,10 +187,10 @@ fclean:	clean clean_libft clean_debug
 
 re:	fclean all
 
-test5: all
-	gcc -g push_swap_tester.c libft/libft.a && ./a.out 5;
+pretty_print_bonus:
+	@echo -e "$(RED)\n------------------- $(NAME_BONUS) -------------------$(RESET_COL)\n"
 
-bonus:	all
+bonus:	$(NAME_BONUS)
 
 run: all
 	./$(NAME) $(RUN_ARGS)
@@ -172,4 +205,4 @@ debug: all pretty_print_debug $(DBG_OBJS)
 	@echo -e "\n$(ON_RED)>>>>>>>> Compiling $(DBG_EXE) ...$(RESET_COL)$(COMPILE_DBG_EXE_OUT)"
 	./$(DBG_EXE) $(RUN_ARGS)
 
-.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print pretty_print_debug run debug test5
+.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print pretty_print_debug pretty_print_bonus run debug

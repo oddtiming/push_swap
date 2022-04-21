@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   deque_modify.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 23:26:19 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 23:26:19 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "deques.h"
 
 bool	deque_add_front(t_deque *deque, int new_elem)
@@ -23,7 +35,7 @@ bool	deque_add_front(t_deque *deque, int new_elem)
 	return (status);
 }
 
-bool deque_add_last(t_deque *deque, int new_elem)
+bool	deque_add_last(t_deque *deque, int new_elem)
 {
 	bool		status;
 

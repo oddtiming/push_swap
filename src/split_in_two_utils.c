@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   split_in_two_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 21:31:33 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 01:28:32 by iyahoui-         ###   ########.fr       */
+/*   Created: 2022/04/20 23:34:38 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 23:40:42 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char *argv[])
+int	max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals)
 {
-	t_main_cont	*cont;
+	int	i;
+	int	max_elem;
 
-	if (argc < 2)
-		exit(EXIT_SUCCESS);
-	cont = ft_safealloc(sizeof(t_main_cont));
-	parse(cont, argc, argv);
-	sort(cont);
-	print_all_moves(&cont->best_moves);
-	cleanup(cont);
-	return (EXIT_SUCCESS);
+	i = 0;
+	max_elem = -1;
+	while (i < leaving_vals->size)
+	{
+		if (leaving_vals->elems[i] > max_elem
+			&& !is_in_stack(&cont->stack_b, leaving_vals->elems[i]))
+			max_elem = leaving_vals->elems[i];
+		i++;
+	}
+	return (max_elem);
 }

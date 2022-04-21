@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:55:24 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 22:57:43 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/21 00:21:44 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ void	init(t_main_cont *cont, char **args)
 
 void	init_reverse_moves_array(void (**array)(t_main_cont *, t_deque *))
 {
-	array[REV_SA] = &do_sa;
-	array[REV_SB] = &do_sb;
-	array[REV_SS] = &do_ss;
-	array[REV_RA] = &do_rra;
-	array[REV_RB] = &do_rrb;
-	array[REV_RR] = &do_rrr;
-	array[REV_RRA] = &do_ra;
-	array[REV_RRB] = &do_rb;
-	array[REV_RRR] = &do_rr;
-	array[REV_PA] = &do_pb;
-	array[REV_PB] = &do_pa;
+	array[SA_INDEX] = &do_sa;
+	array[SB_INDEX] = &do_sb;
+	array[SS_INDEX] = &do_ss;
+	array[RA_INDEX] = &do_rra;
+	array[RB_INDEX] = &do_rrb;
+	array[RR_INDEX] = &do_rrr;
+	array[RRA_INDEX] = &do_ra;
+	array[RRB_INDEX] = &do_rb;
+	array[RRR_INDEX] = &do_rr;
+	array[PA_INDEX] = &do_pb;
+	array[PB_INDEX] = &do_pa;
 	return ;
 }
 

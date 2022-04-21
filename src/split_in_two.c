@@ -1,21 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_in_two.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 23:34:20 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 23:40:18 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-int	max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals)
-{
-	int	i;
-	int	max_elem;
-
-	i = 0;
-	max_elem = -1;
-	while (i < leaving_vals->size)
-	{
-		if (leaving_vals->elems[i] > max_elem
-				&& !is_in_stack(&cont->stack_b, leaving_vals->elems[i]))
-			max_elem = leaving_vals->elems[i];
-		i++;
-	}
-	return (max_elem);
-}
 
 static void	try_single_cutoff(
 	t_main_cont *cont, t_deque *block_ids, float cutoff)
@@ -90,7 +85,7 @@ static void	try_multiple_cutoffs_footer(
 	}	
 }
 
-static void	split_in_two_mult_cutoffs(t_main_cont *cont, t_deque *block_ids)
+void	split_in_two_mult_cutoffs(t_main_cont *cont, t_deque *block_ids)
 {
 	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
 	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);

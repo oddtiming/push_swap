@@ -1,21 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 21:40:00 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 01:23:21 by iyahoui-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "push_swap_bonus.h"
 
-#include "push_swap.h"
-
-/**
- * @param array	the initial int array
- * @param size	nb_params
- */
 static bool	has_duplicates(int *array, int size)
 {
 	long	curr_pos;
@@ -38,12 +22,6 @@ static bool	has_duplicates(int *array, int size)
 	return (false);
 }
 
-/**
- * @brief	will check whether all inputs consist of a decimal integer preceded
- *			by `-`, `+`, or nothing
- * @param	str 
- * @return	true: INT_MIN <= input <= INT_MAX
- */
 static bool	is_an_int(char *str)
 {
 	long	int_to_long;
@@ -72,10 +50,6 @@ static bool	is_an_int(char *str)
 	return (true);
 }
 
-/**
- * @brief	will always transform the inputs into a string literals array
- * @return	char** split_args
- */
 static char	**split_args(int argc, char *argv[])
 {
 	int		i;
@@ -99,10 +73,7 @@ static char	**split_args(int argc, char *argv[])
 	return (args_split);
 }
 
-/**
- * @brief accepts a list of ints without duplicates
- */
-void	parse(t_main_cont *cont, int argc, char *argv[])
+void	parse_bonus(t_checker *checker, int argc, char *argv[])
 {
 	char	**args_split;
 	int		i;
@@ -113,14 +84,14 @@ void	parse(t_main_cont *cont, int argc, char *argv[])
 		i++;
 	if (args_split[i] != NULL)
 	{
-		free(cont);
+		free(checker);
 		ft_free_split(args_split);
 		exit_on_err("Error\n");
 	}
-	init(cont, args_split);
-	if (has_duplicates(cont->stack_a.elems, cont->stack_a.size))
+	init_bonus(checker, args_split);
+	if (has_duplicates(checker->stack_a.elems, checker->stack_a.size))
 	{
-		cleanup(cont);
+		free_checker(checker);
 		ft_free_split(args_split);
 		exit_on_err("Error\n");
 	}

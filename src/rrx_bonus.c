@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   rrx_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 21:31:33 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 01:28:32 by iyahoui-         ###   ########.fr       */
+/*   Created: 2022/04/21 01:02:09 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/21 01:02:09 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-int	main(int argc, char *argv[])
+void	checker_rra(t_checker *checker)
 {
-	t_main_cont	*cont;
+	rev_rotate(&checker->stack_a);
+	return ;
+}
 
-	if (argc < 2)
-		exit(EXIT_SUCCESS);
-	cont = ft_safealloc(sizeof(t_main_cont));
-	parse(cont, argc, argv);
-	sort(cont);
-	print_all_moves(&cont->best_moves);
-	cleanup(cont);
-	return (EXIT_SUCCESS);
+void	checker_rrb(t_checker *checker)
+{
+	rev_rotate(&checker->stack_b);
+	return ;
+}
+
+void	checker_rrr(t_checker *checker)
+{
+	rev_rotate(&checker->stack_a);
+	rev_rotate(&checker->stack_b);
+	return ;
 }
