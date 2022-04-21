@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:53:41 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 15:56:33 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:33:22 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 			do_rra(cont, curr_moves);
 	return ;
 }
-
-
 
 int	max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals)
 {

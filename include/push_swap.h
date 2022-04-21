@@ -46,6 +46,15 @@
 //END OF REMOVE
 
 //TYPEDEFS
+typedef struct s_leaving_vals_info
+{
+	int	block_len;
+	int	curr_block_id;
+	int	block_min;
+	int	offset;
+	int	nb_blocks;
+}	t_leaving_vals_info;
+
 typedef struct s_block_info
 {
 	int	curr_block_id;
@@ -151,22 +160,33 @@ bool	check_if_best_moves(t_main_cont *cont, t_deque *moves_buff);
 
 //	insert.c
 void	insert_b(t_main_cont *cont, t_deque *moves_buff);
-int		calc_delta_insert(t_main_cont *cont, t_insert_info *info);
-void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
 
 //	insert_utils.c
 int		get_cost_either_direction(t_insert_info *info);
 int		get_cost_indep_directions(t_insert_info *info);
-int		get_insert_val(t_deque *haystack, int curr_val);
+void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
+void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids_b, int block_id);
+void	insert_block_of_b_in_a(t_main_cont *cont, t_deque *block_ids_b, int block_id);
+
+//	insert_utils2.c
+int		calc_delta_insert(t_main_cont *cont, t_insert_info *info);
+void	insert_elem_b(t_main_cont *cont, t_deque *moves_buff, t_insert_info *info);
+
 
 //   calc_insert_cost.c
 void	init_insert_info(t_main_cont *cont, t_insert_info *info);
 void	update_insert_info(t_main_cont *cont, t_insert_info *info);
 
+//   insert_block_elems.c
+bool	block_id_is_in_stack(t_deque *block_ids, int id);
+void	assign_block_median(t_deque *stack, t_deque *block_ids, t_block_info *info);
+bool	has_smaller_than_median(t_deque *stack, t_block_info *info);
+void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, t_block_info *info);
+void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info *info);
+
+
 //   insert_blocks.c
 void	insert_block_set_ids(t_main_cont *cont, t_deque *block_ids_a, t_deque *block_ids_b, int curr_block_id_a);
-void	insert_block_of_b_in_a(t_main_cont *cont, t_deque *block_ids_b, int block_id);
-void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info *info);
 
 //   sort_utils.c
 bool	is_sorted(t_deque *stack, int pos_smallest);
@@ -174,20 +194,12 @@ void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 bool	is_in_stack(t_deque *stack, int val);
 int		max_elem_leaving(t_main_cont *cont, t_deque *leaving_vals);
 
-// SORT BIG
-bool	block_id_is_in_stack(t_deque *block_ids, int id);
-void	assign_block_median(t_deque *stack, t_deque *block_ids, t_block_info *info);
-bool	has_smaller_than_median(t_deque *stack, t_block_info *info);
-void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, t_block_info *info);
-void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
-void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
-void	sort_big(t_main_cont *cont);
-
 //UTILS
 void	*ft_safealloc(size_t size);
 int		get_pos_of_val(t_deque  *stack, int val);
 int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
+int		get_insert_val(t_deque *haystack, int curr_val);
 
 //  PRINT UTILS
 void	print_stacks(t_main_cont *cont);

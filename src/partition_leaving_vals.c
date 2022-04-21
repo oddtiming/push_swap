@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   partition_leaving_vals.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 16:43:43 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 17:39:39 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_deque	*get_leaving_vals_trimmed(t_deque *leaving_vals)
@@ -27,53 +39,78 @@ t_deque	*get_leaving_vals_trimmed(t_deque *leaving_vals)
 	return (trimmed_vals);
 }
 
-void	partition_leaving_vals_n_blocks(t_deque *leaving_vals, t_deque *block_ids, int nb_blocks)
+static void	assign_first_leaving_block(
+	t_deque *leaving_vals,
+	t_deque *block_ids,
+	t_deque *trimmed_vals,
+	t_leaving_vals_info *info)
 {
-	t_deque	*trimmed_vals;
-	int		block_len;
-	int		curr_block_id;
-	int		curr_block_min;
-	int		offset;
-	int		i;
-	
-	trimmed_vals = get_leaving_vals_trimmed(leaving_vals);
-	offset = trimmed_vals->size % nb_blocks;
-	deque_reinit_list(block_ids);
-	block_len = trimmed_vals->size / nb_blocks + ((offset-- > 0) * 1);
-	curr_block_id = 0;
-	curr_block_min = 0;
+	int	i;
+
 	i = 0;
 	while (i < leaving_vals->size)
 	{
-		if (leaving_vals->elems[i] >= trimmed_vals->elems[0] && \
-				leaving_vals->elems[i] <= trimmed_vals->elems[block_len - 1])
-			block_ids->add_last(block_ids, curr_block_id);
+		if (leaving_vals->elems[i] >= trimmed_vals->elems[0]
+			&& leaving_vals->elems[i]
+			<= trimmed_vals->elems[info->block_len - 1])
+			block_ids->add_last(block_ids, info->curr_block_id);
 		else
 			block_ids->add_last(block_ids, leaving_vals->elems[i]);
 		i++;
 	}
-	while (++curr_block_id < nb_blocks)
+}
+
+static void	assign_leaving_blocks(
+	t_deque *leaving_vals,
+	t_deque *block_ids,
+	t_deque *trimmed_vals,
+	t_leaving_vals_info *info)
+{
+	int	i;
+
+	while (++info->curr_block_id < info->nb_blocks)
 	{
-		curr_block_min += block_len;
-		block_len = trimmed_vals->size / nb_blocks + ((offset-- > 0) * 1);
+		info->block_min += info->block_len;
+		info->block_len = trimmed_vals->size / info->nb_blocks
+			+ ((info->offset-- > 0) * 1);
 		i = 0;
 		while (i < leaving_vals->size)
 		{
-			if (leaving_vals->elems[i] >= trimmed_vals->elems[curr_block_min] && \
-					leaving_vals->elems[i] <= trimmed_vals->elems[curr_block_min + block_len - 1])
-				block_ids->add_last(block_ids, curr_block_id);
+			if (leaving_vals->elems[i]
+				>= trimmed_vals->elems[info->block_min]
+				&& leaving_vals->elems[i]
+				<= trimmed_vals->elems[info->block_min + info->block_len - 1])
+				block_ids->add_last(block_ids, info->curr_block_id);
 			else
 				block_ids->add_last(block_ids, block_ids->elems[0]);
 			block_ids->remove_front(block_ids);
 			i++;
 		}
 	}
+}
+
+void	partition_leaving_vals_n_blocks(
+	t_deque *leaving_vals, t_deque *block_ids, int nb_blocks)
+{
+	t_deque				*trimmed_vals;
+	t_leaving_vals_info	info;
+
+	trimmed_vals = get_leaving_vals_trimmed(leaving_vals);
+	info.offset = trimmed_vals->size % nb_blocks;
+	deque_reinit_list(block_ids);
+	info.block_len = trimmed_vals->size / nb_blocks + ((info.offset-- > 0) * 1);
+	info.curr_block_id = 0;
+	info.block_min = 0;
+	info.nb_blocks = nb_blocks;
+	assign_first_leaving_block(leaving_vals, block_ids, trimmed_vals, &info);
+	assign_leaving_blocks(leaving_vals, block_ids, trimmed_vals, &info);
 	trimmed_vals->free_list(trimmed_vals);
 	free (trimmed_vals);
 	return ;
 }
 
-void	partition_leaving_vals_cutoff(t_deque *staying_vals, t_deque *block_ids, int cutoff)
+void	partition_leaving_vals_cutoff(
+	t_deque *staying_vals, t_deque *block_ids, int cutoff)
 {
 	int		i;
 
@@ -85,7 +122,7 @@ void	partition_leaving_vals_cutoff(t_deque *staying_vals, t_deque *block_ids, in
 			block_ids->add_last(block_ids, -1);
 		else if (staying_vals->elems[i] > cutoff)
 			block_ids->add_last(block_ids, 1);
-		else 
+		else
 			block_ids->add_last(block_ids, 0);
 		i++;
 	}

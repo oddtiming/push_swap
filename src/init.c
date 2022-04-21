@@ -17,12 +17,10 @@ void	init(t_main_cont *cont, char **args)
 	while (args[++i] != NULL)
 		if (cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i])))
 			exit_on_err("deque_add_last done fucked up\n");
-
 	normalize_stack_values(&cont->stack_a);
 	copy_deque(&cont->stack_a, &cont->initial_stack);
-
 	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a),
-			cont->stack_a.size, 0);
+		cont->stack_a.size, 0);
 	set_iterator(&cont->head_b, 0, 0, 1);
 	init_reverse_moves_array(cont->reverse_fcts);
 	cont->min_nb_moves = INT_MAX;

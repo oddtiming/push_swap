@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 14:58:18 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 14:58:18 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/20 18:34:12 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	split_in_blocks(t_main_cont *cont)
 	new_deque(&block_ids_a);
 	new_deque(&block_ids_b);
 	nb_blocks = 2;
-	while (nb_blocks <= 6)
+	while (nb_blocks <= 5)
 	{
 		split_in_n_blocks(cont, block_ids_a, block_ids_b, nb_blocks);
 		nb_blocks++;

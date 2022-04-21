@@ -6,7 +6,7 @@
 #    By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/17 17:32:33 by iyahoui-          #+#    #+#              #
-#    Updated: 2022/04/19 22:50:11 by iyahoui-         ###   ########.fr        #
+#    Updated: 2022/04/20 18:33:24 by iyahoui-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,6 @@ ENDCOLOR="\033[0m"
 NB_VALS=500
 MAX_NB_MOVES=0
 MAX_TEST_ID=0
-# N=1.38
-# LIMIT=$(bc -l <<< "e($N*l($NB_VALS))")
 LIMIT=3800
 INT_LIMIT=${LIMIT%.1}
 NB_CASES_ABOVE_LIMIT=0
@@ -38,13 +36,13 @@ do
 	./push_swap $ARG > $PS_TEMPFILE
 	NB_MOVES=$(< $PS_TEMPFILE wc -l | sed 's/ //g');
 	if [ $(< $PS_TEMPFILE ./checker_Mac $ARG | grep KO) ];
-	then
+		then
 		echo "${RED}KO!${ENDCOLOR}"
 		echo "******[KO]******" >> $LOG_FILE
 		echo $ARG >> $LOG_FILE
 	fi
 	if [ $(echo "$NB_MOVES > $LIMIT" | bc) -eq 1 ];
-	then
+		then
 		echo "Test #"$i":" $NB_MOVES "[$(cat $PS_TEMPFILE | ./checker_Mac $ARG)]" >> $LOG_FILE
 		echo $ARG >> $LOG_FILE
 		echo "" >> $LOG_FILE

@@ -17,13 +17,15 @@ CFILES	=	algorithms.c \
 			cherrypick.c \
 			cherrypick_utils.c \
 			cleanup.c \
+			delta_insert.c \
 			deques.c \
 			deque_operators.c \
 			errors.c \
-			ignore_LIS.c \
+			ignore_lis.c \
 			init.c \
 			insert.c \
 			insert_blocks.c \
+			insert_block_elems.c \
 			insert_utils.c \
 			iterators.c \
 			parse.c \
