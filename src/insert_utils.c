@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   insert_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 22:05:43 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 22:05:43 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	get_cost_either_direction(t_insert_info *info)
@@ -13,7 +25,7 @@ int	get_cost_indep_directions(t_insert_info *info)
 }
 
 // Will return the next bigger value in the index, or stack_x.min_elem
-int		get_insert_val(t_deque *stack, int curr_val)
+int	get_insert_val(t_deque *stack, int curr_val)
 {
 	int	pos;
 	int	next_bigger;
@@ -31,7 +43,8 @@ int		get_insert_val(t_deque *stack, int curr_val)
 	return (get_insert_val(stack, curr_val + 1));
 }
 
-void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id)
+void	insert_block_of_a_in_b(
+	t_main_cont *cont, t_deque *block_ids, int curr_block_id)
 {
 	t_block_info	info;
 
@@ -78,5 +91,4 @@ void	insert_last_block(t_main_cont *cont, t_deque *moves_list)
 	if (!is_sorted(&cont->stack_a, cont->head_a.index))
 		do_sa(cont, moves_list);
 	return ;
-
 }
