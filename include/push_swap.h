@@ -46,6 +46,15 @@
 //END OF REMOVE
 
 //TYPEDEFS
+typedef struct s_partition_info
+{
+	int		block_len;
+	int		curr_block_id;
+	int		curr_block_min;
+	int		offset;
+	int		nb_blocks;
+}	t_partition_info;
+
 typedef struct s_block_info
 {
 	int	curr_block_id;
