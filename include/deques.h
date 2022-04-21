@@ -2,6 +2,7 @@
 # define DEQUES_H
 
 # include <stdbool.h>
+# include <stdlib.h>
 # include <stddef.h>
 # include <limits.h>
 
@@ -36,21 +37,25 @@ typedef struct s_deque
 	void	(*set_elem)(t_deque *, int, int);
 }	t_deque;
 
-// Deques
+//	deques.c
 void 	init_deque(t_deque *deque);
-bool 	deque_add_front(t_deque *deque, int new_elem);
-bool 	deque_add_last(t_deque *deque, int new_elem);
+bool 	deque_reinit_list(t_deque *deque);
+
+//	deque_utils.c
+bool 	deque_resize_end(t_deque *deque, int new_size);
+bool 	deque_resize_front(t_deque *deque, int new_size);
 void 	deque_free_list(t_deque *deque);
 int		deque_get_elem_max(t_deque *deque);
 int		deque_get_elem_min(t_deque *deque);
-bool 	deque_reinit_list(t_deque *deque);
+
+//	deque_modify.c
+bool 	deque_add_front(t_deque *deque, int new_elem);
+bool 	deque_add_last(t_deque *deque, int new_elem);
 void	deque_remove_front(t_deque *deque);
 void	deque_remove_last(t_deque *deque);
-bool 	deque_resize_end(t_deque *deque, int new_size);
-bool 	deque_resize_front(t_deque *deque, int new_size);
 void	deque_set_elem(t_deque *deque, int pos, int new_value);
 
-// Operators
+//	deque_operators.c
 void	new_deque(t_deque **deque);
 t_deque	*clone_deque(t_deque *src);
 void	copy_deque(t_deque *src, t_deque *dest);

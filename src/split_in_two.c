@@ -92,7 +92,30 @@ static void	try_multiple_cutoffs_footer(
 
 static void	split_in_two_mult_cutoffs(t_main_cont *cont, t_deque *block_ids)
 {
-
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 0);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.5F, 0);
 }
 
 void	split_in_two(t_main_cont *cont)
@@ -100,49 +123,13 @@ void	split_in_two(t_main_cont *cont)
 	t_deque	*block_ids;
 
 	new_deque(&block_ids);
-
 	try_single_cutoff(cont, block_ids, 5 / 8);
 	try_single_cutoff(cont, block_ids, 13 / 24);
 	try_single_cutoff(cont, block_ids, 11 / 24);
 	try_single_cutoff(cont, block_ids, 3 / 8);
 	try_single_cutoff(cont, block_ids, 7 / 24);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.5F, 1);
-
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 0);
-	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 0);
-	try_multiple_cutoffs_footer(cont, block_ids, 0.5F, 0);
-
-
-	// Free block_ids
+	split_in_two_mult_cutoffs(cont, block_ids);
 	block_ids->free_list(block_ids);
 	free(block_ids);
-
 	return ;
 }

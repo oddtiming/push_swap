@@ -18,7 +18,9 @@ CFILES	=	algorithms.c \
 			cherrypick_utils.c \
 			cleanup.c \
 			deques.c \
+			deque_modify.c \
 			deque_operators.c \
+			deque_utils.c \
 			errors.c \
 			ignore_LIS.c \
 			init.c \
