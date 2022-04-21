@@ -27,6 +27,7 @@ CFILES	=	algorithms.c \
 			init.c \
 			insert.c \
 			insert_blocks.c \
+			insert_blocks_utils.c \
 			insert_utils.c \
 			iterators.c \
 			parse.c \

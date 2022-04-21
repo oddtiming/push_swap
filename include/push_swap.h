@@ -172,7 +172,7 @@ void	insert_block_set_ids(t_main_cont *cont, t_deque *block_ids_a, t_deque *bloc
 void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info *info);
 
 //   insert_blocks_utils.c
-void	insert_curr_block_id(t_main_cont *cont, t_deque *block_ids_a, t_deque *block_ids_b, t_block_info *info)
+void	insert_curr_block_id(t_main_cont *cont, t_deque *block_ids_a, t_deque *block_ids_b, t_block_info *info);
 void	insert_block_of_b_in_a(t_main_cont *cont, t_deque *block_ids_b, int block_id);
 void	rotate_to_block_id(t_main_cont *cont,t_deque *block_ids_a,t_deque *block_ids_b,t_block_info	*info);
 void	check_if_top_stack_b_is_smaller_than_median(t_main_cont *cont, t_deque *block_ids, t_block_info *info);
