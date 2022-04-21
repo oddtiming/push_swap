@@ -47,16 +47,18 @@ static void	insert_same_sign(
 				do_rr(cont, moves_buff);
 		}
 	}
-	while (info->min_cost-- > 0)
+	else
 	{
-		if (++info->a_info.dist0_best > 0)
-			do_rrb(cont, moves_buff);
-		else if (++info->b_info.dist0_best > 0)
-			do_rra(cont, moves_buff);
-		else
-			do_rrr(cont, moves_buff);
+		while (info->min_cost-- > 0)
+		{
+			if (++info->a_info.dist0_best > 0)
+				do_rrb(cont, moves_buff);
+			else if (++info->b_info.dist0_best > 0)
+				do_rra(cont, moves_buff);
+			else
+				do_rrr(cont, moves_buff);
+		}
 	}
-	do_pa(cont, moves_buff);
 }
 
 static void	insert_same_direction(
@@ -75,16 +77,18 @@ static void	insert_same_direction(
 				do_rr(cont, moves_buff);
 		}
 	}
-	while (info->min_cost-- > 0)
+	else
 	{
-		if (++info->a_info.revpos_best > 0)
-			do_rrb(cont, moves_buff);
-		else if (++info->b_info.revpos_best > 0)
-			do_rra(cont, moves_buff);
-		else
-			do_rrr(cont, moves_buff);
+		while (info->min_cost-- > 0)
+		{
+			if (++info->a_info.revpos_best > 0)
+				do_rrb(cont, moves_buff);
+			else if (++info->b_info.revpos_best > 0)
+				do_rra(cont, moves_buff);
+			else
+				do_rrr(cont, moves_buff);
+		}
 	}
-	do_pa(cont, moves_buff);
 }
 
 static void	insert_indep_directions(
@@ -102,8 +106,6 @@ static void	insert_indep_directions(
 	else
 		while (info->b_info.dist0_best++ < 0)
 			do_rrb(cont, moves_buff);
-	do_pa(cont, moves_buff);
-
 }
 
 void	insert_elem_b(
@@ -122,6 +124,7 @@ void	insert_elem_b(
 		insert_same_direction(cont, moves_buff, info);
 	else
 		insert_indep_directions(cont, moves_buff, info);
+	do_pa(cont, moves_buff);
 	return ;	
 }
 

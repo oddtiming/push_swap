@@ -169,8 +169,13 @@ void	update_insert_info(t_main_cont *cont, t_insert_info *info);
 
 //   insert_blocks.c
 void	insert_block_set_ids(t_main_cont *cont, t_deque *block_ids_a, t_deque *block_ids_b, int curr_block_id_a);
-void	insert_block_of_b_in_a(t_main_cont *cont, t_deque *block_ids_b, int block_id);
 void	insert_block_elem_b(t_main_cont *cont, t_deque *block_ids_b, t_insert_info *info);
+
+//   insert_blocks_utils.c
+void	insert_curr_block_id(t_main_cont *cont, t_deque *block_ids_a, t_deque *block_ids_b, t_block_info *info)
+void	insert_block_of_b_in_a(t_main_cont *cont, t_deque *block_ids_b, int block_id);
+void	rotate_to_block_id(t_main_cont *cont,t_deque *block_ids_a,t_deque *block_ids_b,t_block_info	*info);
+void	check_if_top_stack_b_is_smaller_than_median(t_main_cont *cont, t_deque *block_ids, t_block_info *info);
 
 //   sort_utils.c
 bool	is_sorted(t_deque *stack, int pos_smallest);
