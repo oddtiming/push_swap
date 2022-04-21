@@ -1,5 +1,14 @@
 #include "push_swap.h"
 
+void	sort_big(t_main_cont *cont)
+{
+	assign_longest_increasing_subsequence(cont);
+	split_in_blocks(cont);
+	split_in_two(cont);
+	ignore_lis(cont);
+	return ;
+}
+
 void	sort_small(t_main_cont *cont)
 {
 	if (cont->stack_a.size == 2 && !is_sorted(&cont->stack_a, 0))
@@ -15,9 +24,6 @@ void	sort(t_main_cont *cont)
 		sort_small(cont);
 	else
 		sort_big(cont);
-	print_all_moves(&cont->best_moves);
-	cleanup(cont);
-	exit(EXIT_SUCCESS);
 	return ;
 }
 

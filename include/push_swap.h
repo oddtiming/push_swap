@@ -180,7 +180,6 @@ bool	is_in_stack(t_deque *stack, int val);
 // SORT BIG
 void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, int curr_block_id, int max_val, int min_val, int median_val);
 void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_block_id);
-void	blind_push(t_main_cont *cont, t_deque *moves_list);
 void	insert_last_block(t_main_cont *cont, t_deque *moves_list);
 bool	block_id_is_in_stack(t_deque *block_ids, int id);
 void	sort_big(t_main_cont *cont);

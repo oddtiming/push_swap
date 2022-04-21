@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   deques.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 21:26:11 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 21:26:12 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "deques.h"
 
-void init_deque(t_deque *deque)
+void	init_deque(t_deque *deque)
 {
 	deque->add_front = &deque_add_front;
 	deque->add_last = &deque_add_last;
@@ -30,16 +42,16 @@ void init_deque(t_deque *deque)
 bool	deque_reinit_list(t_deque *deque)
 {
 	free(deque->malloced_space);
-	deque->size				= 0;
-	deque->min_elem			= INT_MAX - 100;
-	deque->max_elem			= INT_MIN + 100;
-	deque->capacity_end		= VECTOR_INIT_SIZE;
-	deque->capacity_front	= VECTOR_INIT_SIZE;
-	deque->capacity_total	= 2 * VECTOR_INIT_SIZE;
-	deque->malloced_space	= malloc(2 * VECTOR_INIT_SIZE * sizeof(int));
+	deque->size = 0;
+	deque->min_elem = INT_MAX - 100;
+	deque->max_elem = INT_MIN + 100;
+	deque->capacity_end = VECTOR_INIT_SIZE;
+	deque->capacity_front = VECTOR_INIT_SIZE;
+	deque->capacity_total = 2 * VECTOR_INIT_SIZE;
+	deque->malloced_space = malloc(2 * VECTOR_INIT_SIZE * sizeof(int));
 	if (!deque->malloced_space)
 		return (FAILURE);
 	ft_bzero(deque->malloced_space, 2 * VECTOR_INIT_SIZE);
-	deque->elems			= deque->malloced_space + VECTOR_INIT_SIZE;
+	deque->elems = deque->malloced_space + VECTOR_INIT_SIZE;
 	return (SUCCESS);
 }

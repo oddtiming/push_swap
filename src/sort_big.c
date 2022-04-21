@@ -105,28 +105,6 @@ void	insert_block_of_a_in_b(t_main_cont *cont, t_deque *block_ids, int curr_bloc
 	return ;
 }
 
-void	sort_big(t_main_cont *cont)
-{
-	// int	elem_0;
-	int	initial_size;
-	// int	elem_1;
-	// int	elem_last;
-
-	initial_size = cont->stack_a.size;
-
-	// if (stack->size == 100)
-		// blind_push(cont, &cont->curr_moves);
-	// else ()
-	
-	// assign_divisions
-
-	// insert_a needs to be ONLY called after segmentation
-
-
-	insert_b(cont, &cont->best_moves);
-	rotate_to_0_in_a(cont, &cont->best_moves, cont->head_a.index);
-}
-
 void	insert_last_block(t_main_cont *cont, t_deque *moves_list)
 {
 	int	median_val;
@@ -146,16 +124,4 @@ void	insert_last_block(t_main_cont *cont, t_deque *moves_list)
 		do_sa(cont, moves_list);
 	return ;
 
-}
-
-
-void	blind_push(t_main_cont *cont, t_deque *moves_list)
-{
-	while (!is_sorted(&cont->stack_a, cont->head_a.index) && cont->stack_a.size > 3)
-	{
-		do_pb(cont, moves_list);
-	}
-	if (!is_sorted(&cont->stack_a, cont->head_a.index))
-		do_sa(cont, moves_list);
-	return ;
 }
