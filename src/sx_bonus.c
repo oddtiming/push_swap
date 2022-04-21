@@ -6,11 +6,21 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 01:02:15 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 01:26:37 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/21 01:41:59 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_bonus.h"
+
+void	swap(t_deque *stack)
+{
+	int	temp;
+
+	temp = stack->elems[0];
+	stack->set_elem(stack, 0, stack->elems[1]);
+	stack->set_elem(stack, 1, temp);
+	return ;
+}
 
 void	checker_sa(t_checker *checker)
 {

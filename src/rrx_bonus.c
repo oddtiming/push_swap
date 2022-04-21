@@ -6,11 +6,18 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 01:02:09 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 01:02:09 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/21 01:42:35 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_bonus.h"
+
+void	rev_rotate(t_deque *stack)
+{
+	stack->add_front(stack, stack->elems[stack->size - 1]);
+	stack->remove_last(stack);
+	return ;
+}
 
 void	checker_rra(t_checker *checker)
 {
