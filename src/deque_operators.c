@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   deque_operators.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 22:03:32 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 22:03:33 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	new_deque(t_deque **deque)
@@ -30,7 +42,7 @@ void	copy_deque(t_deque *src, t_deque *dest)
 	int	i;
 
 	if (!src || !dest)
-		return ;			
+		return ;
 	dest->reinit_list(dest);
 	i = 0;
 	while (i < src->size)
@@ -46,7 +58,7 @@ void	cat_deque(t_deque *src, t_deque *dest)
 	int	i;
 
 	if (!src || !dest)
-		return ;		
+		return ;
 	i = 0;
 	while (i < src->size)
 	{
@@ -61,7 +73,7 @@ void	cat_deque_front(t_deque *src, t_deque *dest)
 	int	i;
 
 	if (!src || !dest)
-		return ;		
+		return ;
 	i = src->size - 1;
 	while (i >= 0)
 	{

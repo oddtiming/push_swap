@@ -121,6 +121,8 @@ void	ignore_lis(t_main_cont *cont);
 
 //	sort.c
 void	sort(t_main_cont *cont);
+void	sort_small(t_main_cont *cont);
+void	sort_big(t_main_cont *cont);
 
 //	cherrypick.c
 t_deque	*get_ordered_vals(t_deque *stack);
@@ -143,7 +145,6 @@ t_deque	*get_leaving_vals_trimmed(t_deque *leaving_vals);
 
 
 //  sort_small.c
-void	sort_small(t_main_cont *cont);
 void	try_sort_small(t_main_cont *cont);
 bool	try_swap(t_main_cont *cont);
 bool	try_invert_4(t_main_cont *cont);
@@ -182,7 +183,6 @@ bool	is_in_stack(t_deque *stack, int val);
 // SORT BIG
 void	rotate_block_split(t_main_cont *cont, t_deque *block_ids, t_block_info *info);
 bool	block_id_is_in_stack(t_deque *block_ids, int id);
-void	sort_big(t_main_cont *cont);
 bool	has_smaller_than_median(t_deque *stack, t_block_info *info);
 bool	has_bigger_than_median(t_deque *stack, int median_val, int max_val);
 void	assign_block_median(t_deque *stack, t_deque *block_ids, t_block_info *info);
