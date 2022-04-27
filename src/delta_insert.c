@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 23:21:52 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 23:21:52 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:42:34 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	calc_delta_insert(t_main_cont *cont, t_insert_info *info)
 	t_iterator	*iter;
 	int			delta_insert;
 
-	iter = malloc(sizeof(t_iterator));
-	if (!iter)
-		exit_on_err("calc_delta_insert: iter error\n");
+	iter = ft_safealloc(sizeof(t_iterator));
 	set_iterator(iter, info->a_info.pos, cont->stack_a.size, 1);
 	iterate_once(iter, 1);
 	delta_insert = calc_delta_two_values(

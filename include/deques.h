@@ -62,6 +62,8 @@ void	copy_deque(t_deque *src, t_deque *dest);
 void	cat_deque(t_deque *src, t_deque *dest);
 void	cat_deque_front(t_deque *src, t_deque *dest);
 
+//	utils.c
+void	*ft_safealloc(size_t size);
 
 //DUMB SHIT TO REMOVE
 //ERROR HANDLING
