@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:55:24 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 00:21:44 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 23:39:52 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	init(t_main_cont *cont, char **args)
 	init_deque(&cont->initial_stack);
 	init_deque(&cont->staying_vals);
 	init_deque(&cont->leaving_vals);
-	cont->reverse_fcts = ft_safealloc(11 * sizeof(void *));
+	cont->reverse_fcts = ft_xalloc(11 * sizeof(void *));
+	init_reverse_moves_array(cont->reverse_fcts);
 	i = -1;
 	while (args[++i] != NULL)
 		if (cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i])))
@@ -34,7 +35,6 @@ void	init(t_main_cont *cont, char **args)
 	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a),
 		cont->stack_a.size, 0);
 	set_iterator(&cont->head_b, 0, 0, 1);
-	init_reverse_moves_array(cont->reverse_fcts);
 	cont->min_nb_moves = INT_MAX;
 	return ;
 }
@@ -62,7 +62,7 @@ void	normalize_stack_values(t_deque *stack)
 	int	pos_in_stack;
 	int	i;
 
-	normalized_stack = ft_safealloc(stack->size * sizeof(int));
+	normalized_stack = ft_xalloc(stack->size * sizeof(int));
 	pos_in_stack = 0;
 	while (pos_in_stack < stack->size)
 	{

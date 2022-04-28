@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 23:21:52 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/27 22:53:47 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 23:43:13 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,5 @@ int	calc_delta_two_values(t_main_cont *cont, int val_a, int val_b)
 //Need to add absolute distance from previous one
 int	calc_delta_insert(t_main_cont *cont, t_insert_info *info)
 {
-	t_iterator	*iter;
-	int			delta_insert;
-
-	iter = ft_xalloc(sizeof(t_iterator));
-	set_iterator(iter, info->a_info.pos, cont->stack_a.size, 1);
-	iterate_once(iter, 1);
-	delta_insert = calc_delta_two_values(
-			cont,
-			cont->stack_a.elems[iter->index],
-			cont->stack_b.elems[iter->index]);
-	delta_insert = ft_min(delta_insert, \
-		calc_delta_two_values(cont, info->a_info.val, info->b_info.val));
-	free(iter);
-	return (delta_insert);
+	return (calc_delta_two_values(cont, info->a_info.val, info->b_info.val));
 }

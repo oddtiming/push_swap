@@ -48,8 +48,7 @@ CFILES	=	block_utils.c \
 			split_in_two.c \
 			split_in_two_utils.c \
 			sx.c \
-			undo_moves.c \
-			utils.c 
+			undo_moves.c
 
 CFILES_BONUS	=	checker_bonus.c \
 					deques.c \

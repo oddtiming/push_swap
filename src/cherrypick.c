@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:40:44 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 21:56:42 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 23:38:58 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ t_deque	*get_ordered_vals(t_deque *stack)
 	t_deque	*staying_vals;
 	int		list_size;
 
-	list = ft_safealloc(stack->max_elem * sizeof(t_deque *));
-	ft_bzero(list, stack->max_elem);
+	list = ft_xalloc(stack->max_elem * sizeof(t_deque *));
 	new_deque(&list[0]);
 	list[0]->add_last(list[0], stack->elems[0]);
 	list_size = longest_increasing_subsequence(list, stack);

@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:54:39 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 22:55:58 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 23:40:17 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_deque	*get_leaving_vals_trimmed(t_deque *leaving_vals)
 	int		*temp_array;
 	int		i;
 
-	temp_array = ft_safealloc(leaving_vals->size * sizeof(int));
+	temp_array = ft_xalloc(leaving_vals->size * sizeof(int));
 	ft_memset(temp_array, -1, leaving_vals->size * 4);
 	i = 0;
 	while (i < leaving_vals->size)

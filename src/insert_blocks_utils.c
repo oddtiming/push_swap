@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:18:58 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 22:28:18 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 23:39:27 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	insert_block_of_b_in_a(
 
 	if (!block_id_is_in_stack(block_ids_b, block_id))
 		return ;
-	info = ft_safealloc(sizeof(t_insert_info));
+	info = ft_xalloc(sizeof(t_insert_info));
 	info->min_cost = INT_MAX;
 	info->min_delta_insert = INT_MAX;
 	info->b_info.pos = 0;

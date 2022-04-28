@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 23:21:15 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 23:22:44 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 23:40:09 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 
 	if (cont->stack_b.size <= 0)
 		return ;
-	info = ft_safealloc(sizeof(t_insert_info));
+	info = ft_xalloc(sizeof(t_insert_info));
 	info->b_info.pos = 0;
 	info->min_cost = 1000;
 	info->min_delta_insert = 1000;
