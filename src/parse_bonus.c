@@ -52,23 +52,24 @@ static bool	is_an_int(char *str)
 
 static char	**split_args(int argc, char *argv[])
 {
-	int		i;
-	char	**args_split;
+	// int		i;
+	// char	**args_split;
 
 	if (argc == 2)
 		return (ft_split(argv[1], ' '));
-	else
-		args_split = ft_xalloc((argc) * sizeof(char *));
-	i = 0;
-	while (i < argc - 1)
-	{
-		args_split[i] = ft_strdup(argv[i + 1]);
-		if (!args_split[i])
-			exit_on_err("Error\n");
-		i++;
-	}
-	args_split[i] = NULL;
-	return (args_split);
+	// else
+	// 	args_split = ft_xalloc((argc) * sizeof(char *));
+	// i = 0;
+	// while (i < argc - 1)
+	// {
+	// 	args_split[i] = ft_strdup(argv[i + 1]);
+	// 	if (!args_split[i])
+	// 		exit_on_err("Error\n");
+	// 	i++;
+	// }
+	// args_split[i] = NULL;
+	// return (args_split);
+	return (ft_split(argv[1], ' '));
 }
 
 void	parse_bonus(t_checker *checker, int argc, char *argv[])

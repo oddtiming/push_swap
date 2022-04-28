@@ -61,8 +61,7 @@ CFILES_BONUS	=	checker_bonus.c \
 					rx_bonus.c \
 					rrx_bonus.c \
 					sx_bonus.c \
-					undo_moves.c \
-					utils.c
+					undo_moves.c
 
 HFILES	= 	push_swap.h \
 			deques.h

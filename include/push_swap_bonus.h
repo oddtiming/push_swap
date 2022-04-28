@@ -30,7 +30,6 @@ typedef struct s_checker
 //	checker_bonus.c
 void	set_moves_pointers(void (**array)(t_checker *));
 void	init_bonus(t_checker *checker, char **args);
-void	do_moves(t_checker *checker);
 void	free_checker(t_checker *checker);
 
 //	parse_bonus.c
