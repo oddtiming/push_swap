@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:03:32 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 22:03:33 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:53:47 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	new_deque(t_deque **deque)
 {
-	*deque = malloc(sizeof(t_deque));
-	if (!*deque)
-		exit_on_err("new_deque error\n");
+	*deque = ft_xalloc(sizeof(t_deque));
 	init_deque(*deque);
 }
 

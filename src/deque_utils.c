@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:32:07 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 22:32:08 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:53:47 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ bool	deque_resize_end(t_deque *deque, int new_size)
 	int		pos_in_deque;
 
 	total_new_size = new_size + deque->capacity_front;
-	temp = malloc(total_new_size * sizeof(int));
-	if (!temp)
-		return (FAILURE);
+	temp = ft_xalloc(total_new_size * sizeof(int));
 	temp += deque->capacity_front;
 	pos_in_deque = 0;
 	while (pos_in_deque < deque->size)

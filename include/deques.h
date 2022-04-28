@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <limits.h>
+# include "../libft/libft.h"
 
 # define VECTOR_INIT_SIZE 16
 # define SUCCESS 0
@@ -61,9 +62,6 @@ t_deque	*clone_deque(t_deque *src);
 void	copy_deque(t_deque *src, t_deque *dest);
 void	cat_deque(t_deque *src, t_deque *dest);
 void	cat_deque_front(t_deque *src, t_deque *dest);
-
-//	utils.c
-void	*ft_safealloc(size_t size);
 
 //DUMB SHIT TO REMOVE
 //ERROR HANDLING

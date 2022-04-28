@@ -208,9 +208,6 @@ int		get_pos_smallest_val(t_deque *stack);
 int		get_pos_biggest_val(t_deque *stack);
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos);
 
-//	utils.c
-void	*ft_safealloc(size_t size);
-
 //  print_utils.c
 void	print_move(int move);
 void    print_all_moves(t_deque *curr_moves);

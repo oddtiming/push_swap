@@ -58,9 +58,7 @@ static char	**split_args(int argc, char *argv[])
 	if (argc == 2)
 		return (ft_split(argv[1], ' '));
 	else
-		args_split = malloc((argc) * sizeof(char *));
-	if (!args_split)
-		exit_on_err("Error\n");
+		args_split = ft_xalloc((argc) * sizeof(char *));
 	i = 0;
 	while (i < argc - 1)
 	{

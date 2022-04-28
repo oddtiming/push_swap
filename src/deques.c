@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:26:11 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/27 18:12:35 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 23:00:00 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_deque(t_deque *deque)
 	deque->capacity_end = VECTOR_INIT_SIZE;
 	deque->capacity_front = VECTOR_INIT_SIZE;
 	deque->capacity_total = 2 * VECTOR_INIT_SIZE;
-	deque->malloced_space = ft_safealloc(2 * VECTOR_INIT_SIZE * sizeof(int));
+	deque->malloced_space = ft_xalloc(2 * VECTOR_INIT_SIZE * sizeof(int));
 	deque->elems = &(deque->malloced_space[VECTOR_INIT_SIZE]);
 	return ;
 }
@@ -45,7 +45,7 @@ bool	deque_reinit_list(t_deque *deque)
 	deque->capacity_end = VECTOR_INIT_SIZE;
 	deque->capacity_front = VECTOR_INIT_SIZE;
 	deque->capacity_total = 2 * VECTOR_INIT_SIZE;
-	deque->malloced_space = ft_safealloc(2 * VECTOR_INIT_SIZE * sizeof(int));
+	deque->malloced_space = ft_xalloc(2 * VECTOR_INIT_SIZE * sizeof(int));
 	deque->elems = deque->malloced_space + VECTOR_INIT_SIZE;
 	return (SUCCESS);
 }

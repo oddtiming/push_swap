@@ -55,9 +55,6 @@ void	checker_pa(t_checker *checker);
 void	checker_pb(t_checker *checker);
 
 
-//	utils.c
-void	*ft_safealloc(size_t size);
-
 //	undo_moves.c
 int		convert_move_to_index(int move);
 

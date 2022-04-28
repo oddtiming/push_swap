@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 01:02:06 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 15:29:04 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:53:47 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	init_bonus(t_checker *checker, char **args)
 
 	init_deque(&checker->stack_a);
 	init_deque(&checker->stack_b);
-	checker->moves_fcts = ft_safealloc(11 * sizeof(void *));
+	checker->moves_fcts = ft_xalloc(11 * sizeof(void *));
 	i = -1;
 	while (args[++i] != NULL)
 		checker->stack_a.add_last(&checker->stack_a, ft_atoi(args[i]));
@@ -103,7 +103,7 @@ int	main(int argc, char *argv[])
 
 	if (argc < 2)
 		exit(EXIT_SUCCESS);
-	checker = ft_safealloc(sizeof(t_checker));
+	checker = ft_xalloc(sizeof(t_checker));
 	parse_bonus(checker, argc, argv);
 	do_moves(checker);
 	i = 0;
