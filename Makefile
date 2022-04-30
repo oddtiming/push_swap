@@ -51,11 +51,13 @@ CFILES	=	block_utils.c \
 			undo_moves.c
 
 CFILES_BONUS	=	checker_bonus.c \
+					checker_utils_bonus.c \
 					deques.c \
 					deque_modify.c \
 					deque_operators.c \
 					deque_utils.c \
 					errors.c \
+					ft_read_line.c \
 					px_bonus.c \
 					parse_bonus.c \
 					rx_bonus.c \

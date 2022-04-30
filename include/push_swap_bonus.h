@@ -1,9 +1,13 @@
 #ifndef PUSH_SWAP_BONUH_H
 # define PUSH_SWAP_BONUH_H
 
-#include "../libft/libft.h"
-#include "deques.h"
+# include "../libft/libft.h"
+# include "deques.h"
 
+
+# ifndef BUFFSIZE
+#  define BUFFSIZE 4194304
+# endif
 typedef enum e_moves_to_indices
 {
 	SA_INDEX	= 0,
@@ -19,6 +23,8 @@ typedef enum e_moves_to_indices
 	PB_INDEX	= 10
 }	t_moves_to_indices;
 
+
+
 typedef struct s_checker	t_checker;
 typedef struct s_checker
 {
@@ -27,14 +33,29 @@ typedef struct s_checker
 	void			(**moves_fcts)(t_checker *);
 }	t_checker;
 
+typedef struct s_read_info
+{
+	char		*buff;
+	char		*mem_space;
+	char		*line;
+	int			line_len;
+	int			nb_bytes_read;
+}	t_read_info;
+
 //	checker_bonus.c
 void	set_moves_pointers(void (**array)(t_checker *));
+void	do_moves(t_checker *checker, char *file);
+
+//	checker_utils_bonus.c
+void	bonus_exit_on_err(t_checker *checker, char *curr_line, int fd);
 void	init_bonus(t_checker *checker, char **args);
 void	free_checker(t_checker *checker);
 
 //	parse_bonus.c
 void	parse_bonus(t_checker *checker, int argc, char *argv[]);
 
+//	ft_read_line.c
+char	*read_line(int fd);
 
 //	moves
 void	rotate(t_deque *stack);
@@ -56,8 +77,5 @@ void	checker_pb(t_checker *checker);
 
 //	undo_moves.c
 int		convert_move_to_index(int move);
-
-//	errors.c
-void	exit_on_err(char *err_message);
 
 #endif
