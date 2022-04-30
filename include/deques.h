@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   deques.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 19:30:21 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/30 19:33:15 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DEQUES_H
 # define DEQUES_H
 
@@ -25,8 +37,8 @@ typedef struct s_deque
 	int		capacity_total;
 	int		capacity_end;
 	int		capacity_front;
-	bool	(*add_front)(t_deque * deque, int val);
-	bool	(*add_last)(t_deque *deque,	int val);
+	bool	(*add_front)(t_deque *deque, int val);
+	bool	(*add_last)(t_deque *deque, int val);
 	void	(*free_list)(t_deque *deque);
 	int		(*get_elem_max)(t_deque *deque);
 	int		(*get_elem_min)(t_deque *deque);
