@@ -1,13 +1,25 @@
-#ifndef PUSH_SWAP_BONUH_H
-# define PUSH_SWAP_BONUH_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_bonus.h                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 19:11:49 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/30 19:11:49 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PUSH_SWAP_BONUS_H
+# define PUSH_SWAP_BONUS_H
 
 # include "../libft/libft.h"
 # include "deques.h"
 
-
 # ifndef BUFFSIZE
 #  define BUFFSIZE 4194304
 # endif
+
 typedef enum e_moves_to_indices
 {
 	SA_INDEX	= 0,
@@ -22,8 +34,6 @@ typedef enum e_moves_to_indices
 	PA_INDEX	= 9,
 	PB_INDEX	= 10
 }	t_moves_to_indices;
-
-
 
 typedef struct s_checker	t_checker;
 typedef struct s_checker
@@ -44,10 +54,10 @@ typedef struct s_read_info
 
 //	checker_bonus.c
 void	set_moves_pointers(void (**array)(t_checker *));
-void	do_moves(t_checker *checker, char *file);
+void	do_moves(t_checker *checker);
 
 //	checker_utils_bonus.c
-void	bonus_exit_on_err(t_checker *checker, char *curr_line, int fd);
+void	bonus_exit_on_err(t_checker *checker, char *curr_line);
 void	init_bonus(t_checker *checker, char **args);
 void	free_checker(t_checker *checker);
 
@@ -73,7 +83,6 @@ void	checker_ss(t_checker *checker);
 void	push(t_deque *stack_src, t_deque *stack_dest);
 void	checker_pa(t_checker *checker);
 void	checker_pb(t_checker *checker);
-
 
 //	undo_moves.c
 int		convert_move_to_index(int move);

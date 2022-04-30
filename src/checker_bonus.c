@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker_bonus.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 19:04:42 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/30 19:04:42 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap_bonus.h"
 
 void	set_moves_pointers(void (**array)(t_checker *))
@@ -42,31 +54,28 @@ static bool	is_a_move(char *curr_line)
 	return (false);
 }
 
-void	do_moves(t_checker *checker, char *file)
+void	do_moves(t_checker *checker)
 {
 	char	*curr_line;
 	int		move;
 	int		i;
 	int		line_number;
-	int		fd;
 
-	fd = open(file, O_RDONLY);
-	curr_line = read_line(fd);
+	curr_line = read_line(STDIN_FILENO);
 	line_number = 0;
 	while (curr_line)
 	{
 		line_number++;
 		if (!is_a_move(curr_line))
-			bonus_exit_on_err(checker, curr_line, fd);
+			bonus_exit_on_err(checker, curr_line);
 		move = 0;
 		i = 0;
 		while (curr_line[i] && curr_line[i] != '\n')
 			move = (move << 8) | curr_line[i++];
 		checker->moves_fcts[convert_move_to_index(move)](checker);
 		free(curr_line);
-		curr_line = read_line(fd);
+		curr_line = read_line(STDIN_FILENO);
 	}
-	close(fd);
 	return ;
 }
 
@@ -75,11 +84,11 @@ int	main(int argc, char *argv[])
 	t_checker	*checker;
 	int			i;
 
-	if (argc < 3)
+	if (argc < 2)
 		exit(EXIT_SUCCESS);
 	checker = ft_xalloc(sizeof(t_checker));
 	parse_bonus(checker, argc, argv);
-	do_moves(checker, argv[2]);
+	do_moves(checker);
 	i = 0;
 	while (++i < checker->stack_a.size)
 	{

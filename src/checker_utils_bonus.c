@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker_utils_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 19:04:45 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/30 19:04:45 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap_bonus.h"
 
 void	init_bonus(t_checker *checker, char **args)
@@ -14,15 +26,11 @@ void	init_bonus(t_checker *checker, char **args)
 	return ;
 }
 
-void	bonus_exit_on_err(t_checker *checker, char *curr_line, int fd)
+void	bonus_exit_on_err(t_checker *checker, char *curr_line)
 {
 	free(curr_line);
-	curr_line = read_line(fd);
-	while (curr_line)
-	{
-		free(curr_line);
-		curr_line = read_line(fd);
-	}
+	close(STDIN_FILENO);
+	read_line(STDIN_FILENO);
 	free_checker(checker);
 	ft_putstr_fd("Error\n", STDERR_FILENO);
 	exit (255);

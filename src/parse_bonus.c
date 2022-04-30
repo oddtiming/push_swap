@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 19:04:38 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/30 19:04:55 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap_bonus.h"
 
 static bool	has_duplicates(int *array, int size)
@@ -52,23 +64,23 @@ static bool	is_an_int(char *str)
 
 static char	**split_args(int argc, char *argv[])
 {
-	// int		i;
-	// char	**args_split;
+	int		i;
+	char	**args_split;
 
 	if (argc == 2)
 		return (ft_split(argv[1], ' '));
-	// else
-	// 	args_split = ft_xalloc((argc) * sizeof(char *));
-	// i = 0;
-	// while (i < argc - 1)
-	// {
-	// 	args_split[i] = ft_strdup(argv[i + 1]);
-	// 	if (!args_split[i])
-	// 		exit_on_err("Error\n");
-	// 	i++;
-	// }
-	// args_split[i] = NULL;
-	// return (args_split);
+	else
+		args_split = ft_xalloc((argc) * sizeof(char *));
+	i = 0;
+	while (i < argc - 1)
+	{
+		args_split[i] = ft_strdup(argv[i + 1]);
+		if (!args_split[i])
+			exit_on_err("Error\n");
+		i++;
+	}
+	args_split[i] = NULL;
+	return (args_split);
 	return (ft_split(argv[1], ' '));
 }
 
