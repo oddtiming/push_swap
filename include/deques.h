@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   deques.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/30 19:30:21 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/05/01 07:06:16 by iyahoui-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef DEQUES_H
 # define DEQUES_H
 
@@ -27,8 +15,7 @@
 //Learned structure from https://aticleworld.com/implement-vector-in-c/
 //Decided to fuck it up of my own volition, though
 typedef struct s_deque	t_deque;
-
-typedef struct s_deque
+struct s_deque
 {
 	int		*elems;
 	int		*malloced_space;
@@ -38,18 +25,18 @@ typedef struct s_deque
 	int		capacity_total;
 	int		capacity_end;
 	int		capacity_front;
-	bool	(*add_front)(t_deque *, int);
-	bool	(*add_last)(t_deque *, int);
 	void	(*free_list)(t_deque *);
 	int		(*get_elem_max)(t_deque *);
 	int		(*get_elem_min)(t_deque *);
 	bool	(*reinit_list)(t_deque *);
 	void	(*remove_front)(t_deque *);
 	void	(*remove_last)(t_deque *);
+	bool	(*add_front)(t_deque *, int);
+	bool	(*add_last)(t_deque *, int);
 	bool	(*resize_end)(t_deque *, int);
 	bool	(*resize_front)(t_deque *, int);
-	void	(*set_elem)(t_deque *, int);
-}	t_deque;
+	void	(*set_elem)(t_deque *, int, int);
+};
 
 //	deques.c
 void	init_deque(t_deque *deque);

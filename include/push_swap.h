@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 19:05:56 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/05/01 07:12:04 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/05/01 15:51:31 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@
 # define VECTOR_INIT_SIZE 16
 # define SUCCESS 0
 # define FAILURE 1
-
-//DEFINES
-# define MAX_MOVES_FOR_5 9
 
 //TO REMOVE
 # ifndef DEBUG
@@ -98,7 +95,7 @@ typedef struct s_insert_info
 }	t_insert_info;
 
 typedef struct s_main_cont	t_main_cont;
-typedef struct s_main_cont
+struct s_main_cont
 {
 	t_deque			stack_a;
 	t_deque			stack_b;
@@ -111,7 +108,7 @@ typedef struct s_main_cont
 	t_iterator		head_b;
 	void			(**reverse_fcts)(t_main_cont *, t_deque *);
 	int				min_nb_moves;
-}	t_main_cont;
+};
 
 //PARSING
 //	parse.c
