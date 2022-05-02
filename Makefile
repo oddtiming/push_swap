@@ -71,7 +71,6 @@ HFILES	= 	push_swap.h \
 SRC_DIR	= src
 SRCS	= $(addprefix $(SRC_DIR)/, $(CFILES))
 
-
 OBJ_DIR		= obj
 OBJS		= $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 OBJS_BONUS	= $(addprefix $(OBJ_DIR)/, $(CFILES_BONUS:.c=.o))
@@ -81,16 +80,7 @@ INCLFLAGS	= -I$(INCL)
 HEADERS		= $(addprefix $(INCL)/, $(HFILES))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g -O3
-
-#
-# DEBUG build settings
-#
-DBG_DIR = debug_objs
-DBG_EXE = push_swap_try_pb_debug
-DBG_OBJS = $(addprefix $(DBG_DIR)/, $(CFILES:.c=.o))
-DBG_CFLAGS = -D DEBUG=1 -g
-
+CFLAGS	= -Wall -Wextra -Werror -O3
 
 LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -109,7 +99,7 @@ COMPILE_EXE_OUT	=	$$($(COMPILE_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\0
 COMPILE_C		=	$(CC) $(CFLAGS) $(INCLFLAGS) -o $@ -c $<
 COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
-COMPILE_EXE_BONUS		=	$(CC) $(CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS)
+COMPILE_EXE_BONUS		=	$(CC) $(CFLAGS) $(INCLFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS)
 COMPILE_EXE_BONUS_OUT	=	$$($(COMPILE_EXE_BONUS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
 COMPILE_C_BONUS		=	$(CC) $(CFLAGS) $(INCLFLAGS) -o $@ -c $<
@@ -119,22 +109,16 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	@printf "$(CYAN)%-32s-->%32s $(RESET_COL)$(COMPILE_C_OUT)\n" $^ $@
 
-#
-# DEBUG MACROS
-#
-COMPILE_DBG_EXE		=	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(DBG_OBJS) -o $(DBG_EXE)
-COMPILE_DBG_EXE_OUT	=	$$($(COMPILE_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-COMPILE_DBGC		=	$(CC) $(DBG_CFLAGS) $(INCLFLAGS) -o $@ -c $<
-COMPILE_DBGC_OUT	=	$$($(COMPILE_DBGC) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-RM_DBG_EXE			=	rm -f $(DBG_EXE)
-RM_DBG_EXE_OUT		=	$$($(RM_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-
-$(DBG_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(DBG_DIR)
-	@echo -e "$(ON_RED)>\t$^\t--> $@ $(RESET_COL)$(COMPILE_DBGC_OUT)"
-
 all: $(NAME)
 	@if [ -e $(NAME) ]; \
+		then \
+		echo -e "$(GREEN)>>>>>>>> Compilation successful\n>>>>>>>>$(RESET_COL)"; \
+	else \
+		echo -e "$(RED)>>>>>>>> Compilation failed\n>>>>>>>>$(RESET_COL)"; \
+	fi
+
+bonus:	$(NAME_BONUS)
+	@if [ -e $(NAME_BONUS) ]; \
 		then \
 		echo -e "$(GREEN)>>>>>>>> Compilation successful\n>>>>>>>>$(RESET_COL)"; \
 	else \
@@ -145,7 +129,7 @@ all: $(NAME)
 $(NAME):	libft pretty_print $(OBJS)
 	@echo -e "\n$(CYAN)>>>>>>>> Compiling $(NAME) ...$(RESET_COL)$(COMPILE_EXE_OUT)"
 
-$(NAME_BONUS):	libft $(OBJS_BONUS)
+$(NAME_BONUS):	libft pretty_print_bonus $(OBJS_BONUS)
 	@echo -e "\n$(CYAN)>>>>>>>> Compiling $(NAME_BONUS) ...$(RESET_COL)$(COMPILE_EXE_BONUS_OUT)"
 
 silent_libft:
@@ -164,7 +148,6 @@ libft: silent_libft
 pretty_print: 
 	@echo -e "\n--------------------- $(NAME) ---------------------"
 											  
-
 clean:
 	@echo -e "$(RED)>>>>>>>> Deleting obj files$(RESET_COL)$(RM_OBJS_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> obj files deleted\n>>>>>>>>$(RESET_COL)"
@@ -173,32 +156,16 @@ clean_libft:
 	@echo -e "$(RED)>>>>>>>> make fclean -sC libft $(RESET_COL)$(RM_LIBFT_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> libft cleaned\n>>>>>>>>$(RESET_COL)"
 
-clean_debug: clean
-	@echo -e "$(RED)>>>>>>>> Deleting debug obj files$(RESET_COL)$(RM_DBG_EXE_OUT)"
-	@echo -e "$(GREEN)>>>>>>>> obj files deleted\n>>>>>>>>$(RESET_COL)"
-
-fclean:	clean clean_libft clean_debug
+fclean:	clean clean_libft
 	@echo -e "$(RED)>>>>>>>> Deleting $(NAME)$(RESET_COL)$(RM_EXE_OUT)"
 	@echo -e "$(GREEN)>>>>>>>> ./$(NAME) deleted\n>>>>>>>>$(RESET_COL)"
 
 re:	fclean all
 
 pretty_print_bonus:
-	@echo -e "$(RED)\n------------------- $(NAME_BONUS) -------------------$(RESET_COL)\n"
-
-bonus:	$(NAME_BONUS)
+	@echo -e "$(GREEN)\n------------------- $(NAME_BONUS) -------------------$(RESET_COL)\n"
 
 run: all
 	./$(NAME) $(RUN_ARGS)
 
-#
-# Debug rules
-#
-pretty_print_debug:
-	@echo -e "$(RED)\n------------------- $(DBG_EXE) -------------------$(RESET_COL)\n"
-
-debug: all pretty_print_debug $(DBG_OBJS)
-	@echo -e "\n$(ON_RED)>>>>>>>> Compiling $(DBG_EXE) ...$(RESET_COL)$(COMPILE_DBG_EXE_OUT)"
-	./$(DBG_EXE) $(RUN_ARGS)
-
-.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print pretty_print_debug pretty_print_bonus run debug
+.PHONY: all clean clean_libft fclean re bonus libft silent_libft pretty_print pretty_print_bonus run
