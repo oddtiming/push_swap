@@ -5,22 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2022/04/20 14:57:36 by iyahoui-          #+#    #+#             */
 /*   Updated: 2022/04/20 14:57:46 by iyahoui-         ###   ########.fr       */
+=======
+/*   Created: 2022/04/20 23:34:20 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/05/01 21:39:34 by iyahoui-         ###   ########.fr       */
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+<<<<<<< HEAD
 void	try_single_cutoff(
 	t_main_cont *cont, t_deque *block_ids, float cutoff, int block_id)
+=======
+static void	try_single_cutoff(
+	t_main_cont *cont, t_deque *block_ids, float cutoff)
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 {
 	partition_leaving_vals_cutoff(
 		&cont->leaving_vals,
 		block_ids,
 		(int)(max_elem_leaving(cont, &cont->leaving_vals) * cutoff));
-	insert_block_of_a_in_b(cont, block_ids, block_id);
-	insert_block_of_a_in_b(cont, block_ids, (block_id + 1) % 2);
+	insert_block_of_a_in_b(cont, block_ids, 0);
+	insert_block_of_a_in_b(cont, block_ids, 1);
 	insert_b(cont, &cont->curr_moves);
 	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
 	if (cont->curr_moves.size < cont->best_moves.size)
@@ -31,36 +41,36 @@ void	try_single_cutoff(
 	return ;
 }
 
+<<<<<<< HEAD
 void	try_multiple_cutoffs_body(
 	t_main_cont *cont, t_deque *block_ids, float curr_cutoff, int block_id)
+=======
+static void	try_multiple_cutoffs_body(
+	t_main_cont *cont, t_deque *block_ids, float cutoff, int id_to_push)
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 {
 	int	i;
 
 	partition_leaving_vals_cutoff(
 		&cont->leaving_vals,
 		block_ids,
-		(int)max_elem_leaving(cont, &cont->leaving_vals) * curr_cutoff);
-	insert_block_of_a_in_b(cont, block_ids, block_id);
+		(int)(max_elem_leaving(cont, &cont->leaving_vals) * cutoff));
+	insert_block_of_a_in_b(cont, block_ids, id_to_push);
 	deque_reinit_list(&cont->leaving_vals);
 	i = 0;
 	while (i < cont->stack_a.size)
 	{
 		if (is_in_stack(&cont->staying_vals, cont->stack_a.elems[i]))
-		{
-			cont->leaving_vals.add_last(
-				&cont->leaving_vals,
-				-1);
-		}
+			cont->leaving_vals.add_last(&cont->leaving_vals, -1);
 		else
-		{
 			cont->leaving_vals.add_last(
 				&cont->leaving_vals,
 				cont->stack_a.elems[i]);
-		}
 		i++;
 	}
 }
 
+<<<<<<< HEAD
 void	try_multiple_cutoffs_footer(
 	t_main_cont *cont, t_deque *block_ids, float curr_cutoff, int block_id)
 {
@@ -70,6 +80,18 @@ void	try_multiple_cutoffs_footer(
 		(int)max_elem_leaving(cont, &cont->leaving_vals) * curr_cutoff);
 	insert_block_of_a_in_b(cont, block_ids, block_id);
 	insert_block_of_a_in_b(cont, block_ids, (block_id + 1) % 2);
+=======
+static void	try_multiple_cutoffs_footer(
+	t_main_cont *cont, t_deque *block_ids, float cutoff, int id_to_push)
+{
+	int	i;
+
+	partition_leaving_vals_cutoff(
+		&cont->leaving_vals, block_ids,
+		(int)(max_elem_leaving(cont, &cont->leaving_vals) * cutoff));
+	insert_block_of_a_in_b(cont, block_ids, id_to_push);
+	insert_block_of_a_in_b(cont, block_ids, (id_to_push + 1) % 2);
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 	insert_b(cont, &cont->curr_moves);
 	rotate_to_0_in_a(cont, &cont->curr_moves, cont->head_a.index);
 	if (cont->curr_moves.size < cont->best_moves.size)
@@ -87,7 +109,35 @@ void	try_multiple_cutoffs_footer(
 			cont->leaving_vals.add_last(
 				&cont->leaving_vals, cont->stack_a.elems[i]);
 		i++;
-	}
+	}	
+}
+
+void	split_in_two_mult_cutoffs(t_main_cont *cont, t_deque *block_ids)
+{
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.6F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.4F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.5F, 1);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 0);
+	try_multiple_cutoffs_body(cont, block_ids, 0.5F, 0);
+	try_multiple_cutoffs_footer(cont, block_ids, 0.5F, 0);
 }
 
 void	try_multiple_cutoffs(t_main_cont *cont, t_deque *block_ids)
@@ -117,6 +167,7 @@ void	split_in_two(t_main_cont *cont)
 	t_deque	*block_ids;
 
 	new_deque(&block_ids);
+<<<<<<< HEAD
 	try_single_cutoff(cont, block_ids, 17 / 24, 0);
 	try_single_cutoff(cont, block_ids, 16 / 24, 0);
 	try_single_cutoff(cont, block_ids, 5 / 8, 0);
@@ -130,6 +181,14 @@ void	split_in_two(t_main_cont *cont)
 	try_single_cutoff(cont, block_ids, 8 / 24, 1);
 	try_single_cutoff(cont, block_ids, 7 / 24, 1);
 	try_multiple_cutoffs(cont, block_ids);
+=======
+	try_single_cutoff(cont, block_ids, 5 / 8);
+	try_single_cutoff(cont, block_ids, 13 / 24);
+	try_single_cutoff(cont, block_ids, 11 / 24);
+	try_single_cutoff(cont, block_ids, 3 / 8);
+	try_single_cutoff(cont, block_ids, 7 / 24);
+	split_in_two_mult_cutoffs(cont, block_ids);
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 	block_ids->free_list(block_ids);
 	free(block_ids);
 	return ;

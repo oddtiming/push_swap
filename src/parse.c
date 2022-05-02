@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2022/04/20 17:40:37 by iyahoui-          #+#    #+#             */
 /*   Updated: 2022/04/20 17:40:37 by iyahoui-         ###   ########.fr       */
+=======
+/*   Created: 2022/04/20 21:40:00 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/28 00:15:25 by iyahoui-         ###   ########.fr       */
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +89,7 @@ static char	**split_args(int argc, char *argv[])
 	if (argc == 2)
 		return (ft_split(argv[1], ' '));
 	else
-		args_split = malloc((argc) * sizeof(char *));
-	if (!args_split)
-		exit_on_err("Error\n");
+		args_split = ft_xalloc((argc) * sizeof(char *));
 	i = 0;
 	while (i < argc - 1)
 	{
@@ -102,7 +105,7 @@ static char	**split_args(int argc, char *argv[])
 /**
  * @brief accepts a list of ints without duplicates
  */
-void	parse(int argc, char *argv[], t_main_cont *cont)
+void	parse(t_main_cont *cont, int argc, char *argv[])
 {
 	char	**args_split;
 	int		i;

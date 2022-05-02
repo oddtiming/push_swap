@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calc_insert_cost.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 20:15:47 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/05/01 21:21:29 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static void	set_best_individual_costs(
@@ -6,13 +18,9 @@ static void	set_best_individual_costs(
 	a_info->dist0 = a_info->pos;
 	if (ft_abs(a_info->revpos) < a_info->pos)
 		a_info->dist0 = a_info->revpos;
-
 	b_info->dist0 = b_info->pos;
 	if (ft_abs(b_info->revpos) < b_info->pos)
 		b_info->dist0 = b_info->revpos;
-
-	//If equal in both directions, pick the one in the same direction as the other
-
 	if (ft_abs(a_info->revpos) == a_info->pos && b_info->dist0 < 0)
 		a_info->dist0 = a_info->revpos;
 	if (ft_abs(b_info->revpos) == b_info->pos && a_info->dist0 < 0)
@@ -32,7 +40,7 @@ static int	get_best_absolute_cost(
 			ft_max(a_info->pos, b_info->pos),
 			ft_max(-a_info->revpos, -b_info->revpos));
 	curr_cost = ft_min(
-			curr_cost, 
+			curr_cost,
 			ft_abs(a_info->dist0) + ft_abs(b_info->dist0));
 	return (curr_cost);
 }
@@ -44,7 +52,7 @@ static int	get_best_absolute_cost(
 // 
 int	calc_insert_cost(t_insert_info *info)
 {
-	int curr_cost;
+	int	curr_cost;
 
 	set_best_individual_costs(&info->a_info, &info->b_info);
 	curr_cost = get_best_absolute_cost(&info->a_info, &info->b_info);
@@ -68,8 +76,8 @@ static bool	is_new_best_moves(t_insert_info *info)
 
 void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 {
-	t_stack_insert_info *a_info;
-	t_stack_insert_info *b_info;
+	t_stack_insert_info	*a_info;
+	t_stack_insert_info	*b_info;
 
 	a_info = &info->a_info;
 	b_info = &info->b_info;
@@ -93,5 +101,4 @@ void	update_insert_info(t_main_cont *cont, t_insert_info *info)
 		info->min_cost = info->curr_cost;
 		info->min_delta_insert = info->curr_delta_insert;
 	}
-	return ;
 }

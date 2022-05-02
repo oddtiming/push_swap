@@ -5,10 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2022/04/20 15:53:41 by iyahoui-          #+#    #+#             */
 /*   Updated: 2022/04/20 16:33:22 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+=======
+/*   Created: 2022/04/20 22:06:48 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 22:06:48 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+//Get the pos in the stack of a given value. If not found (-1) is returned
+int	get_pos_of_val(t_deque *stack, int val)
+{
+	int	pos;
+
+	pos = 0;
+	while (pos < stack->size)
+	{
+		if (stack->elems[pos] == val)
+			return (pos);
+		pos++;
+	}
+	return (-1);
+}
+
+int	get_pos_smallest_val(t_deque *stack)
+{
+	int	pos_in_stack;
+
+	pos_in_stack = 0;
+	if (stack->size <= 0)
+		return (0);
+	while (stack->elems[pos_in_stack] != stack->min_elem)
+		pos_in_stack++;
+	return (pos_in_stack);
+}
+
+int	get_pos_biggest_val(t_deque *stack)
+{
+	int	pos_in_stack;
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 
 #include "push_swap.h"
 

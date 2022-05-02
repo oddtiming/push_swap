@@ -57,7 +57,7 @@ dkms.conf
 *.swp
 .vscode
 *.txt
-checker*
+checker_Mac
 push_swap
 push_swap_debug
 *.o

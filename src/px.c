@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2022/04/20 16:40:08 by iyahoui-          #+#    #+#             */
 /*   Updated: 2022/04/20 16:40:44 by iyahoui-         ###   ########.fr       */
+=======
+/*   Created: 2022/04/20 21:26:46 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/21 00:23:35 by iyahoui-         ###   ########.fr       */
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +28,19 @@ static inline void	push_update_iterators(t_main_cont *cont)
 {
 	set_iterator(
 		&cont->head_a,
+<<<<<<< HEAD
 		get_pos_smallest_val(&cont->stack_a),
 		cont->stack_a.size, 0);
 	set_iterator(
 		&cont->head_b,
 		get_pos_smallest_val(&cont->stack_b),
 		cont->stack_b.size, 1);
+=======
+		get_pos_smallest_val(&cont->stack_a), cont->stack_a.size, 0);
+	set_iterator(
+		&cont->head_b,
+		get_pos_smallest_val(&cont->stack_b), cont->stack_b.size, 1);
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 	return ;
 }
 

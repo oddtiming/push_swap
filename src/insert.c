@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2022/04/20 18:12:14 by iyahoui-          #+#    #+#             */
 /*   Updated: 2022/04/20 18:12:14 by iyahoui-         ###   ########.fr       */
+=======
+/*   Created: 2022/04/20 23:21:15 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/27 23:40:09 by iyahoui-         ###   ########.fr       */
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +23,11 @@ void	insert_b(t_main_cont *cont, t_deque *moves_buff)
 
 	if (cont->stack_b.size <= 0)
 		return ;
+<<<<<<< HEAD
 	info = ft_safealloc(sizeof(t_insert_info));
+=======
+	info = ft_xalloc(sizeof(t_insert_info));
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 	info->b_info.pos = 0;
 	info->min_cost = 1000;
 	info->min_delta_insert = 1000;
@@ -52,17 +61,23 @@ static void	insert_same_sign(
 				do_rr(cont, moves_buff);
 		}
 	}
-	while (info->min_cost-- > 0)
+	else
 	{
-		if (++info->a_info.dist0_best > 0)
-			do_rrb(cont, moves_buff);
-		else if (++info->b_info.dist0_best > 0)
-			do_rra(cont, moves_buff);
-		else
-			do_rrr(cont, moves_buff);
+		while (info->min_cost-- > 0)
+		{
+			if (++info->a_info.dist0_best > 0)
+				do_rrb(cont, moves_buff);
+			else if (++info->b_info.dist0_best > 0)
+				do_rra(cont, moves_buff);
+			else
+				do_rrr(cont, moves_buff);
+		}
 	}
+<<<<<<< HEAD
 	do_pa(cont, moves_buff);
 	return ;
+=======
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 }
 
 static void	insert_same_direction(
@@ -81,17 +96,23 @@ static void	insert_same_direction(
 				do_rr(cont, moves_buff);
 		}
 	}
-	while (info->min_cost-- > 0)
+	else
 	{
-		if (++info->a_info.revpos_best > 0)
-			do_rrb(cont, moves_buff);
-		else if (++info->b_info.revpos_best > 0)
-			do_rra(cont, moves_buff);
-		else
-			do_rrr(cont, moves_buff);
+		while (info->min_cost-- > 0)
+		{
+			if (++info->a_info.revpos_best > 0)
+				do_rrb(cont, moves_buff);
+			else if (++info->b_info.revpos_best > 0)
+				do_rra(cont, moves_buff);
+			else
+				do_rrr(cont, moves_buff);
+		}
 	}
+<<<<<<< HEAD
 	do_pa(cont, moves_buff);
 	return ;
+=======
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 }
 
 static void	insert_indep_directions(
@@ -109,8 +130,11 @@ static void	insert_indep_directions(
 	else
 		while (info->b_info.dist0_best++ < 0)
 			do_rrb(cont, moves_buff);
+<<<<<<< HEAD
 	do_pa(cont, moves_buff);
 	return ;
+=======
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 }
 
 void	insert_elem_b(
@@ -129,5 +153,9 @@ void	insert_elem_b(
 		insert_same_direction(cont, moves_buff, info);
 	else
 		insert_indep_directions(cont, moves_buff, info);
+<<<<<<< HEAD
+=======
+	do_pa(cont, moves_buff);
+>>>>>>> aae4d5e87735a81400d9797777a9c7de4307c7e5
 	return ;
 }
