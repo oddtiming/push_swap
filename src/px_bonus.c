@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   px_bonus.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 22:57:48 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 00:21:44 by iyahoui-         ###   ########.fr       */
+/*   Created: 2022/04/21 00:51:48 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/21 01:42:56 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-void	sort_big(t_main_cont *cont)
+void	push(t_deque *stack_src, t_deque *stack_dest)
 {
-	assign_longest_increasing_subsequence(cont);
-	split_in_blocks(cont);
-	split_in_two(cont);
-	ignore_lis(cont);
+	stack_dest->add_front(stack_dest, stack_src->elems[0]);
+	stack_src->remove_front(stack_src);
 	return ;
 }
 
-void	sort_small(t_main_cont *cont)
+void	checker_pa(t_checker *checker)
 {
-	if (cont->stack_a.size == 2 && !is_sorted(&cont->stack_a, 0))
-		do_sa(cont, &cont->best_moves);
-	else
-		try_sort_small(cont);
+	push(&checker->stack_b, &checker->stack_a);
 	return ;
 }
 
-void	sort(t_main_cont *cont)
+void	checker_pb(t_checker *checker)
 {
-	if (cont->stack_a.size <= 7)
-		sort_small(cont);
-	else
-		sort_big(cont);
+	push(&checker->stack_a, &checker->stack_b);
 	return ;
 }

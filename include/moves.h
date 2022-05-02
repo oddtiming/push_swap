@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moves.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 19:06:57 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/30 19:06:57 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MOVES_H
 # define MOVES_H
 
@@ -22,44 +34,37 @@ typedef enum e_moves
 	PB	= 'p' << 8	| 'b' << 0
 }	t_moves;
 
-
 typedef enum e_moves_to_indices
 {
-	REV_SA	= 0,
-	REV_SB	= 1,
-	REV_SS	= 2,
-	REV_RA	= 3,
-	REV_RB	= 4,
-	REV_RR	= 5,
-	REV_RRA	= 6,
-	REV_RRB	= 7,
-	REV_RRR	= 8,
-	REV_PA	= 9,
-	REV_PB	= 10
+	SA_INDEX	= 0,
+	SB_INDEX	= 1,
+	SS_INDEX	= 2,
+	RA_INDEX	= 3,
+	RB_INDEX	= 4,
+	RR_INDEX	= 5,
+	RRA_INDEX	= 6,
+	RRB_INDEX	= 7,
+	RRR_INDEX	= 8,
+	PA_INDEX	= 9,
+	PB_INDEX	= 10
 }	t_moves_to_indices;
 
 //MOVES
 void	rotate(t_deque *stack);
-void    do_ra(t_main_cont *cont, t_deque *curr_moves);
-void    do_rb(t_main_cont *cont, t_deque *curr_moves);
-void    do_rr(t_main_cont *cont, t_deque *curr_moves);
+void	do_ra(t_main_cont *cont, t_deque *curr_moves);
+void	do_rb(t_main_cont *cont, t_deque *curr_moves);
+void	do_rr(t_main_cont *cont, t_deque *curr_moves);
 void	rev_rotate(t_deque *stack);
-void    do_rra(t_main_cont *cont, t_deque *curr_moves);
-void    do_rrb(t_main_cont *cont, t_deque *curr_moves);
-void    do_rrr(t_main_cont *cont, t_deque *curr_moves);
+void	do_rra(t_main_cont *cont, t_deque *curr_moves);
+void	do_rrb(t_main_cont *cont, t_deque *curr_moves);
+void	do_rrr(t_main_cont *cont, t_deque *curr_moves);
 void	swap(t_deque *stack);
-void    do_sa(t_main_cont *cont, t_deque *curr_moves);
-void    do_sb(t_main_cont *cont, t_deque *curr_moves);
-void    do_ss(t_main_cont *cont, t_deque *curr_moves);
+void	do_sa(t_main_cont *cont, t_deque *curr_moves);
+void	do_sb(t_main_cont *cont, t_deque *curr_moves);
+void	do_ss(t_main_cont *cont, t_deque *curr_moves);
 void	push(t_deque *stack_src, t_deque *stack_dest);
-void    do_pa(t_main_cont *cont, t_deque *curr_moves);
-void    do_pb(t_main_cont *cont, t_deque *curr_moves);
-
-//	stacks info tracking
-static inline void	rotate_update_iterators(t_iterator *iterator);
-static inline void	rev_rotate_update_iterators(t_iterator *iterator);
-static inline void	swap_update_iterator(t_iterator *iterator);
-static inline void	push_update_iterators(t_main_cont *cont);
+void	do_pa(t_main_cont *cont, t_deque *curr_moves);
+void	do_pb(t_main_cont *cont, t_deque *curr_moves);
 
 //  Moves helper functions
 int		convert_move_to_index(int move);

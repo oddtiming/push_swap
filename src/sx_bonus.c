@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   sx_bonus.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 22:57:48 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 00:21:44 by iyahoui-         ###   ########.fr       */
+/*   Created: 2022/04/21 01:02:15 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/21 01:41:59 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-void	sort_big(t_main_cont *cont)
+void	swap(t_deque *stack)
 {
-	assign_longest_increasing_subsequence(cont);
-	split_in_blocks(cont);
-	split_in_two(cont);
-	ignore_lis(cont);
+	int	temp;
+
+	temp = stack->elems[0];
+	stack->set_elem(stack, 0, stack->elems[1]);
+	stack->set_elem(stack, 1, temp);
 	return ;
 }
 
-void	sort_small(t_main_cont *cont)
+void	checker_sa(t_checker *checker)
 {
-	if (cont->stack_a.size == 2 && !is_sorted(&cont->stack_a, 0))
-		do_sa(cont, &cont->best_moves);
-	else
-		try_sort_small(cont);
+	swap(&checker->stack_a);
 	return ;
 }
 
-void	sort(t_main_cont *cont)
+void	checker_sb(t_checker *checker)
 {
-	if (cont->stack_a.size <= 7)
-		sort_small(cont);
-	else
-		sort_big(cont);
+	swap(&checker->stack_b);
+	return ;
+}
+
+void	checker_ss(t_checker *checker)
+{
+	swap(&checker->stack_a);
+	swap(&checker->stack_b);
 	return ;
 }

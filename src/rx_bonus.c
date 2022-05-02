@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   rx_bonus.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 22:57:48 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/21 00:21:44 by iyahoui-         ###   ########.fr       */
+/*   Created: 2022/04/21 00:48:28 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/21 01:42:12 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-void	sort_big(t_main_cont *cont)
+void	rotate(t_deque *stack)
 {
-	assign_longest_increasing_subsequence(cont);
-	split_in_blocks(cont);
-	split_in_two(cont);
-	ignore_lis(cont);
+	stack->add_last(stack, stack->elems[0]);
+	stack->remove_front(stack);
 	return ;
 }
 
-void	sort_small(t_main_cont *cont)
+void	checker_ra(t_checker *checker)
 {
-	if (cont->stack_a.size == 2 && !is_sorted(&cont->stack_a, 0))
-		do_sa(cont, &cont->best_moves);
-	else
-		try_sort_small(cont);
+	rotate(&checker->stack_a);
 	return ;
 }
 
-void	sort(t_main_cont *cont)
+void	checker_rb(t_checker *checker)
 {
-	if (cont->stack_a.size <= 7)
-		sort_small(cont);
-	else
-		sort_big(cont);
+	rotate(&checker->stack_b);
+	return ;
+}
+
+void	checker_rr(t_checker *checker)
+{
+	rotate(&checker->stack_a);
+	rotate(&checker->stack_b);
 	return ;
 }

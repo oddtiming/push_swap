@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 22:06:48 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 22:06:48 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 //Get the pos in the stack of a given value. If not found (-1) is returned
@@ -56,7 +68,6 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
 			return (false);
 		}
 	}
-
 	return (true);
 }
 
@@ -70,15 +81,6 @@ bool	is_sorted(t_deque *stack, int pos_smallest)
  */
 void	rotate_to_0_in_a(t_main_cont *cont, t_deque *curr_moves, int pos)
 {
-	if (DEBUG)
-	{
-		int revpos = pos - cont->stack_a.size;
-		printf(YELLOW"rotate_to_pos0=======> pos = %d, revpos = %d\n", pos, revpos);
-		if (pos < cont->stack_a.size - pos)
-			printf("Choosing ra; %d < %d\n"RESET_COL, pos, -revpos);
-		else
-			printf("Choosing rra; %d >= %d\n"RESET_COL, pos, -revpos);
-	}
 	if (pos < cont->stack_a.size - pos)
 		while (pos-- > 0)
 			do_ra(cont, curr_moves);

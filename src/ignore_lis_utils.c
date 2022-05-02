@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ignore_lis_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 23:41:19 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/20 23:41:19 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-static void	complete_ignore_lis_algo(t_main_cont *cont)
+static void	complete_algo(t_main_cont *cont)
 {
 	insert_last_block(cont, &cont->curr_moves);
 	insert_b(cont, &cont->curr_moves);
@@ -15,7 +27,6 @@ static void	complete_ignore_lis_algo(t_main_cont *cont)
 	return ;
 }
 
-
 void	try_cutoff_n(t_main_cont *cont, t_deque *block_ids, int n, int cutoff)
 {
 	int	i;
@@ -27,7 +38,7 @@ void	try_cutoff_n(t_main_cont *cont, t_deque *block_ids, int n, int cutoff)
 		insert_block_of_a_in_b(cont, block_ids, 1);
 		i++;
 	}
-	complete_ignore_lis_algo(cont);
+	complete_algo(cont);
 	return ;
 }
 
@@ -42,7 +53,7 @@ void	try_n_divisions(t_main_cont *cont, t_deque *block_ids, int n)
 		insert_block_of_a_in_b(cont, block_ids, 1);
 		i++;
 	}
-	complete_ignore_lis_algo(cont);
+	complete_algo(cont);
 	return ;
 }
 
@@ -57,7 +68,7 @@ void	try_n_divisions_smallest(t_main_cont *cont, t_deque *block_ids, int n)
 		insert_block_of_a_in_b(cont, block_ids, 0);
 		i++;
 	}
-	complete_ignore_lis_algo(cont);
+	complete_algo(cont);
 	return ;
 }
 
@@ -72,38 +83,6 @@ void	try_n_divisions_closest(t_main_cont *cont, t_deque *block_ids, int n)
 		insert_block_of_a_in_b(cont, block_ids, block_ids->elems[0]);
 		i++;
 	}
-	complete_ignore_lis_algo(cont);
+	complete_algo(cont);
 	return ;
-}
-
-void	ignore_lis(t_main_cont *cont)
-{
-	t_deque	*block_ids;
-	int		div_depth = 7;
-	int		i;
-
-	new_deque(&block_ids);
-	i = -1;
-	while (++i < div_depth)
-		try_n_divisions_smallest(cont, block_ids, i);
-	i = -1;
-	while (++i < div_depth)
-		try_n_divisions_closest(cont, block_ids, i);
-	i = -1;
-	while (++i < div_depth)
-		try_n_divisions(cont, block_ids, i);
-	i = -1;
-	while (++i < div_depth)
-		try_cutoff_n(cont, block_ids, i, cont->stack_a.max_elem * 11 / 24);
-	i = -1;
-	while (++i < div_depth)
-		try_cutoff_n(cont, block_ids, i, cont->stack_a.max_elem * 10 / 24);
-	i = -1;
-	while (++i < div_depth)
-		try_cutoff_n(cont, block_ids, i, cont->stack_a.max_elem * 9 / 24);
-	i = -1;
-	while (++i < div_depth)
-		try_cutoff_n(cont, block_ids, i, cont->stack_a.max_elem * 7 / 24);
-	block_ids->free_list(block_ids);
-	free(block_ids);
 }

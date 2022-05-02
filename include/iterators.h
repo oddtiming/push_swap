@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   iterators.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 19:07:10 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/04/30 19:07:10 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ITERATORS_H
 # define ITERATORS_H
 
 # include <stdbool.h>
-
 
 //ITERATORS (still need to learn how to link headers...)
 # define REVERSE 1

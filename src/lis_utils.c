@@ -1,47 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   partition_stack.c                                  :+:      :+:    :+:   */
+/*   lis_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 22:32:19 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 22:32:19 by iyahoui-         ###   ########.fr       */
+/*   Created: 2022/04/20 23:25:23 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/05/01 20:49:08 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	partition_stack_cutoff(t_deque *stack, t_deque *block_ids, int cutoff)
+bool	is_in_stack(t_deque *stack, int val)
 {
-	int		i;
+	int	i;
 
-	deque_reinit_list(block_ids);
 	i = 0;
 	while (i < stack->size)
 	{
-		if (stack->elems[i] > cutoff)
-			block_ids->add_last(block_ids, 1);
-		else
-			block_ids->add_last(block_ids, 0);
+		if (stack->elems[i] == val)
+			return (true);
 		i++;
 	}
+	return (false);
+}
+
+void	free_deque_list(t_deque **list, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		list[i]->free_list(list[i]);
+		free (list[i]);
+		i++;
+	}
+	free (list);
 	return ;
 }
 
-void	partition_stack_in_two(t_deque *stack, t_deque *block_ids)
+void	rotate_stack_to_0(t_deque *stack, int pos)
 {
-	int		i;
-
-	deque_reinit_list(block_ids);
-	i = 0;
-	while (i < stack->size)
+	if (pos < stack->size - pos)
 	{
-		if (stack->elems[i] > stack->max_elem / 2)
-			block_ids->add_last(block_ids, 1);
-		else
-			block_ids->add_last(block_ids, 0);
-		i++;
+		while (pos-- > 0)
+		{
+			rotate(stack);
+		}
+	}
+	else
+	{
+		while (pos++ < stack->size)
+		{
+			rev_rotate(stack);
+		}
 	}
 	return ;
 }
