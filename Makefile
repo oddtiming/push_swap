@@ -16,8 +16,6 @@ RESET_COL	=	\033[0m
 
 CFILES	=	block_utils.c \
 			calc_insert_cost.c \
-			cherrypick.c \
-			cherrypick_utils.c \
 			cleanup.c \
 			delta_insert.c \
 			deques.c \
@@ -33,6 +31,8 @@ CFILES	=	block_utils.c \
 			insert_blocks_utils.c \
 			insert_utils.c \
 			iterators.c \
+			longest_increas_subseq.c \
+			lis_utils.c \
 			parse.c \
 			partition_leaving_vals.c \
 			partition_stack.c \
@@ -98,7 +98,7 @@ LIBFT_FLAGS	= -lft -Llibft
 
 RM_OBJS			=	rm -rf $(OBJ_DIR)
 RM_OBJS_OUT		=	$$($(RM_OBJS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-RM_EXE			=	rm -f $(NAME)
+RM_EXE			=	rm -f $(NAME) $(NAME_BONUS)
 RM_EXE_OUT		=	$$($(RM_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 RM_LIBFT		=	make clean -sC ./libft
 RM_LIBFT_OUT	=	$$($(RM_LIBFT) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
@@ -117,7 +117,7 @@ COMPILE_C_BONUS_OUT	=	$$($(COMPILE_C_BONUS) 2>&1 | sed -e 's/error/\\\033[0;31me
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "$(CYAN)%-30s-->%30s $(RESET_COL)$(COMPILE_C_OUT)\n" $^ $@
+	@printf "$(CYAN)%-32s-->%32s $(RESET_COL)$(COMPILE_C_OUT)\n" $^ $@
 
 #
 # DEBUG MACROS
@@ -126,7 +126,7 @@ COMPILE_DBG_EXE		=	$(CC) $(DBG_CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(DBG_OBJS) -
 COMPILE_DBG_EXE_OUT	=	$$($(COMPILE_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 COMPILE_DBGC		=	$(CC) $(DBG_CFLAGS) $(INCLFLAGS) -o $@ -c $<
 COMPILE_DBGC_OUT	=	$$($(COMPILE_DBGC) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
-RM_DBG_EXE			=	rm $(DBG_EXE)
+RM_DBG_EXE			=	rm -f $(DBG_EXE)
 RM_DBG_EXE_OUT		=	$$($(RM_DBG_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
 $(DBG_DIR)/%.o: $(SRC_DIR)/%.c
@@ -149,7 +149,7 @@ $(NAME_BONUS):	libft $(OBJS_BONUS)
 	@echo -e "\n$(CYAN)>>>>>>>> Compiling $(NAME_BONUS) ...$(RESET_COL)$(COMPILE_EXE_BONUS_OUT)"
 
 silent_libft:
-	@echo -e "---------------------- libft.a ----------------------\n"
+	@echo -e "---------------------- libft ----------------------\n"
 	@echo -e "$(CYAN)>>>>>>>> Archiving libft.a ...$(RESET_COL)"
 	@make -s bonus -C $(LIBFT_DIR)
 	@if [ -e $(LIBFT) ]; \

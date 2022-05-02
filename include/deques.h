@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   deques.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/01 20:40:21 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/05/01 20:40:39 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DEQUES_H
 # define DEQUES_H
 
@@ -28,30 +40,30 @@ struct s_deque
 	void	(*free_list)(t_deque *);
 	int		(*get_elem_max)(t_deque *);
 	int		(*get_elem_min)(t_deque *);
-	bool	(*reinit_list)(t_deque *);
+	void	(*reinit_list)(t_deque *);
 	void	(*remove_front)(t_deque *);
 	void	(*remove_last)(t_deque *);
-	bool	(*add_front)(t_deque *, int);
-	bool	(*add_last)(t_deque *, int);
-	bool	(*resize_end)(t_deque *, int);
-	bool	(*resize_front)(t_deque *, int);
+	void	(*add_front)(t_deque *, int);
+	void	(*add_last)(t_deque *, int);
+	void	(*resize_end)(t_deque *, int);
+	void	(*resize_front)(t_deque *, int);
 	void	(*set_elem)(t_deque *, int, int);
 };
 
 //	deques.c
 void	init_deque(t_deque *deque);
-bool	deque_reinit_list(t_deque *deque);
+void	deque_reinit_list(t_deque *deque);
 
 //	deque_utils.c
-bool	deque_resize_end(t_deque *deque, int new_size);
-bool	deque_resize_front(t_deque *deque, int new_size);
+void	deque_resize_end(t_deque *deque, int new_size);
+void	deque_resize_front(t_deque *deque, int new_size);
 void	deque_free_list(t_deque *deque);
 int		deque_get_elem_max(t_deque *deque);
 int		deque_get_elem_min(t_deque *deque);
 
 //	deque_modify.c
-bool	deque_add_front(t_deque *deque, int new_elem);
-bool	deque_add_last(t_deque *deque, int new_elem);
+void	deque_add_front(t_deque *deque, int new_elem);
+void	deque_add_last(t_deque *deque, int new_elem);
 void	deque_remove_front(t_deque *deque);
 void	deque_remove_last(t_deque *deque);
 void	deque_set_elem(t_deque *deque, int pos, int new_value);
@@ -63,7 +75,6 @@ void	copy_deque(t_deque *src, t_deque *dest);
 void	cat_deque(t_deque *src, t_deque *dest);
 void	cat_deque_front(t_deque *src, t_deque *dest);
 
-//DUMB SHIT TO REMOVE
 //ERROR HANDLING
 void	exit_on_err(char *err_message);
 void	ft_bzero(void *s, size_t n);

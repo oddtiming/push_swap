@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:32:07 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/27 22:53:47 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/05/01 20:22:51 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,14 @@ void	deque_free_list(t_deque *deque)
 	return ;
 }
 
-bool	deque_resize_front(t_deque *deque, int new_size)
+void	deque_resize_front(t_deque *deque, int new_size)
 {
 	int		*temp;
 	int		total_new_size;
 	int		pos_in_deque;
 
 	total_new_size = new_size + deque->capacity_end;
-	temp = malloc(total_new_size * sizeof(int));
-	if (!temp)
-		return (FAILURE);
+	temp = ft_xalloc(total_new_size * sizeof(int));
 	temp += new_size;
 	pos_in_deque = 0;
 	while (pos_in_deque < deque->size)
@@ -41,10 +39,10 @@ bool	deque_resize_front(t_deque *deque, int new_size)
 	deque->elems = temp;
 	deque->capacity_front = new_size;
 	deque->capacity_total = total_new_size;
-	return (SUCCESS);
+	return ;
 }
 
-bool	deque_resize_end(t_deque *deque, int new_size)
+void	deque_resize_end(t_deque *deque, int new_size)
 {
 	int		*temp;
 	int		total_new_size;
@@ -64,7 +62,7 @@ bool	deque_resize_end(t_deque *deque, int new_size)
 	deque->elems = temp;
 	deque->capacity_end = new_size;
 	deque->capacity_total = total_new_size;
-	return (SUCCESS);
+	return ;
 }
 
 int	deque_get_elem_max(t_deque *deque)

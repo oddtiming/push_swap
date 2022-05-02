@@ -6,22 +6,16 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 23:26:19 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/20 23:26:19 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/05/01 20:27:42 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "deques.h"
 
-bool	deque_add_front(t_deque *deque, int new_elem)
+void	deque_add_front(t_deque *deque, int new_elem)
 {
-	bool		status;
-
 	if (deque->capacity_front == 0)
-	{
-		status = deque_resize_front(deque, deque->capacity_total);
-		if (status == FAILURE)
-			return (status);
-	}
+		deque_resize_front(deque, deque->capacity_total * 2);
 	deque->elems -= 1;
 	deque->elems[0] = new_elem;
 	deque->size += 1;
@@ -31,28 +25,20 @@ bool	deque_add_front(t_deque *deque, int new_elem)
 		deque->max_elem = new_elem;
 	if (new_elem < deque->min_elem)
 		deque->min_elem = new_elem;
-	status = SUCCESS;
-	return (status);
+	return ;
 }
 
-bool	deque_add_last(t_deque *deque, int new_elem)
+void	deque_add_last(t_deque *deque, int new_elem)
 {
-	bool		status;
-
 	if (deque->size == deque->capacity_end)
-	{
-		status = deque_resize_end(deque, deque->capacity_total * 2);
-		if (status == FAILURE)
-			return (status);
-	}
+		deque_resize_end(deque, deque->capacity_total * 2);
 	deque->elems[deque->size] = new_elem;
 	deque->size += 1;
 	if (new_elem > deque->max_elem)
 		deque->max_elem = new_elem;
 	if (new_elem < deque->min_elem)
 		deque->min_elem = new_elem;
-	status = SUCCESS;
-	return (status);
+	return ;
 }
 
 //Need to add resize smaller when under a certain size

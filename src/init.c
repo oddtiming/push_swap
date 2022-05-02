@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 22:55:24 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/04/27 23:39:52 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/05/01 20:29:43 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	init(t_main_cont *cont, char **args)
 	init_reverse_moves_array(cont->reverse_fcts);
 	i = -1;
 	while (args[++i] != NULL)
-		if (cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i])))
-			exit_on_err("deque_add_last done fucked up\n");
+		cont->stack_a.add_last(&cont->stack_a, ft_atoi(args[i]));
 	normalize_stack_values(&cont->stack_a);
 	copy_deque(&cont->stack_a, &cont->initial_stack);
 	set_iterator(&cont->head_a, get_pos_smallest_val(&cont->stack_a),
