@@ -99,7 +99,7 @@ COMPILE_EXE_OUT	=	$$($(COMPILE_EXE) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\0
 COMPILE_C		=	$(CC) $(CFLAGS) $(INCLFLAGS) -o $@ -c $<
 COMPILE_C_OUT	=	$$($(COMPILE_C) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
-COMPILE_EXE_BONUS		=	$(CC) $(CFLAGS) $(INCLFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS)
+COMPILE_EXE_BONUS		=	$(CC) $(CFLAGS) $(LIBFT_FLAGS) $(INCLFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS)
 COMPILE_EXE_BONUS_OUT	=	$$($(COMPILE_EXE_BONUS) 2>&1 | sed -e 's/error/\\\033[0;31merror\\\033[0m/g' -e 's/warning/\\\033[0;33mwarning\\\033[0m/g')
 
 COMPILE_C_BONUS		=	$(CC) $(CFLAGS) $(INCLFLAGS) -o $@ -c $<
